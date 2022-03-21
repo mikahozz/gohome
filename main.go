@@ -20,6 +20,8 @@ func jsonResponse(mockFunc func() string) func(http.ResponseWriter, *http.Reques
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
-	mux.HandleFunc(("/weatherfore"), jsonResponse(mock.OutdoorWeatherfore))
+	mux.HandleFunc("/weatherfore", jsonResponse(mock.OutdoorWeatherFore))
+	mux.HandleFunc("/weathernow", jsonResponse(mock.OutdoorWeathernNow))
+	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
 	log.Fatal(http.ListenAndServe(port, mux))
 }

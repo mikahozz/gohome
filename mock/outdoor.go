@@ -5,17 +5,50 @@ import (
 	"time"
 )
 
-func OutdoorWeatherfore() string {
-	var times []string
-	t := time.Now()
-	thisHour := time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), 0, 0, 0, t.Location())
-	for i := 0; i < 14; i++ {
-		times = append(times, thisHour.Add(time.Hour*time.Duration(i)).UTC().Format(time.RFC3339))
-	}
-	timeSubstitutes := make([]interface{}, len(times))
-	for i, v := range times {
-		timeSubstitutes[i] = v
-	}
+func OutdoorWeathernNow() string {
+	timeSubstitutes := ConvertStrArrayToInterface(
+		GenerateFutureDates(time.Minute*time.Duration(10), 6, true, false))
+
+	return fmt.Sprintf(`
+	[
+		{
+		  "datetime": "%s",
+		  "temperature": 2.7,
+		  "humidity": 0.0
+		},
+		{
+		  "datetime": "%s",
+		  "temperature": 2.7,
+		  "humidity": 0.0
+		},
+		{
+		  "datetime": "%s",
+		  "temperature": 3.0,
+		  "humidity": 0.0
+		},
+		{
+		  "datetime": "%s",
+		  "temperature": 3.0,
+		  "humidity": 0.0
+		},
+		{
+		  "datetime": "%s",
+		  "temperature": 3.1,
+		  "humidity": 0.0
+		},
+		{
+		  "datetime": "%s",
+		  "temperature": 3.4,
+		  "humidity": 0.0
+		}
+	  ]
+	  `, timeSubstitutes...)
+}
+
+func OutdoorWeatherFore() string {
+	timeSubstitutes := ConvertStrArrayToInterface(
+		GenerateFutureDates(time.Hour*time.Duration(1), 14, false, true))
+
 	return fmt.Sprintf(`
 	[
 		{
