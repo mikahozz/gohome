@@ -2,13 +2,12 @@ package mock
 
 import (
 	"encoding/json"
-	"math/rand"
 	"time"
 )
 
 type price struct {
 	DateTime string
-	Price    float32
+	Price    float64
 }
 
 func ElectricityPrices() string {
@@ -17,7 +16,7 @@ func ElectricityPrices() string {
 	for _, date := range dates {
 		prices = append(prices, price{
 			DateTime: date,
-			Price:    rand.Float32() * 20.0,
+			Price:    rand.float64() * 20.0,
 		})
 	}
 	pricesJson, err := json.MarshalIndent(prices, "", "  ")
