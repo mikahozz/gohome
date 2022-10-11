@@ -1,7 +1,8 @@
-package main
+package fmi
 
 import (
 	"log"
+	"math"
 	"strconv"
 	"strings"
 	"time"
@@ -9,6 +10,7 @@ import (
 
 type FeatureCollection struct {
 	GridSeriesObservation GridSeriesObservation `xml:"member>GridSeriesObservation"`
+	Resolution            Resolution
 }
 type GridSeriesObservation struct {
 	BeginPosition              string  `xml:"phenomenonTime>TimePeriod>beginPosition"`
@@ -19,10 +21,23 @@ type GridSeriesObservation struct {
 type Field struct {
 	Name string `xml:"name,attr"`
 }
+type Resolution int64
 
-func CreateObservationsModel(f FeatureCollection) []Observation {
-	observations := []Observation{}
-	measureLines := strings.Split(
+const (
+	Hours Resolution = iota + 1
+	Minutes
+)
+
+func GetData(location string, r Resolution) {
+
+}
+
+func (f FeatureCollection) ConvertToWeatherData() []WeatherData {
+	if f.Resolution == 0 {
+		log.Fatal("Resolution is not set, cannot convert to WeatherData")
+	}
+	wArr := []WeatherData{}
+	lines := strings.Split(
 		strings.TrimSpace(
 			strings.ReplaceAll(f.GridSeriesObservation.DoubleOrNilReasonTupleList, "\r\n", "\n"),
 		),
@@ -31,79 +46,62 @@ func CreateObservationsModel(f FeatureCollection) []Observation {
 	if err != nil {
 		log.Fatalf("Failed to parse date: %s", f.GridSeriesObservation.BeginPosition)
 	}
-	for i, measureLine := range measureLines {
-		observation := Observation{}
-		observation.DateTime = beginDate.Add(time.Hour * time.Duration(i)).UTC().Format(time.RFC3339)
-		measures := strings.Split(strings.TrimSpace(measureLine), " ")
+	for i, line := range lines {
+		w := WeatherData{}
+		w.Time = beginDate.Add(time.Hour * time.Duration(i)).UTC().Format(time.RFC3339)
+		values := strings.Split(strings.TrimSpace(line), " ")
 		fields := f.GridSeriesObservation.Fields
-		if len(measures) != len(fields) {
-			log.Fatalf("measures len: %d != fields len: %d", len(measures), len(fields))
+		if len(values) != len(fields) {
+			log.Fatalf("measures len: %d != fields len: %d", len(values), len(fields))
 		}
 		for j, field := range fields {
-			value, err := strconv.ParseFloat(measures[j], 64)
+			value, err := strconv.ParseFloat(values[j], 64)
 			if err != nil {
-				log.Fatalf("Failed to parse string measure %s from position %d from line %d: %v", measures[j], j, i, err)
+				log.Fatalf("Failed to parse string measure %s from position %d from line %d: %v", values[j], j, i, err)
 			}
 			switch field.Name {
-			case "TA_PT1H_AVG":
-				observation.AirTemperature = value
+			case "TA_PT1H_AVG", "t2m":
+				w.Temp = valueOrZero(value)
 			case "TA_PT1H_MAX":
-				observation.HighestTemperature = value
+				w.TempMax = valueOrZero(value)
 			case "TA_PT1H_MIN":
-				observation.LowestTemperature = value
-			case "RH_PT1H_AVG":
-				observation.RelativeHumidity = value
-			case "WS_PT1H_AVG":
-				observation.WindSpeed = value
-			case "WS_PT1H_MAX":
-				observation.MaximumWindSpeed = value
+				w.TempMin = valueOrZero(value)
+			case "RH_PT1H_AVG", "rh":
+				w.Humidity = valueOrZero(value)
+			case "WS_PT1H_AVG", "ws_10min":
+				w.WindSpeed = valueOrZero(value)
+			case "WS_PT1H_MAX", "wg_10min":
+				w.MaxWindSpeed = valueOrZero(value)
 			case "WS_PT1H_MIN":
-				observation.MinimumWindSpeed = value
-			case "WD_PT1H_AVG":
-				observation.WindDirection = value
-			case "PRA_PT1H_ACC":
-				observation.PrecipitationAmount = value
-			case "PRI_PT1H_MAX":
-				observation.MaximumPrecipitationIntensity = value
-			case "PA_PT1H_AVG":
-				observation.AirPressure = value
-			case "WAWA_PT1H_RANK":
-				observation.PresentWeather = value
+				w.MinWindSpeed = valueOrZero(value)
+			case "WD_PT1H_AVG", "wd_10min":
+				w.WindDirection = valueOrZero(value)
+			case "PRA_PT1H_ACC", "r_1h":
+				w.Rain = valueOrZero(value)
+			case "PRI_PT1H_MAX", "ri_10min":
+				w.MaxRainIntensity = valueOrZero(value)
+			case "PA_PT1H_AVG", "p_sea":
+				w.Pressure = valueOrZero(value)
+			case "WAWA_PT1H_RANK", "wawa":
+				w.Weather = valueOrZero(value)
+			case "td":
+				w.DewPoint = valueOrZero(value)
+			case "snow_aws":
+				w.SnowDepth = valueOrZero(value)
+			case "vis":
+				w.Visibility = valueOrZero(value)
+			case "n_man":
+				w.CloudCover = valueOrZero(value)
 			}
 		}
-		observations = append(observations, observation)
+		wArr = append(wArr, w)
 	}
-	return observations
+	return wArr
 }
 
-// fieldDescriptions := map[FieldTypes]string{
-// 	TA_PT1H_AVG:    "Air Temperature",
-// 	TA_PT1H_MAX:    "Highest temperature",
-// 	TA_PT1H_MIN:    "Lowest temperature",
-// 	RH_PT1H_AVG:    "Relative humidity",
-// 	WS_PT1H_AVG:    "Wind speed",
-// 	WS_PT1H_MAX:    "Maximum wind speed",
-// 	WS_PT1H_MIN:    "Minimum wind speed",
-// 	WD_PT1H_AVG:    "Wind direction",
-// 	PRA_PT1H_ACC:   "Precipitation amount",
-// 	PRI_PT1H_MAX:   "Maximum precipitation intensity",
-// 	PA_PT1H_AVG:    "Air pressure",
-// 	WAWA_PT1H_RANK: "Present weather",
-// }
-
-// type FieldTypes int
-
-// const (
-// 	TA_PT1H_AVG FieldTypes = iota
-// 	TA_PT1H_MAX
-// 	TA_PT1H_MIN
-// 	RH_PT1H_AVG
-// 	WS_PT1H_AVG
-// 	WS_PT1H_MAX
-// 	WS_PT1H_MIN
-// 	WD_PT1H_AVG
-// 	PRA_PT1H_ACC
-// 	PRI_PT1H_MAX
-// 	PA_PT1H_AVG
-// 	WAWA_PT1H_RANK
-// )
+func valueOrZero(v float64) float64 {
+	if math.IsNaN(v) {
+		return 0.0
+	}
+	return v
+}
