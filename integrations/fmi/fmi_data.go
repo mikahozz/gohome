@@ -46,9 +46,17 @@ func (f FeatureCollection) ConvertToWeatherData() []WeatherData {
 	if err != nil {
 		log.Fatalf("Failed to parse date: %s", f.GridSeriesObservation.BeginPosition)
 	}
+	dt := beginDate
+	var timeAdd time.Duration
+	if f.Resolution == Hours {
+		timeAdd = time.Hour
+	}
+	if f.Resolution == Minutes {
+		timeAdd = time.Minute * 10
+	}
 	for i, line := range lines {
 		w := WeatherData{}
-		w.Time = beginDate.Add(time.Hour * time.Duration(i)).UTC().Format(time.RFC3339)
+		w.Time = dt.UTC().Format(time.RFC3339)
 		values := strings.Split(strings.TrimSpace(line), " ")
 		fields := f.GridSeriesObservation.Fields
 		if len(values) != len(fields) {
@@ -95,6 +103,7 @@ func (f FeatureCollection) ConvertToWeatherData() []WeatherData {
 			}
 		}
 		wArr = append(wArr, w)
+		dt = dt.Add(timeAdd)
 	}
 	return wArr
 }

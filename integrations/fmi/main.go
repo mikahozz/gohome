@@ -1,29 +1,17 @@
 package fmi
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/pkg/errors"
 )
 
-const port = ":9999"
-
-func jsonResponse(data string) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, data)
+func GetWeatherData() (string, error) {
+	//q := "http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&place=kumpula"
+	q := "ksdjf"
+	_, err := http.Get(q)
+	if err != nil {
+		return "", errors.Wrap(err, "Error fetching data from FMI")
 	}
+	return "lkj", nil
 }
-
-func main() {
-	// mux := http.NewServeMux()
-	// mux.HandleFunc("/weathernow", jsonResponse("{testi: 'sdf'}"))
-	// log.Fatal(http.ListenAndServe(port, mux))
-}
-
-//func GetObservations() {
-//fmiEndpoint := "http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&place=kumpula"
-//observationsRaw, err := http.Get(fmiEndpoint)
-// 	if err != nil {
-// 		log.Print("Error fetching observations from FMI", err)
-// 	}
-// }

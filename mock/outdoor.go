@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func OutdoorWeathernNow() string {
+func OutdoorWeathernNow() (string, error) {
 	timeSubstitutes := ConvertStrArrayToInterface(
 		GenerateFutureDates(time.Minute*time.Duration(10), 6, true, false))
 
@@ -42,10 +42,10 @@ func OutdoorWeathernNow() string {
 		  "humidity": 0.0
 		}
 	  ]
-	  `, timeSubstitutes...)
+	  `, timeSubstitutes...), nil
 }
 
-func OutdoorWeatherFore() string {
+func OutdoorWeatherFore() (string, error) {
 	timeSubstitutes := ConvertStrArrayToInterface(
 		GenerateFutureDates(time.Hour*time.Duration(1), 14, false, true))
 
@@ -304,5 +304,5 @@ func OutdoorWeatherFore() string {
 		  "PrecipitationAmount": 0.0
 		}
 	  ]	
-`, timeSubstitutes...)
+`, timeSubstitutes...), nil
 }
