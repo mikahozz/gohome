@@ -8,15 +8,19 @@ import (
 	"time"
 )
 
-type FeatureCollection struct {
-	GridSeriesObservation GridSeriesObservation `xml:"member>GridSeriesObservation"`
-	Resolution            Resolution
+type FMI_ObservationsModel struct {
+	Observations ObservationCollection `xml:"FeatureCollection"`
 }
-type GridSeriesObservation struct {
-	BeginPosition              string  `xml:"phenomenonTime>TimePeriod>beginPosition"`
-	EndPosition                string  `xml:"phenomenonTime>TimePeriod>endPosition"`
-	DoubleOrNilReasonTupleList string  `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList"`
-	Fields                     []Field `xml:"result>MultiPointCoverage>rangeType>DataRecord>field"`
+
+type ObservationCollection struct {
+	Observation Observation `xml:"member>GridSeriesObservation"` // Weather observations
+	Resolution  Resolution
+}
+type Observation struct {
+	BeginPosition string  `xml:"phenomenonTime>TimePeriod>beginPosition"`
+	EndPosition   string  `xml:"phenomenonTime>TimePeriod>endPosition"`
+	Measures      string  `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList"`
+	Fields        []Field `xml:"result>MultiPointCoverage>rangeType>DataRecord>field"`
 }
 type Field struct {
 	Name string `xml:"name,attr"`
@@ -28,23 +32,26 @@ const (
 	Minutes
 )
 
-func GetData(location string, r Resolution) {
+// func ConvertToWeatherStations(f FeatureCollection) ([]WeatherStation, error) {
 
-}
+// }
+// func GetData(location string, r Resolution) {
 
-func (f FeatureCollection) ConvertToWeatherData() []WeatherData {
+// }
+
+func (f ObservationCollection) ConvertToWeatherData() []WeatherData {
 	if f.Resolution == 0 {
 		log.Fatal("Resolution is not set, cannot convert to WeatherData")
 	}
 	wArr := []WeatherData{}
 	lines := strings.Split(
 		strings.TrimSpace(
-			strings.ReplaceAll(f.GridSeriesObservation.DoubleOrNilReasonTupleList, "\r\n", "\n"),
+			strings.ReplaceAll(f.Observation.Measures, "\r\n", "\n"),
 		),
 		"\n")
-	beginDate, err := time.Parse(time.RFC3339, f.GridSeriesObservation.BeginPosition)
+	beginDate, err := time.Parse(time.RFC3339, f.Observation.BeginPosition)
 	if err != nil {
-		log.Fatalf("Failed to parse date: %s", f.GridSeriesObservation.BeginPosition)
+		log.Fatalf("Failed to parse date: %s", f.Observation.BeginPosition)
 	}
 	dt := beginDate
 	var timeAdd time.Duration
@@ -58,7 +65,7 @@ func (f FeatureCollection) ConvertToWeatherData() []WeatherData {
 		w := WeatherData{}
 		w.Time = dt.UTC().Format(time.RFC3339)
 		values := strings.Split(strings.TrimSpace(line), " ")
-		fields := f.GridSeriesObservation.Fields
+		fields := f.Observation.Fields
 		if len(values) != len(fields) {
 			log.Fatalf("measures len: %d != fields len: %d", len(values), len(fields))
 		}

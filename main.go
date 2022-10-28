@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mikaahopelto/gohome/integrations/fmi"
 	"github.com/mikaahopelto/gohome/mock"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -26,11 +25,16 @@ func jsonResponse(f func() (string, error)) func(http.ResponseWriter, *http.Requ
 	}
 }
 
+func getWeatherData(place string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+	}
+}
 func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	mux := http.NewServeMux()
-	mux.HandleFunc("/weathernow", jsonResponse(fmi.GetWeatherData))
+	mux.HandleFunc("/weathernow", getWeatherData("kumpula"))
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
 	mux.HandleFunc("/weatherfore", jsonResponse(mock.OutdoorWeatherFore))
 	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))

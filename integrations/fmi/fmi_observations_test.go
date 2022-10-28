@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"io/ioutil"
-	"log"
 	"strings"
 	"testing"
 )
 
-func LoadXml(t *testing.T, fn string, fc *FeatureCollection, r Resolution) {
+func LoadXml(t *testing.T, fn string, fc *ObservationCollection, r Resolution) {
 	data, err := ioutil.ReadFile(fn)
 	if err != nil {
 		t.Fatalf("Could not retrieve %s file: %v", fn, err)
@@ -43,7 +42,7 @@ func TestWeatherDataMinutes(t *testing.T) {
 		LastObservationTime:  "2022-10-10T14:50:00Z",
 		Resolution:           Minutes,
 	}
-	WeatherDataTests(t, v)
+	weatherDataTests(t, v)
 }
 
 func TestWeatherDataHours(t *testing.T) {
@@ -57,40 +56,49 @@ func TestWeatherDataHours(t *testing.T) {
 		LastObservationTime:  "2022-10-02T07:00:00Z",
 		Resolution:           Hours,
 	}
-	WeatherDataTests(t, v)
+	weatherDataTests(t, v)
 }
 
 func TestInvalidXml(t *testing.T) {
-	var fc = &FeatureCollection{}
-	LoadXml(t, "exampleEmpty.xml", fc, Minutes)
-	log.Printf("%+v", fc)
-	LoadXml(t, "exampleInvalid.xml", fc, Minutes)
-	log.Printf("%+v", fc)
+	fmi := &FMI_ObservationsModel{}
+	fc := &fmi.Observations
+	LoadXml(t, "testdata/exampleEmpty.xml", fc, Minutes)
+	//log.Printf("%+v", fc)
+	LoadXml(t, "testdata/exampleInvalid.xml", fc, Minutes)
+	//log.Printf("%+v", fc)
 }
 
-func WeatherDataTests(t *testing.T, test TestValues) {
-	var fc = &FeatureCollection{}
+// func TestAPI(t *testing.T) {
+// 	_, err := GetWeatherData("random")
+// 	if err == nil {
+// 		t.Errorf("Got nil err object, wanted error")
+// 	}
+// }
+
+func weatherDataTests(t *testing.T, test TestValues) {
+	fmi := &FMI_ObservationsModel{}
+	fc := &fmi.Observations
 	// Initialize xml
 	if test.Resolution == Minutes {
-		LoadXml(t, "exampleMinutes.xml", fc, Minutes)
+		LoadXml(t, "testdata/exampleMinutes.xml", fc, Minutes)
 	} else if test.Resolution == Hours {
-		LoadXml(t, "exampleHours.xml", fc, Hours)
+		LoadXml(t, "testdata/exampleHours.xml", fc, Hours)
 	} else {
 		t.Error("Missing testValues.Resolution")
 	}
 	//log.Printf("%+v", featureCollection)
 
-	if fc.GridSeriesObservation.BeginPosition != test.BeginPosition {
-		t.Errorf("BeginPosition, got %s, want %s", fc.GridSeriesObservation.BeginPosition, test.BeginPosition)
+	if fc.Observation.BeginPosition != test.BeginPosition {
+		t.Errorf("BeginPosition, got %s, want %s", fc.Observation.BeginPosition, test.BeginPosition)
 	}
-	if fc.GridSeriesObservation.EndPosition != test.EndPosition {
-		t.Errorf("EndPosition, got %s, want %s", fc.GridSeriesObservation.EndPosition, test.EndPosition)
+	if fc.Observation.EndPosition != test.EndPosition {
+		t.Errorf("EndPosition, got %s, want %s", fc.Observation.EndPosition, test.EndPosition)
 	}
-	if len(fc.GridSeriesObservation.Fields) != test.FieldsLen {
-		t.Errorf("GridSeriesObservation.Fields len, got %d, want %d", len(fc.GridSeriesObservation.Fields), test.FieldsLen)
+	if len(fc.Observation.Fields) != test.FieldsLen {
+		t.Errorf("Observation.Fields len, got %d, want %d", len(fc.Observation.Fields), test.FieldsLen)
 	}
-	if len(strings.TrimSpace(fc.GridSeriesObservation.DoubleOrNilReasonTupleList)) < test.TupleListMinLen {
-		t.Errorf("DoubleOrNilReasonTupleList min len, got %d, want %d", len(strings.TrimSpace(fc.GridSeriesObservation.DoubleOrNilReasonTupleList)), test.TupleListMinLen)
+	if len(strings.TrimSpace(fc.Observation.Measures)) < test.TupleListMinLen {
+		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(fc.Observation.Measures)), test.TupleListMinLen)
 	}
 	// Load xml into WeatherData
 	weather := fc.ConvertToWeatherData()
