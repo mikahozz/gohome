@@ -87,7 +87,10 @@ func weatherDataTests(t *testing.T, test TestValues) {
 		t.Error("Missing testValues.Resolution")
 	}
 	//log.Printf("%+v", featureCollection)
-
+	err := fmi.Validate()
+	if err != nil {
+		t.Errorf("Error validating observations model: %v", err)
+	}
 	if fc.Observation.BeginPosition != test.BeginPosition {
 		t.Errorf("BeginPosition, got %s, want %s", fc.Observation.BeginPosition, test.BeginPosition)
 	}
@@ -102,7 +105,7 @@ func weatherDataTests(t *testing.T, test TestValues) {
 	}
 	// Load xml into WeatherData
 	weather := fc.ConvertToWeatherData()
-	_, err := json.Marshal(weather)
+	_, err = json.Marshal(weather)
 	if err != nil {
 		t.Errorf("Failed to marshal json from: %+v. Err: %v", weather, err)
 	}

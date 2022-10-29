@@ -3,27 +3,31 @@ package fmi
 import (
 	"log"
 	"math"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/pkg/errors"
 )
 
 type FMI_ObservationsModel struct {
-	Observations ObservationCollection `xml:"FeatureCollection"`
+	Observations ObservationCollection `xml:"FeatureCollection" validate:"required"`
 }
 
 type ObservationCollection struct {
-	Observation Observation `xml:"member>GridSeriesObservation"` // Weather observations
-	Resolution  Resolution
+	Observation Observation `xml:"member>GridSeriesObservation" validate:"required"` // Weather observations
+	Resolution  Resolution  `validate:"required"`
 }
 type Observation struct {
-	BeginPosition string  `xml:"phenomenonTime>TimePeriod>beginPosition"`
-	EndPosition   string  `xml:"phenomenonTime>TimePeriod>endPosition"`
-	Measures      string  `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList"`
-	Fields        []Field `xml:"result>MultiPointCoverage>rangeType>DataRecord>field"`
+	BeginPosition string  `xml:"phenomenonTime>TimePeriod>beginPosition" validate:"required,ISO8601date"`
+	EndPosition   string  `xml:"phenomenonTime>TimePeriod>endPosition" validate:"required,ISO8601date"`
+	Measures      string  `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList" validate:"required"`
+	Fields        []Field `xml:"result>MultiPointCoverage>rangeType>DataRecord>field" validate:"gt=3,dive"`
 }
 type Field struct {
-	Name string `xml:"name,attr"`
+	Name string `xml:"name,attr" validate:"required"`
 }
 type Resolution int64
 
@@ -32,12 +36,21 @@ const (
 	Minutes
 )
 
-// func ConvertToWeatherStations(f FeatureCollection) ([]WeatherStation, error) {
+func ISO8601Date(fl validator.FieldLevel) bool {
+	ISO8601DateRegexString := "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d{1,9})?(?:Z|[+-][01]\\d:[0-5]\\d)$"
+	ISO8601DateRegex := regexp.MustCompile(ISO8601DateRegexString)
+	return ISO8601DateRegex.MatchString(fl.Field().String())
+}
 
-// }
-// func GetData(location string, r Resolution) {
-
-// }
+func (f FMI_ObservationsModel) Validate() error {
+	validate := validator.New()
+	validate.RegisterValidation("ISO8601date", ISO8601Date)
+	err := validate.Struct(f)
+	if err != nil {
+		return errors.Wrap(err, "Validation error")
+	}
+	return nil
+}
 
 func (f ObservationCollection) ConvertToWeatherData() []WeatherData {
 	if f.Resolution == 0 {
