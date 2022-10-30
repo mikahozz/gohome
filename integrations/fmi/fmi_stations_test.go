@@ -42,7 +42,7 @@ func TestStations(t *testing.T) {
 		t.Errorf("Last Station Id, got %s, want %s", s.Stations[0].Id, id)
 	}
 
-	ws, err := ConvertToWeatherStations(*fmi)
+	ws, err := fmi.ConvertToWeatherStations()
 	if err != nil {
 		t.Errorf("Error converting to weather stations: %v", err)
 	}

@@ -21,14 +21,11 @@ type FMI_ObservationsModel struct {
 }
 
 type ObservationCollection struct {
-	Observation Observation `xml:"member>GridSeriesObservation" validate:"required"` // Weather observations
-}
-type Observation struct {
 	Resolution    Resolution `validate:"required"`
-	BeginPosition string     `xml:"phenomenonTime>TimePeriod>beginPosition" validate:"required,ISO8601date"`
-	EndPosition   string     `xml:"phenomenonTime>TimePeriod>endPosition" validate:"required,ISO8601date"`
-	Measures      string     `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList" validate:"required"`
-	Fields        []Field    `xml:"result>MultiPointCoverage>rangeType>DataRecord>field" validate:"gt=3,dive"`
+	BeginPosition string     `xml:"member>GridSeriesObservation>phenomenonTime>TimePeriod>beginPosition" validate:"required,ISO8601date"`
+	EndPosition   string     `xml:"member>GridSeriesObservation>phenomenonTime>TimePeriod>endPosition" validate:"required,ISO8601date"`
+	Measures      string     `xml:"member>GridSeriesObservation>result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList" validate:"required"`
+	Fields        []Field    `xml:"member>GridSeriesObservation>result>MultiPointCoverage>rangeType>DataRecord>field" validate:"gt=3,dive"`
 }
 type Field struct {
 	Name string `xml:"name,attr" validate:"required"`
@@ -40,8 +37,8 @@ const (
 	Minutes
 )
 
-func (obs *FMI_ObservationsModel) Get_FMIObservations(location StationId) error {
-	obs.Observations.Observation.Resolution = Hours
+func (obs *FMI_ObservationsModel) LoadObservations(location StationId) error {
+	obs.Observations.Resolution = Hours
 	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&fmisid=%s",
 		location)
 	resp, err := http.Get(q)
@@ -58,7 +55,7 @@ func (obs *FMI_ObservationsModel) Get_FMIObservations(location StationId) error 
 
 	err = xml.Unmarshal(body, &obs.Observations)
 	if err != nil {
-		return errors.Wrapf(err, "Error parsing body to xml. Body: %v", body)
+		return errors.Wrapf(err, "Error parsing body to FMI_ObservationsModel. Body: %v", body)
 	}
 	return obs.Validate()
 }
@@ -83,31 +80,31 @@ func (f FMI_ObservationsModel) Validate() error {
 func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error) {
 	wData := WeatherDataModel{}
 	obs := fm.Observations
-	if obs.Observation.Resolution == 0 {
+	if obs.Resolution == 0 {
 		return wData, errors.New("Resolution is not set, cannot convert to WeatherData")
 	}
 	lines := strings.Split(
 		strings.TrimSpace(
-			strings.ReplaceAll(obs.Observation.Measures, "\r\n", "\n"),
+			strings.ReplaceAll(obs.Measures, "\r\n", "\n"),
 		),
 		"\n")
-	beginDate, err := time.Parse(time.RFC3339, obs.Observation.BeginPosition)
+	beginDate, err := time.Parse(time.RFC3339, obs.BeginPosition)
 	if err != nil {
-		return wData, errors.Wrapf(err, "Failed to parse date: %s", obs.Observation.BeginPosition)
+		return wData, errors.Wrapf(err, "Failed to parse date: %s", obs.BeginPosition)
 	}
 	dt := beginDate
 	var timeAdd time.Duration
-	if obs.Observation.Resolution == Hours {
+	if obs.Resolution == Hours {
 		timeAdd = time.Hour
 	}
-	if obs.Observation.Resolution == Minutes {
+	if obs.Resolution == Minutes {
 		timeAdd = time.Minute * 10
 	}
 	for i, line := range lines {
 		w := WeatherData{}
 		w.Time = dt.UTC().Format(time.RFC3339)
 		values := strings.Split(strings.TrimSpace(line), " ")
-		fields := obs.Observation.Fields
+		fields := obs.Fields
 		if len(values) != len(fields) {
 			return wData, errors.Errorf("The amount of measures doesn't match the fields: Measures len: %d, fields len: %d", len(values), len(fields))
 		}

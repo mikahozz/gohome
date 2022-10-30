@@ -1,7 +1,10 @@
 package fmi
 
 import (
+	"encoding/xml"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/pkg/errors"
@@ -38,7 +41,28 @@ func (f FMI_StationsModel) Validate() error {
 	return nil
 }
 
-func ConvertToWeatherStations(s FMI_StationsModel) (WeatherStationModel, error) {
+func (fmis *FMI_StationsModel) LoadWeatherStations() error {
+	q := fmt.Sprintf("https://opendata.fmi.fi/wfs/fin?request=getFeature&storedquery_id=fmi::ef::stations")
+	resp, err := http.Get(q)
+	if err != nil {
+		return errors.Wrap(err, "Error fetching stations from FMI")
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return errors.Wrapf(err, "Error reading body from FMI stations request: StatusCode: %d", resp.StatusCode)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return errors.Errorf("Error fetching data from FMI stations: StatusCode: %d, Body: %s", resp.StatusCode, body)
+	}
+
+	err = xml.Unmarshal(body, &fmis.StationsCol)
+	if err != nil {
+		return errors.Wrapf(err, "Error parsing body to FMI_StationsModel. Body: %v", body)
+	}
+	return fmis.Validate()
+}
+
+func (s *FMI_StationsModel) ConvertToWeatherStations() (WeatherStationModel, error) {
 	wsm := WeatherStationModel{}
 	for _, station := range s.StationsCol.Stations {
 		weatherStation := WeatherStation{

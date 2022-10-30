@@ -17,7 +17,7 @@ func LoadXml(t *testing.T, fn string, fmiObs *FMI_ObservationsModel, r Resolutio
 	if err != nil {
 		t.Fatalf("Could not retrieve %s file: %v", fn, err)
 	}
-	fmiObs.Observations.Observation.Resolution = r
+	fmiObs.Observations.Resolution = r
 }
 
 type TestValues struct {
@@ -90,17 +90,17 @@ func weatherDataTests(t *testing.T, test TestValues) {
 	if err != nil {
 		t.Errorf("Error validating observations model: %v", err)
 	}
-	if obs.Observation.BeginPosition != test.BeginPosition {
-		t.Errorf("BeginPosition, got %s, want %s", obs.Observation.BeginPosition, test.BeginPosition)
+	if obs.BeginPosition != test.BeginPosition {
+		t.Errorf("BeginPosition, got %s, want %s", obs.BeginPosition, test.BeginPosition)
 	}
-	if obs.Observation.EndPosition != test.EndPosition {
-		t.Errorf("EndPosition, got %s, want %s", obs.Observation.EndPosition, test.EndPosition)
+	if obs.EndPosition != test.EndPosition {
+		t.Errorf("EndPosition, got %s, want %s", obs.EndPosition, test.EndPosition)
 	}
-	if len(obs.Observation.Fields) != test.FieldsLen {
-		t.Errorf("Observation.Fields len, got %d, want %d", len(obs.Observation.Fields), test.FieldsLen)
+	if len(obs.Fields) != test.FieldsLen {
+		t.Errorf("Observation.Fields len, got %d, want %d", len(obs.Fields), test.FieldsLen)
 	}
-	if len(strings.TrimSpace(obs.Observation.Measures)) < test.TupleListMinLen {
-		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(obs.Observation.Measures)), test.TupleListMinLen)
+	if len(strings.TrimSpace(obs.Measures)) < test.TupleListMinLen {
+		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(obs.Measures)), test.TupleListMinLen)
 	}
 	// Load xml into WeatherData
 	weather, err := fmiObs.ConvertToWeatherData()

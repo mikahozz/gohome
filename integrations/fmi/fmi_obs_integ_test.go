@@ -1,3 +1,5 @@
+//go:build integration
+
 package fmi
 
 import (
@@ -6,9 +8,9 @@ import (
 
 func TestGetWeatherData(t *testing.T) {
 	obs := FMI_ObservationsModel{}
-	err := obs.Get_FMIObservations(StationId("101004"))
+	err := obs.LoadObservations(StationId("101004"))
 	if err != nil {
-		t.Errorf("Get_FMIObservations failed: %v", err)
+		t.Fatalf("LoadObservations failed: %v", err)
 	}
 	_, err = obs.ConvertToWeatherData()
 	if err != nil {
