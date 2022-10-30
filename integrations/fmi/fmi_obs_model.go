@@ -1,8 +1,11 @@
 package fmi
 
 import (
-	"log"
+	"encoding/xml"
+	"fmt"
+	"io/ioutil"
 	"math"
+	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
@@ -10,6 +13,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/pkg/errors"
+	"github.com/rs/zerolog/log"
 )
 
 type FMI_ObservationsModel struct {
@@ -18,13 +22,13 @@ type FMI_ObservationsModel struct {
 
 type ObservationCollection struct {
 	Observation Observation `xml:"member>GridSeriesObservation" validate:"required"` // Weather observations
-	Resolution  Resolution  `validate:"required"`
 }
 type Observation struct {
-	BeginPosition string  `xml:"phenomenonTime>TimePeriod>beginPosition" validate:"required,ISO8601date"`
-	EndPosition   string  `xml:"phenomenonTime>TimePeriod>endPosition" validate:"required,ISO8601date"`
-	Measures      string  `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList" validate:"required"`
-	Fields        []Field `xml:"result>MultiPointCoverage>rangeType>DataRecord>field" validate:"gt=3,dive"`
+	Resolution    Resolution `validate:"required"`
+	BeginPosition string     `xml:"phenomenonTime>TimePeriod>beginPosition" validate:"required,ISO8601date"`
+	EndPosition   string     `xml:"phenomenonTime>TimePeriod>endPosition" validate:"required,ISO8601date"`
+	Measures      string     `xml:"result>MultiPointCoverage>rangeSet>DataBlock>doubleOrNilReasonTupleList" validate:"required"`
+	Fields        []Field    `xml:"result>MultiPointCoverage>rangeType>DataRecord>field" validate:"gt=3,dive"`
 }
 type Field struct {
 	Name string `xml:"name,attr" validate:"required"`
@@ -35,6 +39,29 @@ const (
 	Hours Resolution = iota + 1
 	Minutes
 )
+
+func (obs *FMI_ObservationsModel) Get_FMIObservations(location StationId) error {
+	obs.Observations.Observation.Resolution = Hours
+	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&fmisid=%s",
+		location)
+	resp, err := http.Get(q)
+	if err != nil {
+		return errors.Wrap(err, "Error fetching data from FMI")
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return errors.Wrapf(err, "Error reading body from FMI request: StatusCode: %d", resp.StatusCode)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return errors.Errorf("Error fetching data from FMI: StatusCode: %d, Body: %s", resp.StatusCode, body)
+	}
+
+	err = xml.Unmarshal(body, &obs.Observations)
+	if err != nil {
+		return errors.Wrapf(err, "Error parsing body to xml. Body: %v", body)
+	}
+	return obs.Validate()
+}
 
 func ISO8601Date(fl validator.FieldLevel) bool {
 	ISO8601DateRegexString := "^(?:[1-9]\\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d{1,9})?(?:Z|[+-][01]\\d:[0-5]\\d)$"
@@ -47,45 +74,47 @@ func (f FMI_ObservationsModel) Validate() error {
 	validate.RegisterValidation("ISO8601date", ISO8601Date)
 	err := validate.Struct(f)
 	if err != nil {
+		log.Debug().Msgf("Validation error: Content: %+v", f)
 		return errors.Wrap(err, "Validation error")
 	}
 	return nil
 }
 
-func (f ObservationCollection) ConvertToWeatherData() []WeatherData {
-	if f.Resolution == 0 {
-		log.Fatal("Resolution is not set, cannot convert to WeatherData")
+func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error) {
+	wData := WeatherDataModel{}
+	obs := fm.Observations
+	if obs.Observation.Resolution == 0 {
+		return wData, errors.New("Resolution is not set, cannot convert to WeatherData")
 	}
-	wArr := []WeatherData{}
 	lines := strings.Split(
 		strings.TrimSpace(
-			strings.ReplaceAll(f.Observation.Measures, "\r\n", "\n"),
+			strings.ReplaceAll(obs.Observation.Measures, "\r\n", "\n"),
 		),
 		"\n")
-	beginDate, err := time.Parse(time.RFC3339, f.Observation.BeginPosition)
+	beginDate, err := time.Parse(time.RFC3339, obs.Observation.BeginPosition)
 	if err != nil {
-		log.Fatalf("Failed to parse date: %s", f.Observation.BeginPosition)
+		return wData, errors.Wrapf(err, "Failed to parse date: %s", obs.Observation.BeginPosition)
 	}
 	dt := beginDate
 	var timeAdd time.Duration
-	if f.Resolution == Hours {
+	if obs.Observation.Resolution == Hours {
 		timeAdd = time.Hour
 	}
-	if f.Resolution == Minutes {
+	if obs.Observation.Resolution == Minutes {
 		timeAdd = time.Minute * 10
 	}
 	for i, line := range lines {
 		w := WeatherData{}
 		w.Time = dt.UTC().Format(time.RFC3339)
 		values := strings.Split(strings.TrimSpace(line), " ")
-		fields := f.Observation.Fields
+		fields := obs.Observation.Fields
 		if len(values) != len(fields) {
-			log.Fatalf("measures len: %d != fields len: %d", len(values), len(fields))
+			return wData, errors.Errorf("The amount of measures doesn't match the fields: Measures len: %d, fields len: %d", len(values), len(fields))
 		}
 		for j, field := range fields {
 			value, err := strconv.ParseFloat(values[j], 64)
 			if err != nil {
-				log.Fatalf("Failed to parse string measure %s from position %d from line %d: %v", values[j], j, i, err)
+				return wData, errors.Wrapf(err, "Failed to parse string measure %s from position %d from line %d: %v", values[j], j, i, err)
 			}
 			switch field.Name {
 			case "TA_PT1H_AVG", "t2m":
@@ -122,10 +151,10 @@ func (f ObservationCollection) ConvertToWeatherData() []WeatherData {
 				w.CloudCover = valueOrZero(value)
 			}
 		}
-		wArr = append(wArr, w)
+		wData.WeatherData = append(wData.WeatherData, w)
 		dt = dt.Add(timeAdd)
 	}
-	return wArr
+	return wData, nil
 }
 
 func valueOrZero(v float64) float64 {

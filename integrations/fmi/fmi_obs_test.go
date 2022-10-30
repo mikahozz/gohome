@@ -8,16 +8,16 @@ import (
 	"testing"
 )
 
-func LoadXml(t *testing.T, fn string, fc *ObservationCollection, r Resolution) {
+func LoadXml(t *testing.T, fn string, fmiObs *FMI_ObservationsModel, r Resolution) {
 	data, err := ioutil.ReadFile(fn)
 	if err != nil {
 		t.Fatalf("Could not retrieve %s file: %v", fn, err)
 	}
-	err = xml.Unmarshal(data, fc)
+	err = xml.Unmarshal(data, &fmiObs.Observations)
 	if err != nil {
 		t.Fatalf("Could not retrieve %s file: %v", fn, err)
 	}
-	fc.Resolution = r
+	fmiObs.Observations.Observation.Resolution = r
 }
 
 type TestValues struct {
@@ -60,11 +60,10 @@ func TestWeatherDataHours(t *testing.T) {
 }
 
 func TestInvalidXml(t *testing.T) {
-	fmi := &FMI_ObservationsModel{}
-	fc := &fmi.Observations
-	LoadXml(t, "testdata/exampleEmpty.xml", fc, Minutes)
+	fmiObs := &FMI_ObservationsModel{}
+	LoadXml(t, "testdata/exampleEmpty.xml", fmiObs, Minutes)
 	//log.Printf("%+v", fc)
-	LoadXml(t, "testdata/exampleInvalid.xml", fc, Minutes)
+	LoadXml(t, "testdata/exampleInvalid.xml", fmiObs, Minutes)
 	//log.Printf("%+v", fc)
 }
 
@@ -76,47 +75,51 @@ func TestInvalidXml(t *testing.T) {
 // }
 
 func weatherDataTests(t *testing.T, test TestValues) {
-	fmi := &FMI_ObservationsModel{}
-	fc := &fmi.Observations
+	fmiObs := &FMI_ObservationsModel{}
 	// Initialize xml
 	if test.Resolution == Minutes {
-		LoadXml(t, "testdata/exampleMinutes.xml", fc, Minutes)
+		LoadXml(t, "testdata/exampleMinutes.xml", fmiObs, Minutes)
 	} else if test.Resolution == Hours {
-		LoadXml(t, "testdata/exampleHours.xml", fc, Hours)
+		LoadXml(t, "testdata/exampleHours.xml", fmiObs, Hours)
 	} else {
 		t.Error("Missing testValues.Resolution")
 	}
 	//log.Printf("%+v", featureCollection)
-	err := fmi.Validate()
+	obs := fmiObs.Observations
+	err := fmiObs.Validate()
 	if err != nil {
 		t.Errorf("Error validating observations model: %v", err)
 	}
-	if fc.Observation.BeginPosition != test.BeginPosition {
-		t.Errorf("BeginPosition, got %s, want %s", fc.Observation.BeginPosition, test.BeginPosition)
+	if obs.Observation.BeginPosition != test.BeginPosition {
+		t.Errorf("BeginPosition, got %s, want %s", obs.Observation.BeginPosition, test.BeginPosition)
 	}
-	if fc.Observation.EndPosition != test.EndPosition {
-		t.Errorf("EndPosition, got %s, want %s", fc.Observation.EndPosition, test.EndPosition)
+	if obs.Observation.EndPosition != test.EndPosition {
+		t.Errorf("EndPosition, got %s, want %s", obs.Observation.EndPosition, test.EndPosition)
 	}
-	if len(fc.Observation.Fields) != test.FieldsLen {
-		t.Errorf("Observation.Fields len, got %d, want %d", len(fc.Observation.Fields), test.FieldsLen)
+	if len(obs.Observation.Fields) != test.FieldsLen {
+		t.Errorf("Observation.Fields len, got %d, want %d", len(obs.Observation.Fields), test.FieldsLen)
 	}
-	if len(strings.TrimSpace(fc.Observation.Measures)) < test.TupleListMinLen {
-		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(fc.Observation.Measures)), test.TupleListMinLen)
+	if len(strings.TrimSpace(obs.Observation.Measures)) < test.TupleListMinLen {
+		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(obs.Observation.Measures)), test.TupleListMinLen)
 	}
 	// Load xml into WeatherData
-	weather := fc.ConvertToWeatherData()
+	weather, err := fmiObs.ConvertToWeatherData()
+	if err != nil {
+		t.Errorf("ConvertToWeatherData failed: %v", err)
+	}
 	_, err = json.Marshal(weather)
 	if err != nil {
 		t.Errorf("Failed to marshal json from: %+v. Err: %v", weather, err)
 	}
 	// log.Print(string(json))
-	if len(weather) != test.ObservationsLen {
-		t.Errorf("len(observations), got %d, want %d", len(weather), test.ObservationsLen)
+
+	if len(weather.WeatherData) != test.ObservationsLen {
+		t.Errorf("len(observations), got %d, want %d", len(weather.WeatherData), test.ObservationsLen)
 	}
-	if weather[0].Time != test.FirstObservationTime {
-		t.Errorf("observations[0].Time, got %s, want %s", weather[0].Time, test.FirstObservationTime)
+	if weather.WeatherData[0].Time != test.FirstObservationTime {
+		t.Errorf("observations[0].Time, got %s, want %s", weather.WeatherData[0].Time, test.FirstObservationTime)
 	}
-	if weather[len(weather)-1].Time != test.LastObservationTime {
-		t.Errorf("last weather time != LastObservationTime, got %s, want %s", weather[len(weather)-1].Time, test.LastObservationTime)
+	if weather.WeatherData[len(weather.WeatherData)-1].Time != test.LastObservationTime {
+		t.Errorf("last weather time != LastObservationTime, got %s, want %s", weather.WeatherData[len(weather.WeatherData)-1].Time, test.LastObservationTime)
 	}
 }

@@ -9,10 +9,9 @@ type WeatherStationModel struct {
 	WeatherStations []WeatherStation `validate:"required,dive"`
 }
 type WeatherStation struct {
-	Id       string `validate:"required"`
-	Region   string
-	Name     string `validate:"required"`
-	Location string
+	Id     string `validate:"required"`
+	Region string
+	Name   string `validate:"required"`
 }
 
 func (ws WeatherStationModel) Validate() error {

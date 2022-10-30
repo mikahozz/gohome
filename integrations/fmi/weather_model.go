@@ -1,5 +1,8 @@
 package fmi
 
+type WeatherDataModel struct {
+	WeatherData []WeatherData
+}
 type WeatherData struct {
 	Time             string  `json:"time"`
 	Temp             float64 `json:"temp"`
