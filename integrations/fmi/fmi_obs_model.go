@@ -38,8 +38,8 @@ const (
 )
 
 func (obs *FMI_ObservationsModel) LoadObservations(location StationId) error {
-	obs.Observations.Resolution = Hours
-	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&fmisid=%s",
+	obs.Observations.Resolution = Minutes
+	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::multipointcoverage&fmisid=%s",
 		location)
 	resp, err := http.Get(q)
 	if err != nil {

@@ -1,6 +1,18 @@
 package fmi
 
-// Param: place: Name of a weather station in https://en.ilmatieteenlaitos.fi/observation-stations?filterKey=groups&filterQuery=weather
+func GetWeatherData(id StationId) (WeatherDataModel, error) {
+	fmi := &FMI_ObservationsModel{}
+	err := fmi.LoadObservations(id)
+	if err != nil {
+		return WeatherDataModel{}, err
+	}
+	w, err := fmi.ConvertToWeatherData()
+	if err != nil {
+		return WeatherDataModel{}, err
+	}
+	return w, nil
+}
+
 // func GetWeatherData(place string) (string, error) {
 // 	stationsXml := GetStations()
 // 	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::hourly::multipointcoverage&place=%s",

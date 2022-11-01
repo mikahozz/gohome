@@ -28,10 +28,6 @@ type Name struct {
 	Value string `xml:",chardata"`
 }
 
-var (
-	errValidate = fmt.Errorf("Validation error")
-)
-
 func (f FMI_StationsModel) Validate() error {
 	validate := validator.New()
 	err := validate.Struct(f)

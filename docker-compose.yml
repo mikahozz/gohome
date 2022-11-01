@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  gohome:
+    image: gohome
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 6001:9999

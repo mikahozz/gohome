@@ -4,8 +4,8 @@ type WeatherDataModel struct {
 	WeatherData []WeatherData
 }
 type WeatherData struct {
-	Time             string  `json:"time"`
-	Temp             float64 `json:"temp"`
+	Time             string  `json:"datetime"`
+	Temp             float64 `json:"temperature"`
 	TempMax          float64 `json:"temp_max"`
 	TempMin          float64 `json:"temp_min"`
 	Humidity         float64 `json:"humidity"`
