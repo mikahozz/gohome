@@ -2,9 +2,17 @@ version: '3'
 
 services:
   gohome:
+    container_name: gohome
     image: gohome
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 6001:9999
+      - 6001:6001
+    networks:
+    - homeapp73-docker_default
+
+networks:
+  homeapp73-docker_default:
+    external: true
+
