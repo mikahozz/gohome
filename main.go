@@ -51,7 +51,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/weathernow", getWeatherData("101004", fmi.Observations))
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
-	mux.HandleFunc("/weatherfore", getWeatherData("101004", fmi.Forecast))
+	mux.HandleFunc("/weatherfore", getWeatherData("Tapanila,Helsinki", fmi.Forecast))
 	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
 	log.Fatal().Err(http.ListenAndServe(port, mux))
 }

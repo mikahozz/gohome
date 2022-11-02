@@ -53,7 +53,7 @@ func (obs *FMI_ObservationsModel) LoadObservations(location StationId, requestTy
 			location)
 	case Forecast:
 		obs.Observations.Resolution = Hours
-		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&fmisid=%s",
+		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&parameters=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,precipitation1h,Pressure,DewPoint,Visibility,TotalCloudCover,WeatherSymbol3&place=%s",
 			location)
 	default:
 		return errors.Errorf("Invalid requestType: %v", requestType)
@@ -148,14 +148,14 @@ func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error)
 				w.MinWindSpeed = valueOrZero(value)
 			case "WD_PT1H_AVG", "wd_10min", "WindDirection":
 				w.WindDirection = valueOrZero(value)
-			case "PRA_PT1H_ACC", "r_1h", "PrecipitationAmount":
+			case "PRA_PT1H_ACC", "r_1h", "precipitation1h":
 				w.Rain = valueOrZero(value)
 			case "PRI_PT1H_MAX", "ri_10min":
 				w.MaxRainIntensity = valueOrZero(value)
 			case "PA_PT1H_AVG", "p_sea", "Pressure":
 				w.Pressure = valueOrZero(value)
 			case "WAWA_PT1H_RANK", "wawa":
-				w.Weather = valueOrZero(value)
+				w.Weather = int(valueOrZero(value))
 			case "td", "DewPoint":
 				w.DewPoint = valueOrZero(value)
 			case "snow_aws":
@@ -164,6 +164,8 @@ func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error)
 				w.Visibility = valueOrZero(value)
 			case "n_man", "TotalCloudCover":
 				w.CloudCover = valueOrZero(value)
+			case "WeatherSymbol3":
+				w.Weather = int(valueOrZero(value))
 			}
 		}
 		wData.WeatherData = append(wData.WeatherData, w)

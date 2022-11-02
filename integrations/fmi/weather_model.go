@@ -16,7 +16,7 @@ type WeatherData struct {
 	Rain             float64 `json:"rain,omitempty"`
 	MaxRainIntensity float64 `json:"max_rain"`
 	Pressure         float64 `json:"pressure"`
-	Weather          float64 `json:"weather"`
+	Weather          int     `json:"weather"`
 	DewPoint         float64 `json:"dew"`
 	SnowDepth        float64 `json:"snow"`
 	Visibility       float64 `json:"visibility"`

@@ -65,13 +65,13 @@ func TestWeatherDataHours(t *testing.T) {
 func TestForecast(t *testing.T) {
 	v := TestValues{
 		RequestType:          Forecast,
-		BeginPosition:        "2022-11-02T06:00:00Z",
-		EndPosition:          "2022-11-04T07:00:00Z",
-		FieldsLen:            21,
-		TupleListMinLen:      21 * 25 * 4,
+		BeginPosition:        "2022-11-02T18:00:00Z",
+		EndPosition:          "2022-11-04T19:00:00Z",
+		FieldsLen:            11,
+		TupleListMinLen:      11 * 25 * 4,
 		ObservationsLen:      50,
-		FirstObservationTime: "2022-11-02T06:00:00Z",
-		LastObservationTime:  "2022-11-04T07:00:00Z",
+		FirstObservationTime: "2022-11-02T18:00:00Z",
+		LastObservationTime:  "2022-11-04T19:00:00Z",
 	}
 	weatherDataTests(t, v)
 }

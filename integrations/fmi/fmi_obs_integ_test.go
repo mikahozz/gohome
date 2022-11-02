@@ -21,7 +21,7 @@ func TestGetWeatherData(t *testing.T) {
 
 func TestGetForecast(t *testing.T) {
 	obs := FMI_ObservationsModel{}
-	err := obs.LoadObservations(StationId("101004"), Forecast)
+	err := obs.LoadObservations(StationId("Tapanila,Helsinki"), Forecast)
 	if err != nil {
 		t.Fatalf("LoadObservations failed: %v", err)
 	}
