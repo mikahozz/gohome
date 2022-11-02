@@ -21,6 +21,7 @@ func LoadXml(t *testing.T, fn string, fmiObs *FMI_ObservationsModel, r Resolutio
 }
 
 type TestValues struct {
+	RequestType          RequestType
 	BeginPosition        string
 	EndPosition          string
 	FieldsLen            int
@@ -33,6 +34,8 @@ type TestValues struct {
 
 func TestWeatherDataMinutes(t *testing.T) {
 	v := TestValues{
+		RequestType:          Observations,
+		Resolution:           Minutes,
 		BeginPosition:        "2022-10-10T02:50:00Z",
 		EndPosition:          "2022-10-10T14:50:00Z",
 		FieldsLen:            13,
@@ -40,13 +43,14 @@ func TestWeatherDataMinutes(t *testing.T) {
 		ObservationsLen:      73,
 		FirstObservationTime: "2022-10-10T02:50:00Z",
 		LastObservationTime:  "2022-10-10T14:50:00Z",
-		Resolution:           Minutes,
 	}
 	weatherDataTests(t, v)
 }
 
 func TestWeatherDataHours(t *testing.T) {
 	v := TestValues{
+		RequestType:          Observations,
+		Resolution:           Hours,
 		BeginPosition:        "2022-10-01T07:00:00Z",
 		EndPosition:          "2022-10-02T07:00:00Z",
 		FieldsLen:            12,
@@ -54,7 +58,20 @@ func TestWeatherDataHours(t *testing.T) {
 		ObservationsLen:      25,
 		FirstObservationTime: "2022-10-01T07:00:00Z",
 		LastObservationTime:  "2022-10-02T07:00:00Z",
-		Resolution:           Hours,
+	}
+	weatherDataTests(t, v)
+}
+
+func TestForecast(t *testing.T) {
+	v := TestValues{
+		RequestType:          Forecast,
+		BeginPosition:        "2022-11-02T06:00:00Z",
+		EndPosition:          "2022-11-04T07:00:00Z",
+		FieldsLen:            21,
+		TupleListMinLen:      21 * 25 * 4,
+		ObservationsLen:      50,
+		FirstObservationTime: "2022-11-02T06:00:00Z",
+		LastObservationTime:  "2022-11-04T07:00:00Z",
 	}
 	weatherDataTests(t, v)
 }
@@ -67,22 +84,17 @@ func TestInvalidXml(t *testing.T) {
 	//log.Printf("%+v", fc)
 }
 
-// func TestAPI(t *testing.T) {
-// 	_, err := GetWeatherData("random")
-// 	if err == nil {
-// 		t.Errorf("Got nil err object, wanted error")
-// 	}
-// }
-
 func weatherDataTests(t *testing.T, test TestValues) {
 	fmiObs := &FMI_ObservationsModel{}
 	// Initialize xml
-	if test.Resolution == Minutes {
+	if test.RequestType == Observations && test.Resolution == Minutes {
 		LoadXml(t, "testdata/exampleMinutes.xml", fmiObs, Minutes)
-	} else if test.Resolution == Hours {
+	} else if test.RequestType == Observations && test.Resolution == Hours {
 		LoadXml(t, "testdata/exampleHours.xml", fmiObs, Hours)
+	} else if test.RequestType == Forecast {
+		LoadXml(t, "testdata/exampleForecast.xml", fmiObs, Hours)
 	} else {
-		t.Error("Missing testValues.Resolution")
+		t.Errorf("Invalid test data: RequestType: %v, Resolution: %v", test.RequestType, test.Resolution)
 	}
 	//log.Printf("%+v", featureCollection)
 	obs := fmiObs.Observations
@@ -102,6 +114,7 @@ func weatherDataTests(t *testing.T, test TestValues) {
 	if len(strings.TrimSpace(obs.Measures)) < test.TupleListMinLen {
 		t.Errorf("Measures min len, got %d, want %d", len(strings.TrimSpace(obs.Measures)), test.TupleListMinLen)
 	}
+
 	// Load xml into WeatherData
 	weather, err := fmiObs.ConvertToWeatherData()
 	if err != nil {

@@ -27,9 +27,9 @@ func jsonResponse(f func() (string, error)) func(http.ResponseWriter, *http.Requ
 	}
 }
 
-func getWeatherData(place string) http.HandlerFunc {
+func getWeatherData(place string, requestType fmi.RequestType) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		weather, err := fmi.GetWeatherData(fmi.StationId(place))
+		weather, err := fmi.GetWeatherData(fmi.StationId(place), requestType)
 		if err != nil {
 			log.Err(err).Msg("")
 			http.Error(w, fmt.Sprintf("Error occurred in fetching weather data for %s", place), http.StatusInternalServerError)
@@ -49,9 +49,9 @@ func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	mux := http.NewServeMux()
-	mux.HandleFunc("/weathernow", getWeatherData("101004"))
+	mux.HandleFunc("/weathernow", getWeatherData("101004", fmi.Observations))
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
-	mux.HandleFunc("/weatherfore", jsonResponse(mock.OutdoorWeatherFore))
+	mux.HandleFunc("/weatherfore", getWeatherData("101004", fmi.Forecast))
 	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
 	log.Fatal().Err(http.ListenAndServe(port, mux))
 }

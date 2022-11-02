@@ -37,10 +37,28 @@ const (
 	Minutes
 )
 
-func (obs *FMI_ObservationsModel) LoadObservations(location StationId) error {
-	obs.Observations.Resolution = Minutes
-	q := fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::multipointcoverage&fmisid=%s",
-		location)
+type RequestType int64
+
+const (
+	Observations RequestType = iota + 1
+	Forecast
+)
+
+func (obs *FMI_ObservationsModel) LoadObservations(location StationId, requestType RequestType) error {
+	q := ""
+	switch requestType {
+	case Observations:
+		obs.Observations.Resolution = Minutes
+		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::multipointcoverage&fmisid=%s",
+			location)
+	case Forecast:
+		obs.Observations.Resolution = Hours
+		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&fmisid=%s",
+			location)
+	default:
+		return errors.Errorf("Invalid requestType: %v", requestType)
+	}
+
 	resp, err := http.Get(q)
 	if err != nil {
 		return errors.Wrap(err, "Error fetching data from FMI")
@@ -114,37 +132,37 @@ func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error)
 				return wData, errors.Wrapf(err, "Failed to parse string measure %s from position %d from line %d: %v", values[j], j, i, err)
 			}
 			switch field.Name {
-			case "TA_PT1H_AVG", "t2m":
+			case "TA_PT1H_AVG", "t2m", "Temperature":
 				w.Temp = valueOrZero(value)
 			case "TA_PT1H_MAX":
 				w.TempMax = valueOrZero(value)
 			case "TA_PT1H_MIN":
 				w.TempMin = valueOrZero(value)
-			case "RH_PT1H_AVG", "rh":
+			case "RH_PT1H_AVG", "rh", "Humidity":
 				w.Humidity = valueOrZero(value)
-			case "WS_PT1H_AVG", "ws_10min":
+			case "WS_PT1H_AVG", "ws_10min", "WindSpeedMS":
 				w.WindSpeed = valueOrZero(value)
-			case "WS_PT1H_MAX", "wg_10min":
+			case "WS_PT1H_MAX", "wg_10min", "WindGust":
 				w.MaxWindSpeed = valueOrZero(value)
 			case "WS_PT1H_MIN":
 				w.MinWindSpeed = valueOrZero(value)
-			case "WD_PT1H_AVG", "wd_10min":
+			case "WD_PT1H_AVG", "wd_10min", "WindDirection":
 				w.WindDirection = valueOrZero(value)
-			case "PRA_PT1H_ACC", "r_1h":
+			case "PRA_PT1H_ACC", "r_1h", "PrecipitationAmount":
 				w.Rain = valueOrZero(value)
 			case "PRI_PT1H_MAX", "ri_10min":
 				w.MaxRainIntensity = valueOrZero(value)
-			case "PA_PT1H_AVG", "p_sea":
+			case "PA_PT1H_AVG", "p_sea", "Pressure":
 				w.Pressure = valueOrZero(value)
 			case "WAWA_PT1H_RANK", "wawa":
 				w.Weather = valueOrZero(value)
-			case "td":
+			case "td", "DewPoint":
 				w.DewPoint = valueOrZero(value)
 			case "snow_aws":
 				w.SnowDepth = valueOrZero(value)
-			case "vis":
+			case "vis", "Visibility":
 				w.Visibility = valueOrZero(value)
-			case "n_man":
+			case "n_man", "TotalCloudCover":
 				w.CloudCover = valueOrZero(value)
 			}
 		}
