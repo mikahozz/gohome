@@ -4,6 +4,7 @@ services:
   gohome:
     container_name: gohome
     image: gohome
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./Dockerfile
