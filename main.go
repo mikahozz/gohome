@@ -8,6 +8,7 @@ import (
 
 	"github.com/mikaahopelto/gohome/integrations/fmi"
 	"github.com/mikaahopelto/gohome/mock"
+	"github.com/mikahozz/gohome/integrations/cal"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -45,6 +46,27 @@ func getWeatherData(place string, requestType fmi.RequestType) http.HandlerFunc 
 		w.Write(json)
 	}
 }
+func getCalendarEvents() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		from := cal.DateOffset{}
+		to := cal.DateOffset{Days: 7}
+		events, err := cal.GetFamilyCalendarEvents(from, to)
+		if err != nil {
+			log.Err(err).Msg("")
+			http.Error(w, fmt.Sprintf("Error occurred fetching calendar events"), http.StatusInternalServerError)
+			return
+		}
+		json, err := json.Marshal(events)
+		if err != nil {
+			log.Err(err).Msg("")
+			http.Error(w, fmt.Sprintf("Error occurred in json conversion of calendar events"), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
+}
+
 func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
@@ -53,5 +75,6 @@ func main() {
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
 	mux.HandleFunc("/weatherfore", getWeatherData("Tapanila,Helsinki", fmi.Forecast))
 	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
+	mux.HandleFunc("/api/events", getCalendarEvents())
 	log.Fatal().Err(http.ListenAndServe(port, mux))
 }
