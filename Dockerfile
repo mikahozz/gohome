@@ -1,5 +1,5 @@
 # base image
-FROM golang:1.19.2-alpine3.16 as base
+FROM golang:alpine3.20 as base
 WORKDIR /builder
 ENV CGO_ENABLED=0
 

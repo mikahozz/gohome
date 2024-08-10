@@ -1,6 +1,6 @@
 module github.com/mikahozz/gohome
 
-go 1.17
+go 1.22.6
 
 require (
 	github.com/emersion/go-webdav v0.5.0

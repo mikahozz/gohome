@@ -24,7 +24,7 @@ func jsonResponse(f func() (string, error)) func(http.ResponseWriter, *http.Requ
 			http.Error(w, "Error occurred when performing request", http.StatusInternalServerError)
 			return
 		}
-		fmt.Fprintf(w, json)
+		fmt.Fprint(w, json)
 	}
 }
 
@@ -53,13 +53,13 @@ func getCalendarEvents() http.HandlerFunc {
 		events, err := cal.GetFamilyCalendarEvents(from, to)
 		if err != nil {
 			log.Err(err).Msg("")
-			http.Error(w, fmt.Sprintf("Error occurred fetching calendar events"), http.StatusInternalServerError)
+			http.Error(w, "Error occurred fetching calendar events", http.StatusInternalServerError)
 			return
 		}
 		json, err := json.Marshal(events)
 		if err != nil {
 			log.Err(err).Msg("")
-			http.Error(w, fmt.Sprintf("Error occurred in json conversion of calendar events"), http.StatusInternalServerError)
+			http.Error(w, "Error occurred in json conversion of calendar events", http.StatusInternalServerError)
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")
@@ -70,11 +70,12 @@ func getCalendarEvents() http.HandlerFunc {
 func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	log.Info().Msg("Starting server")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/weathernow", getWeatherData("101004", fmi.Observations))
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
 	mux.HandleFunc("/weatherfore", getWeatherData("Tapanila,Helsinki", fmi.Forecast))
 	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
 	mux.HandleFunc("/api/events", getCalendarEvents())
-	log.Fatal().Err(http.ListenAndServe(port, mux))
+	log.Fatal().Err(http.ListenAndServe(port, mux)).Send()
 }
