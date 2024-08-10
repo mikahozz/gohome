@@ -12,7 +12,7 @@ RUN go build -o /builder/main /builder/main.go
 # runner image
 FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /app
-COPY --from=base /builder/main main
+COPY --from=base /builder/main /builder/.env ./
 
 EXPOSE 6001
 CMD ["/app/main"]

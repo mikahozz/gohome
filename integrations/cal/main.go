@@ -15,10 +15,10 @@ import (
 )
 
 type Event struct {
-	Uid     string
-	Start   time.Time
-	End     time.Time
-	Summary string
+	Uid     string `json:"uid"`
+	Start   time.Time `json:"start"`
+	End     time.Time `json:"end"`
+	Summary string `json:"summary"`
 }
 
 type DateOffset struct {
