@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mikaahopelto/gohome/integrations/fmi"
-	"github.com/mikaahopelto/gohome/mock"
 	"github.com/mikahozz/gohome/integrations/cal"
+	"github.com/mikahozz/gohome/integrations/fmi"
+	"github.com/mikahozz/gohome/mock"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
