@@ -6,10 +6,10 @@ import (
 )
 
 func TestGetFamilyCalendarEventsIntegration(t *testing.T) {
-	from := DateOffset{Months: -6}
-	to := DateOffset{Months: 6}
-	// from := DateOffset{Days: -6}
-	// to := DateOffset{Days: 6}
+	// from := DateOffset{Months: -6}
+	// to := DateOffset{Months: 6}
+	from := DateOffset{Days: 0}
+	to := DateOffset{Days: 7}
 	events, err := GetFamilyCalendarEvents(from, to)
 	if err != nil {
 		t.Fatalf("GetFamilyCalendarEvents failed with error: %v", err)
