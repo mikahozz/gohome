@@ -167,15 +167,7 @@ func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdat
 	rule.DTStart(event.Start)
 
 	// Generate the dates between from and to
-	recDates := rule.Between(event.Start, to, true)
-
-	// Filter out the dates outside the range
-	var dates []time.Time
-	for _, date := range recDates {
-		if date.After(from) && date.Before(to) {
-			dates = append(dates, date)
-		}
-	}
+	dates := rule.Between(event.Start, to, true)
 
 	// Parse the exdate string
 	var exDates []time.Time
@@ -196,11 +188,13 @@ func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdat
 		exDate[exdate] = true
 	}
 
-	// Filter out the exdates
+	// Create events, filtering out the exdates and events outside the from-to range
 	var events []Event
-	for _, date := range dates {
-		if !exDate[date] {
-			events = append(events, Event{event.Uid, date, date.Add(eventDuration), event.Summary})
+	for _, eventFrom := range dates {
+		eventTo := eventFrom.Add(eventDuration)
+		isOutsideRange := eventFrom.After(to) || eventTo.Before(from)
+		if !exDate[eventFrom] && !isOutsideRange {
+			events = append(events, Event{event.Uid, eventFrom, eventTo, event.Summary})
 		}
 	}
 
