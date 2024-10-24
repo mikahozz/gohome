@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/xml"
-	"time"
 )
 
 type PublicationMarketDocument struct {
@@ -33,14 +32,4 @@ type Interval struct {
 type Point struct {
 	Position int     `xml:"position"`
 	Price    float64 `xml:"price.amount"`
-}
-
-// New struct for the converted data
-type SpotPrice struct {
-	DateTime time.Time
-	Price    float64
-}
-
-type SpotPriceList struct {
-	Prices []SpotPrice
 }
