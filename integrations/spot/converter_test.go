@@ -39,8 +39,8 @@ func TestConvertToSpotPriceList(t *testing.T) {
 
 	// Check the first price
 	expectedFirstPrice := SpotPrice{
-		DateTime: time.Date(2024, 10, 22, 21, 0, 0, 0, time.UTC),
-		Price:    -0.08,
+		DateTime:  time.Date(2024, 10, 22, 21, 0, 0, 0, time.UTC),
+		PriceCkwh: -0.08,
 	}
 	if spotPriceList.Prices[0] != expectedFirstPrice {
 		t.Errorf("Expected first price %+v, but got %+v", expectedFirstPrice, spotPriceList.Prices[0])
@@ -48,8 +48,8 @@ func TestConvertToSpotPriceList(t *testing.T) {
 
 	// Check the last price
 	expectedLastPrice := SpotPrice{
-		DateTime: time.Date(2024, 10, 23, 21, 0, 0, 0, time.UTC),
-		Price:    -0.081,
+		DateTime:  time.Date(2024, 10, 23, 21, 0, 0, 0, time.UTC),
+		PriceCkwh: -0.081,
 	}
 	if spotPriceList.Prices[len(spotPriceList.Prices)-1] != expectedLastPrice {
 		t.Errorf("Expected last price %+v, but got %+v", expectedLastPrice, spotPriceList.Prices[len(spotPriceList.Prices)-1])

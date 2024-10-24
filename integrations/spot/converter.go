@@ -59,8 +59,8 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 			price := point.Price * 100 / 1000
 
 			spotPrices = append(spotPrices, SpotPrice{
-				DateTime: dateTime,
-				Price:    price,
+				DateTime:  dateTime,
+				PriceCkwh: price,
 			})
 		}
 	}
