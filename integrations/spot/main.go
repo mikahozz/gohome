@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"sort"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -65,6 +68,58 @@ func getSpotPrices(periodStart, periodEnd time.Time) (*PublicationMarketDocument
 	return &document, nil
 }
 
+func parseISO8601Duration(duration string) (time.Duration, error) {
+	// Remove the "PT" prefix
+	duration = strings.TrimPrefix(duration, "PT")
+
+	// Check if the duration ends with "M" for minutes
+	if strings.HasSuffix(duration, "M") {
+		minutes, err := strconv.Atoi(strings.TrimSuffix(duration, "M"))
+		if err != nil {
+			return 0, fmt.Errorf("invalid duration format: %s", duration)
+		}
+		return time.Duration(minutes) * time.Minute, nil
+	}
+
+	// Add more cases here if you need to handle other duration formats (e.g., hours, seconds)
+
+	return 0, fmt.Errorf("unsupported duration format: %s", duration)
+}
+
+func convertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodEnd time.Time) (*SpotPriceList, error) {
+	var spotPrices []SpotPrice
+
+	for _, ts := range doc.TimeSeries {
+		start, err := time.Parse("2006-01-02T15:04Z", ts.Period.TimeInterval.Start)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing start time: %w", err)
+		}
+
+		resolution, err := parseISO8601Duration(ts.Period.Resolution)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing resolution: %w", err)
+		}
+
+		for _, point := range ts.Period.Points {
+			dateTime := start.Add(time.Duration(point.Position-1) * resolution)
+			if dateTime.Before(periodStart) || dateTime.After(periodEnd) {
+				continue
+			}
+			spotPrices = append(spotPrices, SpotPrice{
+				DateTime: dateTime,
+				Price:    point.Price,
+			})
+		}
+	}
+
+	// Sort the prices by datetime
+	sort.Slice(spotPrices, func(i, j int) bool {
+		return spotPrices[i].DateTime.Before(spotPrices[j].DateTime)
+	})
+
+	return &SpotPriceList{Prices: spotPrices}, nil
+}
+
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -80,7 +135,13 @@ func main() {
 		return
 	}
 
-	jsonData, err := json.MarshalIndent(document, "", "  ")
+	spotPriceList, err := convertToSpotPriceList(document, periodStart, periodEnd)
+	if err != nil {
+		fmt.Println("Error converting spot prices:", err)
+		return
+	}
+
+	jsonData, err := json.MarshalIndent(spotPriceList, "", "  ")
 	if err != nil {
 		fmt.Println("Error marshalling to JSON:", err)
 		return
