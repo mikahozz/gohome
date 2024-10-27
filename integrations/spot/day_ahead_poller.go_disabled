@@ -1,0 +1,44 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+func pollForTomorrowPrices() {
+	for {
+		now := time.Now()
+		loc, _ := time.LoadLocation("UTC")
+		tomorrow := now.AddDate(0, 0, 2)
+		start := time.Date(tomorrow.Year(), tomorrow.Month(), tomorrow.Day(), 0, 0, 0, 0, loc)
+		end := start.AddDate(0, 0, 2)
+
+		for {
+			document, err := getSpotPrices(start, end)
+			if err != nil {
+				fmt.Println("Error fetching prices:", err)
+				time.Sleep(10 * time.Minute)
+				continue
+			}
+
+			spotPriceList, err := ConvertToSpotPriceList(document, start, end)
+			if err != nil {
+				fmt.Println("Error converting spot prices:", err)
+				return
+			}
+
+			jsonData, err := json.MarshalIndent(spotPriceList, "", "  ")
+			if err != nil {
+				fmt.Println("Error marshalling to JSON:", err)
+				return
+			}
+			fmt.Println(string(jsonData))
+
+			break
+		}
+
+		nextPollTime := time.Date(now.Year(), now.Month(), now.Day()+1, 12, 0, 0, 0, loc)
+		time.Sleep(time.Until(nextPollTime))
+	}
+}
