@@ -13,7 +13,7 @@ const (
 	apiEndpoint = "https://web-api.tp.entsoe.eu/api"
 )
 
-func GetPrices(start, end time.Time) (*SpotPriceList, error) {
+func GetPrices(start, end time.Time, location *time.Location) (*SpotPriceList, error) {
 	err := godotenv.Load()
 	if err != nil {
 		log.Printf("Error loading .env file: %v", err)
@@ -32,5 +32,5 @@ func GetPrices(start, end time.Time) (*SpotPriceList, error) {
 		return nil, fmt.Errorf("error getting spot prices: %w", err)
 	}
 
-	return ConvertToSpotPriceList(document, start, end)
+	return ConvertToSpotPriceList(document, start, end, location)
 }

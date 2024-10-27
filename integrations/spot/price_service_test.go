@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetSpotPrices(t *testing.T) {
-	mockClient := mock.NewMockHTTPClient("testdata/oneDay.xml")
+	mockClient := mock.NewMockHTTPClient("mock/oneDay.xml")
 	spotService := NewSpotService(mockClient, "http://mock.api")
 
 	periodStart, _ := time.Parse(time.RFC3339, "2024-10-22T21:00:00Z")
@@ -25,7 +25,7 @@ func TestGetSpotPrices(t *testing.T) {
 }
 
 func TestGetSpotPrices_NoData(t *testing.T) {
-	mockClient := mock.NewMockHTTPClient("testdata/noData_200.xml")
+	mockClient := mock.NewMockHTTPClient("mock/noData_200.xml")
 	spotService := NewSpotService(mockClient, "http://mock.api")
 
 	periodStart := time.Now().AddDate(0, 0, 2)

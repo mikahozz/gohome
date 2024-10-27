@@ -9,7 +9,7 @@ import (
 
 func TestConvertToSpotPriceList(t *testing.T) {
 	// Read the test XML file
-	xmlData, err := os.ReadFile("testdata/oneDay.xml")
+	xmlData, err := os.ReadFile("mock/oneDay.xml")
 	if err != nil {
 		t.Fatalf("Failed to read test XML file: %v", err)
 	}
@@ -26,7 +26,7 @@ func TestConvertToSpotPriceList(t *testing.T) {
 	periodEnd, _ := time.Parse(time.RFC3339, "2024-10-23T21:00:00Z")
 
 	// Convert to SpotPriceList
-	spotPriceList, err := ConvertToSpotPriceList(&doc, periodStart, periodEnd)
+	spotPriceList, err := ConvertToSpotPriceList(&doc, periodStart, periodEnd, time.UTC)
 	if err != nil {
 		t.Fatalf("Failed to convert to SpotPriceList: %v", err)
 	}

@@ -33,7 +33,7 @@ func parseISO8601Duration(duration string) (time.Duration, error) {
 	return 0, fmt.Errorf("unsupported duration format: %s", duration)
 }
 
-func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodEnd time.Time) (*SpotPriceList, error) {
+func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodEnd time.Time, location *time.Location) (*SpotPriceList, error) {
 	var spotPrices []SpotPrice
 
 	for _, ts := range doc.TimeSeries {
@@ -41,7 +41,8 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 		if err != nil {
 			return nil, fmt.Errorf("error parsing start time: %w", err)
 		}
-		start = start.UTC() // Ensure we're working with UTC
+		// Convert to the desired timezone immediately
+		start = start.In(location)
 
 		resolution, err := parseISO8601Duration(ts.Period.Resolution)
 		if err != nil {
@@ -69,12 +70,6 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 	sort.Slice(spotPrices, func(i, j int) bool {
 		return spotPrices[i].DateTime.Before(spotPrices[j].DateTime)
 	})
-
-	fmt.Printf("Total spot prices: %d\n", len(spotPrices))
-	if len(spotPrices) > 0 {
-		fmt.Printf("First price: %+v\n", spotPrices[0])
-		fmt.Printf("Last price: %+v\n", spotPrices[len(spotPrices)-1])
-	}
 
 	return &SpotPriceList{Prices: spotPrices}, nil
 }
