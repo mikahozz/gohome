@@ -8,6 +8,7 @@ import (
 
 	"github.com/mikahozz/gohome/integrations/cal"
 	"github.com/mikahozz/gohome/integrations/fmi"
+	"github.com/mikahozz/gohome/integrations/spot"
 	"github.com/mikahozz/gohome/mock"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -46,6 +47,7 @@ func getWeatherData(place string, requestType fmi.RequestType) http.HandlerFunc 
 		w.Write(json)
 	}
 }
+
 func getCalendarEvents() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		from := cal.DateOffset{}
@@ -67,6 +69,44 @@ func getCalendarEvents() http.HandlerFunc {
 	}
 }
 
+func getSpotPrices() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		startStr := r.URL.Query().Get("start")
+		endStr := r.URL.Query().Get("end")
+
+		start, err := time.Parse(time.RFC3339, startStr)
+		if err != nil {
+			log.Err(err).Msg("")
+			http.Error(w, "Invalid start time format. Use RFC3339.", http.StatusBadRequest)
+			return
+		}
+
+		end, err := time.Parse(time.RFC3339, endStr)
+		if err != nil {
+			log.Err(err).Msg("")
+			http.Error(w, "Invalid end time format. Use RFC3339.", http.StatusBadRequest)
+			return
+		}
+		log.Info().Msgf("Getting spot prices for %s to %s", start, end)
+		prices, err := spot.GetPrices(start, end)
+		if err != nil {
+			log.Error().Err(err).Msg("Error getting spot prices")
+			http.Error(w, "Error occurred fetching spot prices", http.StatusInternalServerError)
+			return
+		}
+
+		json, err := json.Marshal(prices)
+		if err != nil {
+			log.Error().Err(err).Msg("Error marshalling spot prices to JSON")
+			http.Error(w, "Error occurred in JSON conversion of spot prices", http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
+}
+
 func main() {
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
@@ -75,7 +115,7 @@ func main() {
 	mux.HandleFunc("/weathernow", getWeatherData("101004", fmi.Observations))
 	mux.HandleFunc("/indoor/dev_upstairs", jsonResponse(mock.IndoorDevUpstairs))
 	mux.HandleFunc("/weatherfore", getWeatherData("Tapanila,Helsinki", fmi.Forecast))
-	mux.HandleFunc("/electricity/prices", jsonResponse(mock.ElectricityPrices))
+	mux.HandleFunc("/electricity/prices", getSpotPrices())
 	mux.HandleFunc("/api/events", getCalendarEvents())
 	log.Fatal().Err(http.ListenAndServe(port, mux)).Send()
 }

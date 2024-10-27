@@ -13,25 +13,24 @@ const (
 	apiEndpoint = "https://web-api.tp.entsoe.eu/api"
 )
 
-func getPrices() {
+func GetPrices(start, end time.Time) (*SpotPriceList, error) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Printf("Error loading .env file: %v", err)
 	}
 
 	apiKey := os.Getenv("API_KEY")
 	if apiKey == "" {
-		log.Fatal("API_KEY not set in environment")
+		return nil, fmt.Errorf("API_KEY not set in environment")
 	}
 
 	client := NewDefaultHTTPClient(apiKey)
 	spotService := NewSpotService(client, apiEndpoint)
 
-	prices, err := spotService.GetSpotPrices(time.Now(), time.Now().Add(24*time.Hour))
+	document, err := spotService.GetSpotPrices(start, end)
 	if err != nil {
-		log.Fatalf("Error getting spot prices: %v", err)
+		return nil, fmt.Errorf("error getting spot prices: %w", err)
 	}
-	fmt.Println(prices)
 
-	select {} // Block forever
+	return ConvertToSpotPriceList(document, start, end)
 }
