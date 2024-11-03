@@ -33,8 +33,8 @@ func (c *DefaultHTTPClient) Get(endpoint string, periodStart, periodEnd time.Tim
 	params.Add("documentType", "A44")
 	params.Add("in_Domain", "10YFI-1--------U")
 	params.Add("out_Domain", "10YFI-1--------U")
-	params.Add("periodStart", periodStart.Format("200601021504"))
-	params.Add("periodEnd", periodEnd.Format("200601021504"))
+	params.Add("periodStart", periodStart.UTC().Format("200601021504"))
+	params.Add("periodEnd", periodEnd.UTC().Format("200601021504"))
 
 	apiURL.RawQuery = params.Encode()
 	fmt.Println("Requesting url:", apiURL.String())

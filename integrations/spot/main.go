@@ -24,13 +24,11 @@ func GetPrices(start, end time.Time, location *time.Location) (*SpotPriceList, e
 		return nil, fmt.Errorf("API_KEY not set in environment")
 	}
 
+	start = start.In(location)
+	end = end.In(location)
+
 	client := NewDefaultHTTPClient(apiKey)
 	spotService := NewSpotService(client, apiEndpoint)
 
-	document, err := spotService.GetSpotPrices(start, end)
-	if err != nil {
-		return nil, fmt.Errorf("error getting spot prices: %w", err)
-	}
-
-	return ConvertToSpotPriceList(document, start, end, location)
+	return spotService.GetSpotPrices(start, end)
 }

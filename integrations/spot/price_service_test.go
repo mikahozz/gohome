@@ -14,13 +14,13 @@ func TestGetSpotPrices(t *testing.T) {
 	periodStart, _ := time.Parse(time.RFC3339, "2024-10-22T21:00:00Z")
 	periodEnd, _ := time.Parse(time.RFC3339, "2024-10-23T21:00:00Z")
 
-	document, err := spotService.GetSpotPrices(periodStart, periodEnd)
+	prices, err := spotService.GetSpotPrices(periodStart, periodEnd)
 	if err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
 
-	if len(document.TimeSeries) != 2 {
-		t.Errorf("Expected 2 TimeSeries, got %d", len(document.TimeSeries))
+	if len(prices.Prices) == 0 {
+		t.Error("Expected non-empty price list")
 	}
 }
 

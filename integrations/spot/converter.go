@@ -41,8 +41,6 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 		if err != nil {
 			return nil, fmt.Errorf("error parsing start time: %w", err)
 		}
-		// Convert to the desired timezone immediately
-		start = start.In(location)
 
 		resolution, err := parseISO8601Duration(ts.Period.Resolution)
 		if err != nil {
@@ -51,22 +49,21 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 
 		for _, point := range ts.Period.Points {
 			dateTime := start.Add(time.Duration(point.Position-1) * resolution)
+			localDateTime := dateTime.In(location)
 
-			if dateTime.Before(periodStart) || dateTime.After(periodEnd) {
+			// Include times that are >= start and <= end
+			if localDateTime.Before(periodStart) || localDateTime.After(periodEnd) {
 				continue
 			}
 
-			// Convert price from EUR/MWh to cents/kWh
 			price := point.Price * 100 / 1000
-
 			spotPrices = append(spotPrices, SpotPrice{
-				DateTime:  dateTime,
+				DateTime:  localDateTime,
 				PriceCkwh: price,
 			})
 		}
 	}
 
-	// Sort the prices by datetime
 	sort.Slice(spotPrices, func(i, j int) bool {
 		return spotPrices[i].DateTime.Before(spotPrices[j].DateTime)
 	})

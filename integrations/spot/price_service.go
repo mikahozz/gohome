@@ -18,7 +18,16 @@ func NewSpotService(client HTTPClient, apiEndpoint string) *SpotService {
 	}
 }
 
-func (s *SpotService) GetSpotPrices(periodStart, periodEnd time.Time) (*PublicationMarketDocument, error) {
+func (s *SpotService) GetSpotPrices(periodStart, periodEnd time.Time) (*SpotPriceList, error) {
+	document, err := s.getDocument(periodStart, periodEnd)
+	if err != nil {
+		return nil, err
+	}
+
+	return ConvertToSpotPriceList(document, periodStart, periodEnd, periodStart.Location())
+}
+
+func (s *SpotService) getDocument(periodStart, periodEnd time.Time) (*PublicationMarketDocument, error) {
 	body, err := s.client.Get(s.apiEndpoint, periodStart, periodEnd)
 	if err != nil {
 		return nil, err

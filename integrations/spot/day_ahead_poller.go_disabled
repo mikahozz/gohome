@@ -1,4 +1,4 @@
-package main
+package spot
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ func pollForTomorrowPrices() {
 		end := start.AddDate(0, 0, 2)
 
 		for {
-			document, err := getSpotPrices(start, end)
+			document, err := GetSpotPricea(start, end)
 			if err != nil {
 				fmt.Println("Error fetching prices:", err)
 				time.Sleep(10 * time.Minute)
