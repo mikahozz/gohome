@@ -38,12 +38,8 @@ func TestGetSpotPrices_NoData(t *testing.T) {
 		t.Fatalf("Expected NoDataError, got %T", err)
 	}
 
-	if noDataErr.Code != "999" {
-		t.Errorf("Expected error code 999, got %s", noDataErr.Code)
-	}
-
 	expectedTextPrefix := "No matching data found for Data item ENERGY_PRICES and interval"
-	if len(noDataErr.Text) < len(expectedTextPrefix) || noDataErr.Text[:len(expectedTextPrefix)] != expectedTextPrefix {
-		t.Errorf("Expected error text to start with '%s', got '%s'", expectedTextPrefix, noDataErr.Text)
+	if len(noDataErr.Message) < len(expectedTextPrefix) || noDataErr.Message[:len(expectedTextPrefix)] != expectedTextPrefix {
+		t.Errorf("Expected error text to start with '%s', got '%s'", expectedTextPrefix, noDataErr.Message)
 	}
 }

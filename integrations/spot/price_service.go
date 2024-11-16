@@ -40,7 +40,7 @@ func (s *SpotService) getDocument(periodStart, periodEnd time.Time) (*Publicatio
 		var ack AcknowledgementMarketDocument
 		ackErr := xml.Unmarshal(body, &ack)
 		if ackErr == nil && ack.Reason.Code == "999" {
-			return nil, &NoDataError{Code: ack.Reason.Code, Text: ack.Reason.Text}
+			return nil, &NoDataError{Message: ack.Reason.Text}
 		}
 		return nil, fmt.Errorf("error unmarshalling API response: %w", err)
 	}
