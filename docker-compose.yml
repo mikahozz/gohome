@@ -11,7 +11,25 @@ services:
     ports:
       - 6001:6001
     networks:
-    - homeapp73-docker_default
+      - homeapp73-docker_default
+
+  db:
+    container_name: db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=fi_FI.UTF-8"
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - homeapp73-docker_default
 
 networks:
   homeapp73-docker_default:

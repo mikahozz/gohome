@@ -1,4 +1,4 @@
-package main
+package dbsync
 
 import (
 	"encoding/json"
