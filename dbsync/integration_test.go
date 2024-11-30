@@ -3,6 +3,7 @@ package dbsync
 import (
 	"context"
 	"database/sql"
+	"math/rand"
 	"os"
 	"testing"
 	"time"
@@ -66,8 +67,11 @@ func TestPostgresWriteAndQuery(t *testing.T) {
 
 	ctx := context.Background()
 
-	// Test if we can write to the database
+	// Generate random temperature between 20.0 and 30.0
+	temperature := 20.0 + rand.Float64()*10.0
 	timestamp := time.Now()
+
+	// Test if we can write to the database
 	_, err := db.ExecContext(ctx,
 		`INSERT INTO measurements (timestamp, sensor_id, sensor_type, location, value, metadata) 
 		 VALUES ($1, $2, $3, $4, $5, $6)`,
@@ -75,27 +79,32 @@ func TestPostgresWriteAndQuery(t *testing.T) {
 		"test_sensor",
 		"temperature",
 		"test_location",
-		21.5,
+		temperature,
 		`{"test": "integration"}`,
 	)
 	if err != nil {
-		t.Errorf("Failed to write test measurement: %v", err)
+		t.Fatalf("Failed to write test measurement: %v", err)
 	}
 
-	// Test if we can query the database
-	var count int
+	// Test if we can query the database and verify the values
+	var resultTimestamp time.Time
+	var resultTemperature float64
 	err = db.QueryRowContext(ctx,
-		`SELECT COUNT(*) FROM measurements 
-		 WHERE sensor_id = $1 AND timestamp > $2`,
+		`SELECT timestamp, value FROM measurements 
+		 WHERE sensor_id = $1 AND timestamp = $2`,
 		"test_sensor",
-		timestamp.Add(-1*time.Hour),
-	).Scan(&count)
+		timestamp,
+	).Scan(&resultTimestamp, &resultTemperature)
 
 	if err != nil {
-		t.Errorf("Failed to query measurements: %v", err)
+		t.Fatalf("Failed to query measurement: %v", err)
 	}
 
-	if count == 0 {
-		t.Error("No measurements found after insertion")
+	if !resultTimestamp.Equal(timestamp) {
+		t.Errorf("Retrieved timestamp %v doesn't match inserted timestamp %v", resultTimestamp, timestamp)
+	}
+
+	if resultTemperature != temperature {
+		t.Errorf("Retrieved temperature %.2f doesn't match inserted temperature %.2f", resultTemperature, temperature)
 	}
 }
