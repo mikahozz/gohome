@@ -1,20 +1,28 @@
 version: '3'
 
 services:
-  gohome:
-    container_name: gohome
-    image: gohome
+  api:
+    container_name: gohome-api
+    image: gohome-api
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./cmd/api/Dockerfile
     ports:
       - 6001:6001
     networks:
       - homeapp73-docker_default
-
+  sync:
+    container_name: gohome-sync
+    image: gohome-sync
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./cmd/sync/Dockerfile
+    networks:
+      - homeapp73-docker_default
   db:
-    container_name: db
+    container_name: gohome-db
     build:
       context: ./db
       dockerfile: Dockerfile
