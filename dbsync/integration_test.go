@@ -3,7 +3,7 @@ package dbsync
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
+	"fmt"
 	"math/rand"
 	"os"
 	"testing"
@@ -13,45 +13,45 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// setupTestDB creates and returns a PostgreSQL database connection for testing
 func setupTestDB(t *testing.T) *sql.DB {
 	err := godotenv.Load("../.env")
 	if err != nil {
 		t.Fatalf("Error loading .env file: %v", err)
 	}
 
-	host := "localhost"
-	port := os.Getenv("POSTGRES_PORT")
-	user := os.Getenv("DB_APP_USER")
-	password := os.Getenv("DB_APP_PASSWORD")
-	dbname := os.Getenv("POSTGRES_DB")
-
-	connStr := "host=%s port=%s user=%s password=%s dbname=%s sslmode=disable"
-	connStr = "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + dbname + " sslmode=disable"
+	connStr := fmt.Sprintf("host=localhost port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("POSTGRES_PORT"),
+		os.Getenv("DB_APP_USER"),
+		os.Getenv("DB_APP_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+	)
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		t.Fatalf("Error connecting to database: %v", err)
 	}
 
+	if err := db.Ping(); err != nil {
+		t.Fatalf("Failed to connect to PostgreSQL: %v", err)
+	}
+
 	return db
 }
 
-func TestPostgresHealth(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping integration test")
-	}
-
-	db := setupTestDB(t)
-	defer db.Close()
-
-	err := db.Ping()
-	if err != nil {
-		t.Fatalf("Failed to connect to PostgreSQL: %v", err)
+func createTestMeasurement(temperature float64) *Measurement {
+	return &Measurement{
+		Timestamp: time.Now(),
+		SensorID:  "test_sensor",
+		MainValue: temperature,
+		Value: map[string]interface{}{
+			"temperature": temperature,
+			"humidity":    45.5,
+			"battery":     98,
+		},
 	}
 }
 
-func TestMeasurementWrite(t *testing.T) {
+func TestMeasurements(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping integration test")
 	}
@@ -59,71 +59,75 @@ func TestMeasurementWrite(t *testing.T) {
 	db := setupTestDB(t)
 	defer db.Close()
 
+	store := NewMeasurementStore(db)
 	ctx := context.Background()
 
-	// Generate test data
-	temperature := 20.0 + rand.Float64()*10.0
-	timestamp := time.Now()
-	value := map[string]interface{}{
-		"temperature": temperature,
-		"humidity":    45.5,
-		"battery":     98,
-		"type":        "temperature_sensor",
-		"location":    "living_room",
-	}
+	t.Run("insert and retrieve", func(t *testing.T) {
+		// Insert measurement
+		temperature := 20.0 + rand.Float64()*10.0
+		m := createTestMeasurement(temperature)
 
-	// Convert value map to JSON
-	valueJSON, err := json.Marshal(value)
-	if err != nil {
-		t.Fatalf("Failed to marshal value to JSON: %v", err)
-	}
+		if err := store.Insert(ctx, m); err != nil {
+			t.Fatalf("Failed to insert measurement: %v", err)
+		}
 
-	// Test writing to database
-	_, err = db.ExecContext(ctx,
-		`INSERT INTO measurements (timestamp, sensor_id, main_value, value) 
-		 VALUES ($1, $2, $3, $4)`,
-		timestamp,
-		"test_sensor",
-		temperature,
-		valueJSON,
-	)
-	if err != nil {
-		t.Fatalf("Failed to write test measurement: %v", err)
-	}
+		// Retrieve and verify
+		retrieved, err := store.GetBySensorAndTime(ctx, m.SensorID, m.Timestamp)
+		if err != nil {
+			t.Fatalf("Failed to get measurement: %v", err)
+		}
 
-	// Test reading from database
-	var resultTimestamp time.Time
-	var resultMainValue float64
-	var valueBytes []byte
-	err = db.QueryRowContext(ctx,
-		`SELECT timestamp, main_value, value FROM measurements 
-		 WHERE sensor_id = $1 AND timestamp = $2`,
-		"test_sensor",
-		timestamp,
-	).Scan(&resultTimestamp, &resultMainValue, &valueBytes)
+		if retrieved.MainValue != temperature {
+			t.Errorf("MainValue mismatch: got %.1f, want %.1f", retrieved.MainValue, temperature)
+		}
+	})
 
-	if err != nil {
-		t.Fatalf("Failed to query measurement: %v", err)
-	}
+	t.Run("update", func(t *testing.T) {
+		// Insert initial measurement
+		m := createTestMeasurement(21.5)
+		if err := store.Insert(ctx, m); err != nil {
+			t.Fatalf("Failed to insert initial measurement: %v", err)
+		}
 
-	// Parse JSON value
-	var resultValue map[string]interface{}
-	err = json.Unmarshal(valueBytes, &resultValue)
-	if err != nil {
-		t.Fatalf("Failed to parse JSON value: %v", err)
-	}
+		// Update values
+		m.MainValue = 22.5
+		m.Value["temperature"] = 22.5
+		m.Value["humidity"] = 46.0
+		m.Value["battery"] = 97
 
-	// Verify results
-	if !resultTimestamp.Equal(timestamp) {
-		t.Errorf("Retrieved timestamp %v doesn't match inserted timestamp %v", resultTimestamp, timestamp)
-	}
+		if err := store.Insert(ctx, m); err != nil {
+			t.Fatalf("Failed to update measurement: %v", err)
+		}
 
-	if resultMainValue != temperature {
-		t.Errorf("Retrieved main_value %.2f doesn't match inserted temperature %.2f", resultMainValue, temperature)
-	}
+		// Verify update
+		updated, err := store.GetBySensorAndTime(ctx, m.SensorID, m.Timestamp)
+		if err != nil {
+			t.Fatalf("Failed to get updated measurement: %v", err)
+		}
 
-	if resultValue["temperature"].(float64) != temperature {
-		t.Errorf("Retrieved temperature %.2f from value JSON doesn't match inserted temperature %.2f",
-			resultValue["temperature"].(float64), temperature)
+		if updated.MainValue != 22.5 {
+			t.Errorf("MainValue not updated: got %.1f, want %.1f", updated.MainValue, 22.5)
+		}
+
+		for key, want := range m.Value {
+			got := toFloat64(updated.Value[key], t)
+			want := toFloat64(want, t)
+			if got != want {
+				t.Errorf("%s not updated: got %.1f, want %.1f", key, got, want)
+			}
+		}
+	})
+}
+
+// Helper function to convert interface{} to float64
+func toFloat64(v interface{}, t *testing.T) float64 {
+	switch x := v.(type) {
+	case float64:
+		return x
+	case int:
+		return float64(x)
+	default:
+		t.Fatalf("Unexpected type for value: %T", v)
+		return 0
 	}
 }

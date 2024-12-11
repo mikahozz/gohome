@@ -1,5 +1,12 @@
 # GoHome
 
+## Work
+
+### Next
+
+- [ ] Change the sync to update the returned prices into db
+- [ ] Change prices api to read data from db
+
 ## Testing
 
 This project contains both unit tests and integration tests. Integration tests require a running PostgreSQL database (provided via Docker).
