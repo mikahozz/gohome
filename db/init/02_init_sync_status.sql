@@ -4,8 +4,8 @@ CREATE TYPE sync_frequency AS ENUM ('HOURLY', 'DAILY', 'WEEKLY', 'MONTHLY');
 -- Enum for sync status
 CREATE TYPE sync_status AS ENUM ('SYNCED', 'NOT_SYNCED', 'ERROR');
 
--- Main sync status table
-CREATE TABLE sync_status (
+-- Main sync status table (renamed from sync_status to sync_entries)
+CREATE TABLE sync_entries (
     id BIGSERIAL PRIMARY KEY,
     sync_type VARCHAR(50) NOT NULL,  -- e.g., 'SPOT_PRICE', 'WEATHER_DATA', etc.
     target_date DATE NOT NULL,
@@ -23,5 +23,5 @@ CREATE TABLE sync_status (
 );
 
 -- Index for common queries
-CREATE INDEX idx_sync_status_type_date ON sync_status(sync_type, target_date);
-CREATE INDEX idx_sync_status_status ON sync_status(status);
+CREATE INDEX idx_sync_entries_type_date ON sync_entries(sync_type, target_date);
+CREATE INDEX idx_sync_entries_status ON sync_entries(status);
