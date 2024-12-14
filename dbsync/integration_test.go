@@ -2,40 +2,27 @@ package dbsync
 
 import (
 	"context"
-	"database/sql"
-	"fmt"
 	"math/rand"
-	"os"
 	"testing"
 	"time"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/mikahozz/gohome/config"
 )
 
-func setupTestDB(t *testing.T) *sql.DB {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		t.Fatalf("Error loading .env file: %v", err)
-	}
+func setupTestDB(t *testing.T) *MeasurementStore {
+	config.LoadEnv()
 
-	connStr := fmt.Sprintf("host=localhost port=%s user=%s password=%s dbname=%s sslmode=disable",
-		os.Getenv("POSTGRES_PORT"),
-		os.Getenv("DB_APP_USER"),
-		os.Getenv("DB_APP_PASSWORD"),
-		os.Getenv("POSTGRES_DB"),
-	)
-
-	db, err := sql.Open("postgres", connStr)
+	db, err := SetupDbConn()
 	if err != nil {
-		t.Fatalf("Error connecting to database: %v", err)
+		t.Fatalf("Failed to setup database: %v", err)
 	}
 
 	if err := db.Ping(); err != nil {
 		t.Fatalf("Failed to connect to PostgreSQL: %v", err)
 	}
 
-	return db
+	return NewMeasurementStore(db)
 }
 
 func createTestMeasurement(temperature float64) *Measurement {
@@ -56,10 +43,7 @@ func TestMeasurements(t *testing.T) {
 		t.Skip("Skipping integration test")
 	}
 
-	db := setupTestDB(t)
-	defer db.Close()
-
-	store := NewMeasurementStore(db)
+	store := setupTestDB(t)
 	ctx := context.Background()
 
 	t.Run("insert and retrieve", func(t *testing.T) {

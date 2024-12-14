@@ -4,7 +4,8 @@
 
 ### Next
 
-- [ ] Change the sync to update the returned prices into db
+- [x] Change the sync to update the returned prices into db
+- [ ] Fix the prices to correct ones. Entsoe returns weird data
 - [ ] Change prices api to read data from db
 
 ## Testing

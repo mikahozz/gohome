@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/mikahozz/gohome/config"
 	"github.com/mikahozz/gohome/integrations/cal"
 	"github.com/mikahozz/gohome/integrations/fmi"
 	"github.com/mikahozz/gohome/integrations/spot"
@@ -191,6 +192,8 @@ func main() {
 
 	zerolog.TimeFieldFormat = time.RFC3339
 	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+
+	config.LoadEnv()
 
 	if *useMock {
 		log.Info().Msg("Starting server in mock mode")
