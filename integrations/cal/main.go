@@ -220,8 +220,18 @@ func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdat
 //
 // This will print the time corresponding to April 12, 2022, 12:30:00 in the New York timezone.
 func parseDate(d string, tz *time.Location) (time.Time, error) {
+	// Try parsing with Z suffix (UTC time)
+	if len(d) > 0 && d[len(d)-1] == 'Z' {
+		parsed, err := time.Parse("20060102T150405Z", d)
+		if err == nil {
+			return parsed.In(config.baseTimezone), nil
+		}
+	}
+
+	// Try formats without Z
 	parsed, err := time.ParseInLocation("20060102T150405", d, tz)
 	if err != nil {
+		fmt.Printf("Error parsing date in long format: %s\n", err)
 		parsed, err = time.ParseInLocation("20060102", d, tz)
 		if err != nil {
 			return time.Time{}, err
