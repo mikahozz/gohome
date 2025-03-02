@@ -208,10 +208,10 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/weathernow", h.weatherNow)
-	mux.HandleFunc("/indoor/dev_upstairs", h.indoorTemp)
-	mux.HandleFunc("/weatherfore", h.weatherFore)
-	mux.HandleFunc("/electricity/prices", h.spotPrices)
+	mux.HandleFunc("/api/weathernow", h.weatherNow)
+	mux.HandleFunc("/api/indoor/dev_upstairs", h.indoorTemp)
+	mux.HandleFunc("/api/weatherfore", h.weatherFore)
+	mux.HandleFunc("/api/electricity/prices", h.spotPrices)
 	mux.HandleFunc("/api/events", h.calendarEvents)
 
 	// Start server in a goroutine
