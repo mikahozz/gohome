@@ -217,7 +217,7 @@ func main() {
 	// Start server in a goroutine
 	server := &http.Server{
 		Addr:    port,
-		Handler: mux,
+		Handler: loggingMiddleware(mux),
 	}
 
 	go func() {
