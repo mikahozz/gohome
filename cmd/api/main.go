@@ -168,16 +168,16 @@ func printEndpoints() {
 	fmt.Println("\nAvailable endpoints:")
 	fmt.Println("-------------------")
 	fmt.Printf("GET /weathernow                  - Current weather observations\n")
-	fmt.Printf("    curl http://localhost:6001/weathernow\n")
+	fmt.Printf("    curl http://localhost:6001/api/weathernow\n")
 
 	fmt.Printf("GET /weatherfore                 - Weather forecast\n")
-	fmt.Printf("    curl http://localhost:6001/weatherfore\n")
+	fmt.Printf("    curl http://localhost:6001/api/weatherfore\n")
 
 	fmt.Printf("GET /indoor/dev_upstairs         - Indoor temperature\n")
-	fmt.Printf("    curl http://localhost:6001/indoor/dev_upstairs\n")
+	fmt.Printf("    curl http://localhost:6001/api/indoor/dev_upstairs\n")
 
 	fmt.Printf("GET /electricity/prices          - Spot prices for time range (params: start, end, timeFormat)\n")
-	fmt.Printf("    curl \"http://localhost:6001/electricity/prices?start=2024-03-20T00:00:00Z&end=2024-03-21T00:00:00Z&timeFormat=Europe/Helsinki\"\n")
+	fmt.Printf("    curl \"http://localhost:6001/api/electricity/prices?start=2024-03-20T00:00:00Z&end=2024-03-21T00:00:00Z&timeFormat=Europe/Helsinki\"\n")
 
 	fmt.Printf("GET /api/events                  - Calendar events for next 7 days\n")
 	fmt.Printf("    curl http://localhost:6001/api/events\n")

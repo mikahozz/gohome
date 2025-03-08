@@ -4,7 +4,6 @@ build:
 	go build ./cmd/...
 
 test:
-	docker compose up -d db
 	go test ./...
 
 run-api:
