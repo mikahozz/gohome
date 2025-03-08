@@ -174,7 +174,7 @@ func getSunData() http.HandlerFunc {
 		startStr := r.URL.Query().Get("start")
 		endStr := r.URL.Query().Get("end")
 
-		start, err := time.Parse("2006-01-02", startStr)
+		start, err := time.Parse(time.RFC3339, startStr)
 		if err != nil {
 			log.Err(err).Msg("")
 			http.Error(w, "Invalid start time format. Use RFC3339.", http.StatusBadRequest)
@@ -183,7 +183,7 @@ func getSunData() http.HandlerFunc {
 
 		var end *time.Time
 		if endStr != "" {
-			parsedTime, err := time.Parse("2006-01-02", endStr)
+			parsedTime, err := time.Parse(time.RFC3339, endStr)
 			if err != nil {
 				log.Err(err).Msg("")
 				http.Error(w, "Invalid end time format. Use RFC3339.", http.StatusBadRequest)
@@ -192,7 +192,7 @@ func getSunData() http.HandlerFunc {
 			end = &parsedTime
 		}
 
-		// Load sun data
+		// Load sun data - note that only month and day are considered, year is ignored
 		sunData, err := sun.LoadSunData("integrations/sun/sun_helsinki_2025.json")
 		if err != nil {
 			log.Error().Err(err).Msg("Error loading sun data")
@@ -200,7 +200,7 @@ func getSunData() http.HandlerFunc {
 			return
 		}
 
-		// Filter sun data
+		// Get data for the date range (ignoring year)
 		filtered := sunData.GetDailyData(start, end)
 		json, err := json.Marshal(filtered)
 		if err != nil {
@@ -232,7 +232,7 @@ func printEndpoints() {
 	fmt.Printf("    curl http://localhost:6001/api/events\n")
 
 	fmt.Printf("GET /api/sun                    - Sunset and runrise info for date range (params: start, end)\n")
-	fmt.Printf("    curl \"http://localhost:6001/api/sun?start=2025-03-20&end=2025-03-21\"\n")
+	fmt.Printf("    curl \"http://localhost:6001/api/sun?start=2025-03-20T12:00:00Z&end=2025-03-21T12:00:00Z\"\n")
 
 	fmt.Printf("\nServer running on port %s\n\n", port)
 }

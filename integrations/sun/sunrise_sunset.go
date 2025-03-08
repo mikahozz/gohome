@@ -43,19 +43,30 @@ func LoadSunData(filePath string) (*SunData, error) {
 }
 
 // GetDailyData returns the sun data for a specific date or date range
+// The year part of the date is ignored, only month and day are considered
 func (s *SunData) GetDailyData(startDate time.Time, endDate *time.Time) []*DailyData {
-	startDateStr := startDate.Format("2006-01-02")
+	// Format dates as MM-DD to ignore year
+	startMonthDay := startDate.Format("01-02")
 	var results []*DailyData
 
-	// Determine end date string - either the provided end date or the start date if no end date
-	endDateStr := startDateStr
+	// Determine end date - either the provided end date or the start date if no end date
+	endMonthDay := startMonthDay
 	if endDate != nil {
-		endDateStr = endDate.Format("2006-01-02")
+		endMonthDay = endDate.Format("01-02")
 	}
 
 	// Collect all dates in the range
 	for i, daily := range s.Results {
-		if daily.Date >= startDateStr && daily.Date <= endDateStr {
+		// Parse the date from the data to extract month and day
+		t, err := time.Parse("2006-01-02", daily.Date)
+		if err != nil {
+			continue // Skip invalid dates
+		}
+
+		// Compare only month and day
+		dailyMonthDay := t.Format("01-02")
+
+		if dailyMonthDay >= startMonthDay && dailyMonthDay <= endMonthDay {
 			results = append(results, &s.Results[i])
 		}
 	}

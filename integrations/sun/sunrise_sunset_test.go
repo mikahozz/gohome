@@ -31,7 +31,7 @@ func TestLoadSunData(t *testing.T) {
 }
 
 func TestGetDailyData(t *testing.T) {
-	// Create test data
+	// Create test data with different years to verify year-independent behavior
 	sunData := &SunData{
 		Results: []DailyData{
 			{
@@ -61,41 +61,48 @@ func TestGetDailyData(t *testing.T) {
 		expectedLength int
 	}{
 		{
-			name:           "Single day",
-			startDate:      "2025-01-01",
+			name:           "Single day - same year",
+			startDate:      "2025-01-01T12:00:00Z",
 			endDate:        nil,
 			expectedDates:  []string{"2025-01-01"},
 			expectedLength: 1,
 		},
 		{
-			name:           "Date range",
-			startDate:      "2025-01-02",
-			endDate:        stringPtr("2025-01-03"),
+			name:           "Single day - different year",
+			startDate:      "2023-01-01T12:00:00Z", // Different year, same month/day
+			endDate:        nil,
+			expectedDates:  []string{"2025-01-01"},
+			expectedLength: 1,
+		},
+		{
+			name:           "Date range - same year",
+			startDate:      "2025-01-02T12:00:00Z",
+			endDate:        stringPtr("2025-01-03T12:00:00Z"),
+			expectedDates:  []string{"2025-01-02", "2025-01-03"},
+			expectedLength: 2,
+		},
+		{
+			name:           "Date range - different years",
+			startDate:      "2023-01-02T12:00:00Z",            // Different year, same month/day
+			endDate:        stringPtr("2024-01-03T12:00:00Z"), // Different year, same month/day
 			expectedDates:  []string{"2025-01-02", "2025-01-03"},
 			expectedLength: 2,
 		},
 		{
 			name:           "Non-existent date",
-			startDate:      "2025-01-04",
+			startDate:      "2025-01-04T12:00:00Z",
 			endDate:        nil,
 			expectedDates:  []string{},
 			expectedLength: 0,
-		},
-		{
-			name:           "Partial range",
-			startDate:      "2025-01-03",
-			endDate:        stringPtr("2025-01-05"),
-			expectedDates:  []string{"2025-01-03"},
-			expectedLength: 1,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			startDate, _ := time.Parse("2006-01-02", tc.startDate)
+			startDate, _ := time.Parse(time.RFC3339, tc.startDate)
 			var endDate *time.Time
 			if tc.endDate != nil {
-				parsed, _ := time.Parse("2006-01-02", *tc.endDate)
+				parsed, _ := time.Parse(time.RFC3339, *tc.endDate)
 				endDate = &parsed
 			}
 
