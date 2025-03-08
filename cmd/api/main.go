@@ -11,6 +11,7 @@ import (
 	"github.com/mikahozz/gohome/integrations/cal"
 	"github.com/mikahozz/gohome/integrations/fmi"
 	"github.com/mikahozz/gohome/integrations/spot"
+	"github.com/mikahozz/gohome/integrations/sun"
 	"github.com/mikahozz/gohome/mock"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -25,6 +26,7 @@ type handlers struct {
 	indoorTemp     http.HandlerFunc
 	spotPrices     http.HandlerFunc
 	calendarEvents http.HandlerFunc
+	sunData        http.HandlerFunc
 }
 
 // Create real data handlers
@@ -35,6 +37,7 @@ func createRealHandlers() handlers {
 		indoorTemp:     jsonResponse(mock.IndoorDevUpstairs),
 		spotPrices:     getSpotPrices(),
 		calendarEvents: getCalendarEvents(),
+		sunData:        getSunData(),
 	}
 }
 
@@ -46,6 +49,7 @@ func createMockHandlers() handlers {
 		indoorTemp:     jsonResponse(mock.IndoorDevUpstairs),
 		spotPrices:     jsonResponse(mock.ElectricityPrices),
 		calendarEvents: jsonResponse(mock.Events),
+		sunData:        getSunData(), // We use hard code Helsinki data for now
 	}
 }
 
@@ -164,6 +168,51 @@ func getSpotPrices() http.HandlerFunc {
 	}
 }
 
+func getSunData() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Parse date parameters
+		startStr := r.URL.Query().Get("start")
+		endStr := r.URL.Query().Get("end")
+
+		start, err := time.Parse("2006-01-02", startStr)
+		if err != nil {
+			log.Err(err).Msg("")
+			http.Error(w, "Invalid start time format. Use RFC3339.", http.StatusBadRequest)
+			return
+		}
+
+		var end *time.Time
+		if endStr != "" {
+			parsedTime, err := time.Parse("2006-01-02", endStr)
+			if err != nil {
+				log.Err(err).Msg("")
+				http.Error(w, "Invalid end time format. Use RFC3339.", http.StatusBadRequest)
+				return
+			}
+			end = &parsedTime
+		}
+
+		// Load sun data
+		sunData, err := sun.LoadSunData("integrations/sun/sun_helsinki_2025.json")
+		if err != nil {
+			log.Error().Err(err).Msg("Error loading sun data")
+			http.Error(w, "Error occurred in loading sun data", http.StatusInternalServerError)
+			return
+		}
+
+		// Filter sun data
+		filtered := sunData.GetDailyData(start, end)
+		json, err := json.Marshal(filtered)
+		if err != nil {
+			log.Error().Err(err).Msg("Error marshalling sun data to JSON")
+			http.Error(w, "Error occurred in JSON conversion of sun data", http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(json)
+	}
+}
+
 func printEndpoints() {
 	fmt.Println("\nAvailable endpoints:")
 	fmt.Println("-------------------")
@@ -181,6 +230,9 @@ func printEndpoints() {
 
 	fmt.Printf("GET /api/events                  - Calendar events for next 7 days\n")
 	fmt.Printf("    curl http://localhost:6001/api/events\n")
+
+	fmt.Printf("GET /api/sun                    - Sunset and runrise info for date range (params: start, end)\n")
+	fmt.Printf("    curl \"http://localhost:6001/api/sun?start=2025-03-20&end=2025-03-21\"\n")
 
 	fmt.Printf("\nServer running on port %s\n\n", port)
 }
@@ -213,6 +265,7 @@ func main() {
 	mux.HandleFunc("/api/weatherfore", h.weatherFore)
 	mux.HandleFunc("/api/electricity/prices", h.spotPrices)
 	mux.HandleFunc("/api/events", h.calendarEvents)
+	mux.HandleFunc("/api/sun", h.sunData)
 
 	// Start server in a goroutine
 	server := &http.Server{

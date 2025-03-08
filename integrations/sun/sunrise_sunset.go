@@ -2,7 +2,7 @@ package sun
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 	"time"
 )
 
@@ -29,7 +29,7 @@ type DailyData struct {
 
 // LoadSunData loads sun data from a JSON file
 func LoadSunData(filePath string) (*SunData, error) {
-	data, err := ioutil.ReadFile(filePath)
+	data, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -42,15 +42,23 @@ func LoadSunData(filePath string) (*SunData, error) {
 	return &sunData, nil
 }
 
-// GetDailyData returns the sun data for a specific date
-func (s *SunData) GetDailyData(date time.Time) *DailyData {
-	dateStr := date.Format("2006-01-02")
+// GetDailyData returns the sun data for a specific date or date range
+func (s *SunData) GetDailyData(startDate time.Time, endDate *time.Time) []*DailyData {
+	startDateStr := startDate.Format("2006-01-02")
+	var results []*DailyData
 
-	for _, daily := range s.Results {
-		if daily.Date == dateStr {
-			return &daily
+	// Determine end date string - either the provided end date or the start date if no end date
+	endDateStr := startDateStr
+	if endDate != nil {
+		endDateStr = endDate.Format("2006-01-02")
+	}
+
+	// Collect all dates in the range
+	for i, daily := range s.Results {
+		if daily.Date >= startDateStr && daily.Date <= endDateStr {
+			results = append(results, &s.Results[i])
 		}
 	}
 
-	return nil
+	return results
 }
