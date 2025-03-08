@@ -170,26 +170,28 @@ func getSpotPrices() http.HandlerFunc {
 
 func getSunData() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Parse date parameters
+		// Parse date parameters - only using YYYY-MM-DD format
 		startStr := r.URL.Query().Get("start")
 		endStr := r.URL.Query().Get("end")
 
-		start, err := time.Parse(time.RFC3339, startStr)
+		// Parse start date (required)
+		start, err := time.Parse("2006-01-02", startStr)
 		if err != nil {
-			log.Err(err).Msg("")
-			http.Error(w, "Invalid start time format. Use RFC3339.", http.StatusBadRequest)
+			log.Err(err).Msg("Invalid start date format")
+			http.Error(w, "Invalid start date format. Use YYYY-MM-DD (e.g., 2025-03-08).", http.StatusBadRequest)
 			return
 		}
 
+		// Parse end date (optional)
 		var end *time.Time
 		if endStr != "" {
-			parsedTime, err := time.Parse(time.RFC3339, endStr)
+			parsedEnd, err := time.Parse("2006-01-02", endStr)
 			if err != nil {
-				log.Err(err).Msg("")
-				http.Error(w, "Invalid end time format. Use RFC3339.", http.StatusBadRequest)
+				log.Err(err).Msg("Invalid end date format")
+				http.Error(w, "Invalid end date format. Use YYYY-MM-DD (e.g., 2025-03-08).", http.StatusBadRequest)
 				return
 			}
-			end = &parsedTime
+			end = &parsedEnd
 		}
 
 		// Load sun data - note that only month and day are considered, year is ignored
@@ -232,7 +234,7 @@ func printEndpoints() {
 	fmt.Printf("    curl http://localhost:6001/api/events\n")
 
 	fmt.Printf("GET /api/sun                    - Sunset and runrise info for date range (params: start, end)\n")
-	fmt.Printf("    curl \"http://localhost:6001/api/sun?start=2025-03-20T12:00:00Z&end=2025-03-21T12:00:00Z\"\n")
+	fmt.Printf("    curl \"http://localhost:6001/api/sun?start=2025-03-20&end=2025-03-21\"\n")
 
 	fmt.Printf("\nServer running on port %s\n\n", port)
 }

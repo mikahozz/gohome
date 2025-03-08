@@ -62,35 +62,35 @@ func TestGetDailyData(t *testing.T) {
 	}{
 		{
 			name:           "Single day - same year",
-			startDate:      "2025-01-01T12:00:00Z",
+			startDate:      "2025-01-01",
 			endDate:        nil,
 			expectedDates:  []string{"2025-01-01"},
 			expectedLength: 1,
 		},
 		{
 			name:           "Single day - different year",
-			startDate:      "2023-01-01T12:00:00Z", // Different year, same month/day
+			startDate:      "2023-01-01", // Different year, same month/day
 			endDate:        nil,
 			expectedDates:  []string{"2025-01-01"},
 			expectedLength: 1,
 		},
 		{
 			name:           "Date range - same year",
-			startDate:      "2025-01-02T12:00:00Z",
-			endDate:        stringPtr("2025-01-03T12:00:00Z"),
+			startDate:      "2025-01-02",
+			endDate:        stringPtr("2025-01-03"),
 			expectedDates:  []string{"2025-01-02", "2025-01-03"},
 			expectedLength: 2,
 		},
 		{
 			name:           "Date range - different years",
-			startDate:      "2023-01-02T12:00:00Z",            // Different year, same month/day
-			endDate:        stringPtr("2024-01-03T12:00:00Z"), // Different year, same month/day
+			startDate:      "2023-01-02",            // Different year, same month/day
+			endDate:        stringPtr("2024-01-03"), // Different year, same month/day
 			expectedDates:  []string{"2025-01-02", "2025-01-03"},
 			expectedLength: 2,
 		},
 		{
 			name:           "Non-existent date",
-			startDate:      "2025-01-04T12:00:00Z",
+			startDate:      "2025-01-04",
 			endDate:        nil,
 			expectedDates:  []string{},
 			expectedLength: 0,
@@ -99,10 +99,10 @@ func TestGetDailyData(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			startDate, _ := time.Parse(time.RFC3339, tc.startDate)
+			startDate, _ := time.Parse("2006-01-02", tc.startDate)
 			var endDate *time.Time
 			if tc.endDate != nil {
-				parsed, _ := time.Parse(time.RFC3339, *tc.endDate)
+				parsed, _ := time.Parse("2006-01-02", *tc.endDate)
 				endDate = &parsed
 			}
 
