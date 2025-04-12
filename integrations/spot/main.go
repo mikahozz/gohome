@@ -30,5 +30,10 @@ func GetPrices(start, end time.Time, location *time.Location) (*SpotPriceList, e
 	client := NewDefaultHTTPClient(apiKey)
 	spotService := NewSpotService(client, apiEndpoint)
 
-	return spotService.GetSpotPrices(start, end)
+	prices, err := spotService.GetSpotPrices(start, end)
+	if err != nil {
+		return nil, err
+	}
+
+	return prices, nil
 }

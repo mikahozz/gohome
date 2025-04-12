@@ -2,6 +2,7 @@ package spot
 
 import (
 	"fmt"
+	"math"
 	"sort"
 	"strconv"
 	"strings"
@@ -56,7 +57,8 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 				continue
 			}
 
-			price := point.Price * 100 / 1000
+			priceWithVat := point.Price * vatMultiplier(point.Price, localDateTime)
+			price := math.Round(priceWithVat*100) / 1000
 			spotPrices = append(spotPrices, SpotPrice{
 				DateTime:  localDateTime,
 				PriceCkwh: price,
@@ -69,4 +71,29 @@ func ConvertToSpotPriceList(doc *PublicationMarketDocument, periodStart, periodE
 	})
 
 	return &SpotPriceList{Prices: spotPrices}, nil
+}
+
+type VATRate struct {
+	EffectiveFrom string
+	Multiplier    float64
+}
+
+var vatRates = []VATRate{
+	{EffectiveFrom: "2024-09-01", Multiplier: 1.255},
+	{EffectiveFrom: "2013-01-01", Multiplier: 1.24},
+	{EffectiveFrom: "2010-07-01", Multiplier: 1.23},
+	{EffectiveFrom: "1994-06-01", Multiplier: 1.22},
+}
+
+func vatMultiplier(price float64, dt time.Time) float64 {
+	if price < 0 {
+		return 1
+	}
+	priceDate := dt.Format("2006-01-02")
+	for _, rate := range vatRates {
+		if priceDate >= rate.EffectiveFrom {
+			return rate.Multiplier
+		}
+	}
+	panic(fmt.Sprintf("No VAT multiplier found for price date: %s", priceDate))
 }

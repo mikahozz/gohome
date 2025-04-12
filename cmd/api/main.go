@@ -156,7 +156,7 @@ func getSpotPrices() http.HandlerFunc {
 			return
 		}
 
-		json, err := json.Marshal(prices)
+		json, err := json.Marshal(prices.Prices)
 		if err != nil {
 			log.Error().Err(err).Msg("Error marshalling spot prices to JSON")
 			http.Error(w, "Error occurred in JSON conversion of spot prices", http.StatusInternalServerError)
