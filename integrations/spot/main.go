@@ -19,9 +19,9 @@ func GetPrices(start, end time.Time, location *time.Location) (*SpotPriceList, e
 		log.Printf("Error loading .env file: %v", err)
 	}
 
-	apiKey := os.Getenv("API_KEY")
+	apiKey := os.Getenv("SPOT_API_KEY")
 	if apiKey == "" {
-		return nil, fmt.Errorf("API_KEY not set in environment")
+		return nil, fmt.Errorf("SPOT_API_KEY not set in environment")
 	}
 
 	start = start.In(location)
