@@ -49,7 +49,7 @@
                     </om:value>
                 </om:NamedValue>
             </om:parameter>
-            <om:observedProperty  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,PrecipitationAmount,Pressure,DewPoint,Visibility,TotalCloudCover,WeatherSymbol3&amp;language=eng"/>
+            <om:observedProperty  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,PrecipitationAmount,Pressure,DewPoint,Visibility,TotalCloudCover,SmartSymbol&amp;language=eng"/>
             <om:featureOfInterest>
                 <sams:SF_SpatialSamplingFeature gml:id="enn-s-1-1-">
                     <sam:sampledFeature>
@@ -211,7 +211,7 @@
                             <swe:field name="DewPoint"  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=DewPoint&amp;language=eng"/>
                             <swe:field name="Visibility"  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=Visibility&amp;language=eng"/>
                             <swe:field name="TotalCloudCover"  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=TotalCloudCover&amp;language=eng"/>
-                            <swe:field name="WeatherSymbol3"  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=WeatherSymbol3&amp;language=eng"/>
+                            <swe:field name="SmartSymbol"  xlink:href="http://opendata.fmi.fi/meta?observableProperty=forecast&amp;param=SmartSymbol&amp;language=eng"/>
                         </swe:DataRecord>
                     </gmlcov:rangeType>
                 </gmlcov:MultiPointCoverage>

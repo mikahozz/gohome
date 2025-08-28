@@ -53,7 +53,7 @@ func (obs *FMI_ObservationsModel) LoadObservations(location StationId, requestTy
 			location)
 	case Forecast:
 		obs.Observations.Resolution = Hours
-		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&parameters=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,precipitation1h,Pressure,DewPoint,Visibility,TotalCloudCover,WeatherSymbol3&place=%s",
+		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&parameters=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,precipitation1h,Pressure,DewPoint,Visibility,TotalCloudCover,SmartSymbol&place=%s",
 			location)
 	default:
 		return errors.Errorf("Invalid requestType: %v", requestType)
@@ -164,7 +164,7 @@ func (fm FMI_ObservationsModel) ConvertToWeatherData() (WeatherDataModel, error)
 				w.Visibility = valueOrZero(value)
 			case "n_man", "TotalCloudCover":
 				w.CloudCover = valueOrZero(value)
-			case "WeatherSymbol3":
+			case "SmartSymbol":
 				w.Weather = int(valueOrZero(value))
 			}
 		}
