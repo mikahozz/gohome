@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/emersion/go-ical"
 	webdav "github.com/emersion/go-webdav"
 	"github.com/emersion/go-webdav/caldav"
 	"github.com/teambition/rrule-go"
@@ -26,6 +27,13 @@ type DateOffset struct {
 	Years  int
 	Months int
 	Days   int
+}
+
+type EventOverride struct {
+	OriginalStart time.Time
+	NewStart      time.Time
+	NewEnd        time.Time
+	NewSummary    string
 }
 
 // Pretty print DateOffset for logging
@@ -91,6 +99,10 @@ func GetFamilyCalendarEvents(from DateOffset, to DateOffset) ([]Event, error) {
 			}
 			fmt.Printf("Found %d objects\n", len(objects))
 			for _, obj := range objects {
+				if len(obj.Data.Children) < 1 {
+					continue
+				}
+
 				uid := obj.Data.Children[0].Props.Get("UID")
 				dtstart := obj.Data.Children[0].Props.Get("DTSTART")
 				dtend := obj.Data.Children[0].Props.Get("DTEND")
@@ -127,8 +139,15 @@ func GetFamilyCalendarEvents(from DateOffset, to DateOffset) ([]Event, error) {
 				}
 
 				if rRuleVal != "" {
+					var overrides []EventOverride
+					if len(obj.Data.Children) > 1 {
+						overrides, err = getOverrideEvents(obj.Data.Children[1:], location)
+						if err != nil {
+							return nil, fmt.Errorf("error getting override events: %w", err)
+						}
+					}
 					recEvent := Event{uid.Value, startTime, endTime, summary.Value}
-					eventInstances, err := getRecurrenceEvents(recEvent, reqStart, reqEnd, rRuleVal, exdateVal, location)
+					eventInstances, err := getRecurrenceEvents(recEvent, reqStart, reqEnd, rRuleVal, exdateVal, location, overrides)
 					if err != nil {
 						return nil, fmt.Errorf("error parsing events based on rrule: %s, err: %w", rRuleVal, err)
 					}
@@ -156,7 +175,50 @@ func GetFamilyCalendarEvents(from DateOffset, to DateOffset) ([]Event, error) {
 	return events, nil
 }
 
-func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdateStr string, tz *time.Location) ([]Event, error) {
+func getOverrideEvents(childEvents []*ical.Component, tz *time.Location) ([]EventOverride, error) {
+	var overrides []EventOverride
+	for _, child := range childEvents {
+		uidProp := child.Props.Get("UID")
+		if uidProp == nil {
+			return nil, fmt.Errorf("missing UID property in override event")
+		}
+
+		dtstartProp := child.Props.Get("DTSTART")
+		if dtstartProp == nil {
+			return nil, fmt.Errorf("missing DTSTART property in override event")
+		}
+		dtendProp := child.Props.Get("DTEND")
+		if dtendProp == nil {
+			return nil, fmt.Errorf("missing DTEND property in override event")
+		}
+		summaryProp := child.Props.Get("SUMMARY")
+		if summaryProp == nil {
+			return nil, fmt.Errorf("missing SUMMARY property in override event")
+		}
+		replaceDateProp := child.Props.Get("RECURRENCE-ID")
+		if replaceDateProp == nil {
+			return nil, fmt.Errorf("missing RECURRENCE-ID property in override event")
+		}
+		replaceDate, err := parseDate(replaceDateProp.Value, tz)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing RECURRENCE-ID date: %w", err)
+		}
+		startTime, err := parseDate(dtstartProp.Value, tz)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing start date: %w", err)
+		}
+		endTime, err := parseDate(dtendProp.Value, tz)
+		if err != nil {
+			return nil, fmt.Errorf("error parsing end date: %w", err)
+		}
+
+		e := EventOverride{replaceDate, startTime, endTime, summaryProp.Value}
+		overrides = append(overrides, e)
+	}
+	return overrides, nil
+}
+
+func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdateStr string, tz *time.Location, overrides []EventOverride) ([]Event, error) {
 	// Calculate event start and end time difference
 	eventDuration := event.End.Sub(event.Start)
 	// Parse the recurrence rule
@@ -194,6 +256,19 @@ func getRecurrenceEvents(event Event, from, to time.Time, rRuleVal string, exdat
 		eventTo := eventFrom.Add(eventDuration)
 		isOutsideRange := eventFrom.After(to) || eventTo.Before(from)
 		if !exDate[eventFrom] && !isOutsideRange {
+			// Check for overrides
+			for _, override := range overrides {
+				if override.OriginalStart.Equal(eventFrom) {
+					fmt.Printf("Applying override for event %s on %s\n", event.Summary, eventFrom)
+					fmt.Printf("New event details: start: %s, end: %s, summary: %s\n", override.NewStart, override.NewEnd, override.NewSummary)
+					eventFrom = override.NewStart
+					eventTo = override.NewEnd
+					if override.NewSummary != "" {
+						event.Summary = override.NewSummary
+					}
+					break
+				}
+			}
 			events = append(events, Event{event.Uid, eventFrom, eventTo, event.Summary})
 		}
 	}
@@ -231,9 +306,9 @@ func parseDate(d string, tz *time.Location) (time.Time, error) {
 	// Try formats without Z
 	parsed, err := time.ParseInLocation("20060102T150405", d, tz)
 	if err != nil {
-		fmt.Printf("Error parsing date in long format: %s\n", err)
 		parsed, err = time.ParseInLocation("20060102", d, tz)
 		if err != nil {
+			fmt.Printf("Error parsing date: %s\n", err)
 			return time.Time{}, err
 		}
 	}
@@ -254,6 +329,7 @@ func buildQuery(from DateOffset, to DateOffset) caldav.CalendarQuery {
 					"DTEND",
 					"RRULE",
 					"EXDATE",
+					"RECURRENCE-ID",
 				},
 			}},
 		},
