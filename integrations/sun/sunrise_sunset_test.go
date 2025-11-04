@@ -1,6 +1,8 @@
 package sun
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -120,6 +122,37 @@ func TestGetDailyData(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestGetSunriseAndSunsetToday(t *testing.T) {
+	// Change working directory to repo root so relative path in GetSunrise/Set functions resolves
+	wd, _ := os.Getwd()
+	// Assume test file located at .../integrations/sun; repo root is two levels up
+	root := filepath.Clean(filepath.Join(wd, "..", ".."))
+	if err := os.Chdir(root); err != nil {
+		t.Fatalf("failed to chdir root: %v", err)
+	}
+	defer os.Chdir(wd)
+
+	sunrise := GetSunriseToday()
+	sunset := GetSunsetToday()
+	if !sunset.After(sunrise) {
+		t.Fatalf("expected sunset (%v) to be after sunrise (%v)", sunset, sunrise)
+	}
+	// Load raw data to verify the parsed times match the expected date
+	sunData, err := LoadSunData("integrations/sun/sun_helsinki_2025.json")
+	if err != nil {
+		t.Fatalf("could not load sun data: %v", err)
+	}
+	todayArr := sunData.GetDailyData(time.Now(), nil)
+	if len(todayArr) == 0 {
+		t.Fatalf("no data for today in test dataset")
+	}
+	d := todayArr[0]
+	// Ensure the date portion matches
+	if sunrise.Format("2006-01-02") != d.Date || sunset.Format("2006-01-02") != d.Date {
+		t.Fatalf("parsed times date mismatch. got sunrise date=%s sunset date=%s want=%s", sunrise.Format("2006-01-02"), sunset.Format("2006-01-02"), d.Date)
 	}
 }
 

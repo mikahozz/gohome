@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"runtime/debug"
 	"sync"
 	"time"
 
@@ -25,12 +26,6 @@ func (rc *RealClock) After(d time.Duration) <-chan time.Time {
 	return time.After(d)
 }
 
-type TriggerType string
-
-const (
-	TriggerTime TriggerType = "time"
-)
-
 type FilterType string
 
 const (
@@ -45,7 +40,6 @@ const (
 )
 
 type Trigger struct {
-	Type TriggerType
 	Time func() time.Time
 }
 
@@ -63,7 +57,7 @@ type Filter struct {
 	Comparator Comparator
 }
 
-type Schedule struct {
+type DailySchedule struct {
 	Name          string
 	Trigger       Trigger
 	FilterLogic   AndOrType
@@ -73,7 +67,7 @@ type Schedule struct {
 }
 
 type Scheduler struct {
-	schedules []*Schedule
+	schedules []*DailySchedule
 	mu        sync.RWMutex
 	ctx       context.Context
 	cancel    context.CancelFunc
@@ -90,7 +84,7 @@ func NewScheduler() *Scheduler {
 func NewSchedulerWithClock(clock Clock) *Scheduler {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &Scheduler{
-		schedules: make([]*Schedule, 0),
+		schedules: make([]*DailySchedule, 0),
 		ctx:       ctx,
 		cancel:    cancel,
 		clock:     clock,
@@ -98,15 +92,17 @@ func NewSchedulerWithClock(clock Clock) *Scheduler {
 }
 
 // AddSchedule adds a schedule to the scheduler
-func (s *Scheduler) AddSchedule(schedule *Schedule) {
+func (s *Scheduler) AddSchedule(schedule *DailySchedule) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.schedules = append(s.schedules, schedule)
+	s.logScheduleAdded(schedule)
 }
 
 // Start begins running the scheduler
 func (s *Scheduler) Start() {
 	s.wg.Add(1)
+	s.logStart()
 	go s.run()
 }
 
@@ -123,6 +119,7 @@ func (s *Scheduler) run() {
 	for {
 		select {
 		case <-s.ctx.Done():
+			s.logStop()
 			return
 		case <-s.clock.After(1 * time.Minute):
 			s.evaluate(s.clock.Now())
@@ -133,33 +130,59 @@ func (s *Scheduler) run() {
 // evaluate checks all schedules and executes matching ones
 func (s *Scheduler) evaluate(now time.Time) {
 	s.mu.RLock()
-	schedules := make([]*Schedule, len(s.schedules))
+	schedules := make([]*DailySchedule, len(s.schedules))
 	copy(schedules, s.schedules)
 	s.mu.RUnlock()
 
 	for _, schedule := range schedules {
-		if s.shouldTrigger(schedule, now) && s.filtersPass(schedule, now) {
-			go schedule.Action(s.ctx)
+		should := s.shouldTrigger(schedule, now)
+		filtersOk := false
+		if should {
+			filtersOk = s.filtersPass(schedule, now)
+		} else {
+			// If trigger time not met, filters not evaluated
+			filtersOk = false
+		}
+		if should && filtersOk {
+			s.mu.Lock()
 			schedule.LastTriggered = now
+			s.mu.Unlock()
+			s.logScheduleTrigger(schedule, now)
+			go func(sch *DailySchedule) {
+				start := s.clock.Now()
+				s.logActionStart(sch, start)
+				defer func() {
+					if r := recover(); r != nil {
+						s.logActionPanic(sch, r)
+					}
+					s.logActionFinish(sch, start)
+				}()
+				sch.Action(s.ctx)
+			}(schedule)
+		} else {
+			reason := "trigger_time_not_reached"
+			if should && !filtersOk {
+				reason = "filters_not_passed"
+			} else if hasTriggeredThisPeriod(schedule, now) {
+				reason = "already_triggered_today"
+			}
+			triggerT := schedule.Trigger.Time()
+			s.logScheduleSkip(schedule, now, triggerT, reason)
 		}
 	}
 }
 
 // shouldTrigger checks if the trigger condition is met
-func (s *Scheduler) shouldTrigger(schedule *Schedule, now time.Time) bool {
-	switch schedule.Trigger.Type {
-	case TriggerTime:
-		t := schedule.Trigger.Time()
-		// Check if current time is at or after trigger time
-		// If hour is greater, trigger. If hour is equal, check minutes.
-		ret := !hasTriggeredThisPeriod(schedule, now) &&
-			(now.Hour() > t.Hour() || (now.Hour() == t.Hour() && now.Minute() >= t.Minute()))
-		return ret
-	}
-	return false
+func (s *Scheduler) shouldTrigger(schedule *DailySchedule, now time.Time) bool {
+	t := schedule.Trigger.Time()
+	// Check if current time is at or after trigger time
+	// If hour is greater, trigger. If hour is equal, check minutes.
+	ret := !hasTriggeredThisPeriod(schedule, now) &&
+		(now.Hour() > t.Hour() || (now.Hour() == t.Hour() && now.Minute() >= t.Minute()))
+	return ret
 }
 
-func hasTriggeredThisPeriod(schedule *Schedule, now time.Time) bool {
+func hasTriggeredThisPeriod(schedule *DailySchedule, now time.Time) bool {
 	if schedule.LastTriggered.IsZero() {
 		return false
 	}
@@ -169,7 +192,7 @@ func hasTriggeredThisPeriod(schedule *Schedule, now time.Time) bool {
 }
 
 // filtersPass checks if all filters pass according to logic type
-func (s *Scheduler) filtersPass(schedule *Schedule, now time.Time) bool {
+func (s *Scheduler) filtersPass(schedule *DailySchedule, now time.Time) bool {
 	if len(schedule.Filters) == 0 {
 		return true
 	}
@@ -210,4 +233,46 @@ func (s *Scheduler) filterPass(filter Filter, now time.Time) bool {
 		}
 	}
 	return true
+}
+
+// --- Logging helpers (centralized formatting) ---
+func (s *Scheduler) logScheduleAdded(schedule *DailySchedule) {
+	trigInfo := schedule.Trigger.Time().Format(time.RFC3339)
+	log.Info().Str("event", "schedule_added").Str("name", schedule.Name).Str("trigger_time", trigInfo).Int("filters", len(schedule.Filters)).Msg("schedule registered")
+}
+
+func (s *Scheduler) logStart() {
+	s.mu.RLock()
+	cnt := len(s.schedules)
+	names := make([]string, 0, cnt)
+	for _, sch := range s.schedules {
+		names = append(names, sch.Name)
+	}
+	s.mu.RUnlock()
+	log.Info().Str("event", "scheduler_start").Int("schedule_count", cnt).Strs("schedules", names).Msg("scheduler started")
+}
+
+func (s *Scheduler) logStop() {
+	log.Info().Str("event", "scheduler_stop").Msg("scheduler stopping")
+}
+
+func (s *Scheduler) logScheduleTrigger(schedule *DailySchedule, now time.Time) {
+	log.Info().Str("event", "schedule_trigger").Str("name", schedule.Name).Time("now", now).Msg("executing schedule action")
+}
+
+func (s *Scheduler) logScheduleSkip(schedule *DailySchedule, now, triggerT time.Time, reason string) {
+	log.Debug().Str("event", "schedule_skip").Str("name", schedule.Name).Str("reason", reason).Time("now", now).Time("trigger_time", triggerT).Time("last_triggered", schedule.LastTriggered).Msg("schedule not executed")
+}
+
+func (s *Scheduler) logActionStart(schedule *DailySchedule, start time.Time) {
+	log.Info().Str("event", "action_start").Str("schedule", schedule.Name).Time("start", start).Msg("action started")
+}
+
+func (s *Scheduler) logActionFinish(schedule *DailySchedule, start time.Time) {
+	dur := time.Since(start)
+	log.Info().Str("event", "action_finish").Str("schedule", schedule.Name).Dur("duration", dur).Msg("action finished")
+}
+
+func (s *Scheduler) logActionPanic(schedule *DailySchedule, r interface{}) {
+	log.Error().Str("event", "action_panic").Str("schedule", schedule.Name).Interface("panic", r).Bytes("stack", debug.Stack()).Msg("schedule action panic")
 }

@@ -10,6 +10,17 @@ services:
       - 6001:6001
     networks:
       - homeapp73-docker_default
+  scheduler:
+    container_name: gohome-scheduler
+    image: gohome-scheduler
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./cmd/scheduler/Dockerfile
+    ports:
+      - 6002:6002
+    networks:
+      - homeapp73-docker_default
 
 networks:
   homeapp73-docker_default:

@@ -23,18 +23,18 @@ func advanceMinutes(fc *FakeClock, minutes int) {
 func buildScheduler(clock *FakeClock, offCalls, onCalls *int32) *Scheduler {
 	s := NewSchedulerWithClock(clock)
 
-	s.AddSchedule(&Schedule{
+	s.AddSchedule(&DailySchedule{
 		Name: "Night Lights OFF",
-		Trigger: Trigger{Type: TriggerTime, Time: func() time.Time {
+		Trigger: Trigger{Time: func() time.Time {
 			cur := clock.Now()
 			return time.Date(cur.Year(), cur.Month(), cur.Day(), 7, 30, 0, 0, cur.Location())
 		}},
 		Action: func(ctx context.Context) { atomic.AddInt32(offCalls, 1) },
 	})
 
-	s.AddSchedule(&Schedule{
+	s.AddSchedule(&DailySchedule{
 		Name: "Night Lights ON",
-		Trigger: Trigger{Type: TriggerTime, Time: func() time.Time {
+		Trigger: Trigger{Time: func() time.Time {
 			cur := clock.Now()
 			return time.Date(cur.Year(), cur.Month(), cur.Day(), 16, 30, 0, 0, cur.Location())
 		}},

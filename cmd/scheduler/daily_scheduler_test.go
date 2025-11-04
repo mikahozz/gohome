@@ -12,10 +12,9 @@ import (
 func createSchedule(t func() time.Time, fn func(context.Context)) *Scheduler {
 	scheduler := NewScheduler()
 
-	schedule := &Schedule{
+	schedule := &DailySchedule{
 		Name: "Test Schedule",
 		Trigger: Trigger{
-			Type: TriggerTime,
 			Time: t,
 		},
 		Action: fn,

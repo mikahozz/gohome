@@ -2,8 +2,12 @@ package sun
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"os"
 	"time"
+
+	"github.com/rs/zerolog/log"
 )
 
 // SunData represents the overall structure of the sun data JSON
@@ -73,3 +77,43 @@ func (s *SunData) GetDailyData(startDate time.Time, endDate *time.Time) []*Daily
 
 	return results
 }
+
+// getTodayTime is an internal helper to fetch and parse a specific field (sunrise/sunset)
+// for today's date from the static JSON file. It panics on error to preserve existing
+// public function behaviour.
+func getTodayTime(field string) time.Time {
+	sunData, err := LoadSunData("integrations/sun/sun_helsinki_2025.json")
+	if err != nil {
+		log.Error().Err(err).Msg("Error loading sun data")
+		panic(err)
+	}
+	sArr := sunData.GetDailyData(time.Now(), nil)
+	if len(sArr) == 0 {
+		e := errors.New("no sun data found for the date")
+		log.Error().Err(e).Msg("No sun data found for the date")
+		panic(e)
+	}
+	s := sArr[0]
+	var raw string
+	switch field {
+	case "sunrise":
+		raw = s.Sunrise
+	case "sunset":
+		raw = s.Sunset
+	default:
+		e := errors.New("unsupported field: " + field)
+		panic(e)
+	}
+	tm, err := time.Parse("2006-01-02 3:04:05 PM", fmt.Sprintf("%s %s", s.Date, raw))
+	if err != nil {
+		log.Error().Err(err).Str("field", field).Msg("Error parsing sun time")
+		panic(err)
+	}
+	return tm
+}
+
+// GetSunriseToday returns today's sunrise time.
+func GetSunriseToday() time.Time { return getTodayTime("sunrise") }
+
+// GetSunsetToday returns today's sunset time.
+func GetSunsetToday() time.Time { return getTodayTime("sunset") }
