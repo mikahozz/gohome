@@ -22,14 +22,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
-	"github.com/mikahozz/gohome/config"
-	"github.com/rs/zerolog/log"
-
 	"net/http"
 	"net/url"
 	"os"
+	"sync"
 	"time"
+
+	"github.com/mikahozz/gohome/config"
+	"github.com/rs/zerolog/log"
 )
 
 // SwitchStatus represents the minimal status information we care about.
@@ -43,34 +43,39 @@ type ShellyClient struct {
 	baseURL string
 	http    *http.Client
 	pollInt time.Duration
+	mu      sync.Mutex // serialize Set operations to avoid overlapping state changes
 }
 
-func TurnOff(ctx context.Context) {
+func TurnOff(ctx context.Context) error {
 	c := GetClient()
 	if c == nil {
-		log.Error().Str("event", "shelly_client_missing_env").Msg("SHELLY_BASE_URL not set; skipping Shelly actions")
-		return
+		err := errors.New("missing SHELLY_BASE_URL")
+		log.Error().Err(err).Str("event", "shelly_client_missing_env").Msg("SHELLY_BASE_URL not set; skipping Shelly actions")
+		return err
 	}
 	_, err := c.Set(ctx, false, true, 10*time.Second)
 	if err != nil {
 		log.Error().Err(err).Str("event", "shelly_turn_off_error").Msg("failed to turn off Shelly plug")
-		return
+		return err
 	}
 	log.Info().Str("event", "shelly_turn_off_success").Msg("Shelly plug turned OFF")
+	return nil
 }
 
-func TurnOn(ctx context.Context) {
+func TurnOn(ctx context.Context) error {
 	c := GetClient()
 	if c == nil {
-		log.Error().Str("event", "shelly_client_missing_env").Msg("SHELLY_BASE_URL not set; skipping Shelly actions")
-		return
+		err := errors.New("missing SHELLY_BASE_URL")
+		log.Error().Err(err).Str("event", "shelly_client_missing_env").Msg("SHELLY_BASE_URL not set; skipping Shelly actions")
+		return err
 	}
 	_, err := c.Set(ctx, true, true, 10*time.Second)
 	if err != nil {
 		log.Error().Err(err).Str("event", "shelly_turn_on_error").Msg("failed to turn on Shelly plug")
-		return
+		return err
 	}
 	log.Info().Str("event", "shelly_turn_on_success").Msg("Shelly plug turned ON")
+	return nil
 }
 
 func GetClient() *ShellyClient {
@@ -125,6 +130,9 @@ func (c *ShellyClient) GetStatus(ctx context.Context) (SwitchStatus, error) {
 // Set changes the switch output state. If verify is true, it polls until the
 // desired state is reported or timeout expires. Returns final observed status.
 func (c *ShellyClient) Set(ctx context.Context, on bool, verify bool, timeout time.Duration) (SwitchStatus, error) {
+	// Ensure only one Set (including verification polling) runs at a time to avoid races
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	endpoint := fmt.Sprintf("%s/rpc/Switch.Set?id=0", c.baseURL)
 	u, err := url.Parse(endpoint)
 	if err != nil {

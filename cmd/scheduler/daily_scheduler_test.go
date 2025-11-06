@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createSchedule(t func() time.Time, fn func(context.Context)) *Scheduler {
+func createSchedule(t func() time.Time, fn func(context.Context) error) *Scheduler {
 	scheduler := NewScheduler()
 
 	schedule := &DailySchedule{
@@ -29,10 +29,11 @@ func TestSunsetSchedule(t *testing.T) {
 	var actionCalled bool
 	var mu sync.Mutex
 
-	dummyAction := func(ctx context.Context) {
+	dummyAction := func(ctx context.Context) error {
 		mu.Lock()
 		actionCalled = true
 		mu.Unlock()
+		return nil
 	}
 
 	t.Run("Should execute at 18:30", func(t *testing.T) {
@@ -108,4 +109,118 @@ func TestSunsetSchedule(t *testing.T) {
 
 		assert.True(t, actionCalled, "Action should have been executed next day")
 	})
+}
+
+func TestOfflineActionRetry(t *testing.T) {
+	now := time.Now()
+	scheduleTime := func() time.Time {
+		return time.Date(now.Year(), now.Month(), now.Day(), 12, 0, 0, 0, time.Local)
+	}
+	attempts := 0
+	failing := func(ctx context.Context) error {
+		attempts++
+		return assert.AnError
+	}
+	scheduler := createSchedule(scheduleTime, failing)
+	scheduler.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 12, 0, 0, 0, time.Local))
+	time.Sleep(50 * time.Millisecond)
+	assert.Equal(t, 1, attempts)
+	if !scheduler.schedules[0].LastTriggered.IsZero() {
+		t.Fatalf("expected LastTriggered zero after failure")
+	}
+	scheduler.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 12, 1, 0, 0, time.Local))
+	time.Sleep(50 * time.Millisecond)
+	assert.Equal(t, 2, attempts)
+	if !scheduler.schedules[0].LastTriggered.IsZero() {
+		t.Fatalf("expected LastTriggered still zero after second failure")
+	}
+}
+
+func TestCategorySupersede(t *testing.T) {
+	now := time.Now()
+	// Both schedules trigger at 10:00; evaluation at 10:05 -> both eligible
+	trig := func() time.Time { return time.Date(now.Year(), now.Month(), now.Day(), 10, 0, 0, 0, time.Local) }
+	executed := []string{}
+	var mu sync.Mutex
+	makeAction := func(name string) func(context.Context) error {
+		return func(ctx context.Context) error {
+			mu.Lock()
+			executed = append(executed, name)
+			mu.Unlock()
+			return nil
+		}
+	}
+	scheduler := NewScheduler()
+	scheduler.AddSchedule(&DailySchedule{Name: "First", Category: "group1", Trigger: Trigger{Time: trig}, Action: makeAction("First")})
+	scheduler.AddSchedule(&DailySchedule{Name: "Second", Category: "group1", Trigger: Trigger{Time: trig}, Action: makeAction("Second")})
+	scheduler.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 10, 5, 0, 0, time.Local))
+	time.Sleep(100 * time.Millisecond)
+	// Expect only last (Second) executed
+	assert.Equal(t, []string{"Second"}, executed)
+	if !scheduler.schedules[1].LastTriggered.IsZero() && !scheduler.schedules[0].LastTriggered.IsZero() {
+		t.Fatalf("expected only last schedule LastTriggered to be set")
+	}
+}
+
+func TestCategorySupersedeLatestTimeWins(t *testing.T) {
+	now := time.Now()
+	// Two schedules in same category with different trigger times; added in reverse chronological order
+	trigLate := func() time.Time { return time.Date(now.Year(), now.Month(), now.Day(), 15, 0, 0, 0, time.Local) }
+	trigEarly := func() time.Time { return time.Date(now.Year(), now.Month(), now.Day(), 10, 0, 0, 0, time.Local) }
+	var mu sync.Mutex
+	executed := []string{}
+	act := func(name string) func(context.Context) error {
+		return func(ctx context.Context) error {
+			mu.Lock()
+			executed = append(executed, name)
+			mu.Unlock()
+			return nil
+		}
+	}
+	s := NewScheduler()
+	// Add early (later in list) after late to ensure ordering alone doesn't decide
+	s.AddSchedule(&DailySchedule{Name: "Late", Category: "cat1", Trigger: Trigger{Time: trigLate}, Action: act("Late")})
+	s.AddSchedule(&DailySchedule{Name: "Early", Category: "cat1", Trigger: Trigger{Time: trigEarly}, Action: act("Early")})
+	// Evaluate after both times passed
+	s.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 16, 0, 0, 0, time.Local))
+	time.Sleep(100 * time.Millisecond)
+	// Expect only Late executed because its trigger time (15:00) is later than 10:00
+	assert.Equal(t, []string{"Late"}, executed)
+	if s.schedules[0].LastTriggered.IsZero() || !s.schedules[1].LastTriggered.IsZero() {
+		// schedules[0] is Late, schedules[1] is Early
+		if s.schedules[1].LastTriggered.IsZero() {
+			// ok
+		} else {
+			t.Fatalf("expected Early not to have LastTriggered set")
+		}
+	}
+}
+
+func TestEarlierScheduleDoesNotRunAfterLaterTriggered(t *testing.T) {
+	now := time.Now()
+	trigEarly := func() time.Time { return time.Date(now.Year(), now.Month(), now.Day(), 8, 0, 0, 0, time.Local) }
+	trigLate := func() time.Time { return time.Date(now.Year(), now.Month(), now.Day(), 18, 0, 0, 0, time.Local) }
+	var mu sync.Mutex
+	executed := []string{}
+	act := func(name string) func(context.Context) error {
+		return func(ctx context.Context) error { mu.Lock(); executed = append(executed, name); mu.Unlock(); return nil }
+	}
+	s := NewScheduler()
+	s.AddSchedule(&DailySchedule{Name: "Early", Category: "lights", Trigger: Trigger{Time: trigEarly}, Action: act("Early")})
+	s.AddSchedule(&DailySchedule{Name: "Late", Category: "lights", Trigger: Trigger{Time: trigLate}, Action: act("Late")})
+
+	// Morning: only early should run (late not yet time)
+	s.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 8, 5, 0, 0, time.Local))
+	time.Sleep(50 * time.Millisecond)
+	assert.Equal(t, []string{"Early"}, executed)
+
+	// Evening after both times: only late should run, early must NOT re-run
+	s.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 19, 0, 0, 0, time.Local))
+	time.Sleep(50 * time.Millisecond)
+	assert.Equal(t, []string{"Early", "Late"}, executed)
+
+	// Another later evaluation: early must remain suppressed
+	s.evaluate(time.Date(now.Year(), now.Month(), now.Day(), 20, 0, 0, 0, time.Local))
+	time.Sleep(50 * time.Millisecond)
+	assert.Equal(t, []string{"Early", "Late"}, executed)
 }

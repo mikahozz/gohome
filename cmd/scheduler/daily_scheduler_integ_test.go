@@ -29,7 +29,7 @@ func buildScheduler(clock *FakeClock, offCalls, onCalls *int32) *Scheduler {
 			cur := clock.Now()
 			return time.Date(cur.Year(), cur.Month(), cur.Day(), 7, 30, 0, 0, cur.Location())
 		}},
-		Action: func(ctx context.Context) { atomic.AddInt32(offCalls, 1) },
+		Action: func(ctx context.Context) error { atomic.AddInt32(offCalls, 1); return nil },
 	})
 
 	s.AddSchedule(&DailySchedule{
@@ -38,7 +38,7 @@ func buildScheduler(clock *FakeClock, offCalls, onCalls *int32) *Scheduler {
 			cur := clock.Now()
 			return time.Date(cur.Year(), cur.Month(), cur.Day(), 16, 30, 0, 0, cur.Location())
 		}},
-		Action: func(ctx context.Context) { atomic.AddInt32(onCalls, 1) },
+		Action: func(ctx context.Context) error { atomic.AddInt32(onCalls, 1); return nil },
 	})
 
 	return s

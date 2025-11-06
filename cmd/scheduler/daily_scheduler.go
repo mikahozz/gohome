@@ -59,10 +59,11 @@ type Filter struct {
 
 type DailySchedule struct {
 	Name          string
+	Category      string // optional grouping; only last eligible schedule in same category runs per evaluation cycle
 	Trigger       Trigger
 	FilterLogic   AndOrType
 	Filters       []Filter
-	Action        func(context.Context)
+	Action        func(context.Context) error
 	LastTriggered time.Time
 }
 
@@ -134,20 +135,58 @@ func (s *Scheduler) evaluate(now time.Time) {
 	copy(schedules, s.schedules)
 	s.mu.RUnlock()
 
-	for _, schedule := range schedules {
-		should := s.shouldTrigger(schedule, now)
-		filtersOk := false
-		if should {
-			filtersOk = s.filtersPass(schedule, now)
-		} else {
-			// If trigger time not met, filters not evaluated
-			filtersOk = false
+	// Track, per category, the latest trigger time that has already fired today.
+	triggeredMax := make(map[string]time.Time)
+	for _, sch := range schedules {
+		if sch.Category == "" || sch.LastTriggered.IsZero() || !hasTriggeredThisPeriod(sch, now) {
+			continue
 		}
-		if should && filtersOk {
-			s.mu.Lock()
-			schedule.LastTriggered = now
-			s.mu.Unlock()
-			s.logScheduleTrigger(schedule, now)
+		t := sch.Trigger.Time()
+		if prev, ok := triggeredMax[sch.Category]; !ok || t.After(prev) {
+			triggeredMax[sch.Category] = t
+		}
+	}
+
+	// Determine candidate per category for this evaluation.
+	candidates := make(map[string]*DailySchedule)
+	candidateTime := make(map[string]time.Time)
+	eligible := make(map[*DailySchedule]bool)
+	for _, sch := range schedules {
+		// Basic eligibility (time reached & not triggered today)
+		if !s.shouldTrigger(sch, now) {
+			continue
+		}
+		if !s.filtersPass(sch, now) {
+			continue
+		}
+		t := sch.Trigger.Time()
+		cat := sch.Category
+		eligible[sch] = true
+		// If a schedule already fired today in this category with time >= t, suppress (we only allow later times).
+		if cat != "" {
+			if firedT, ok := triggeredMax[cat]; ok && (t.Before(firedT) || t.Equal(firedT)) {
+				eligible[sch] = false
+				continue
+			}
+			prevT, ok := candidateTime[cat]
+			if !ok || t.After(prevT) || t.Equal(prevT) { // tie -> later-added wins
+				candidates[cat] = sch
+				candidateTime[cat] = t
+			}
+		} else {
+			// No category: treat each as its own candidate under a unique key (use name)
+			candidates[sch.Name] = sch
+		}
+	}
+
+	for _, sch := range schedules {
+		catKey := sch.Category
+		if catKey == "" {
+			catKey = sch.Name
+		}
+		isWinner := candidates[catKey] == sch && eligible[sch]
+		if isWinner {
+			s.logScheduleTrigger(sch, now)
 			go func(sch *DailySchedule) {
 				start := s.clock.Now()
 				s.logActionStart(sch, start)
@@ -155,20 +194,35 @@ func (s *Scheduler) evaluate(now time.Time) {
 					if r := recover(); r != nil {
 						s.logActionPanic(sch, r)
 					}
-					s.logActionFinish(sch, start)
 				}()
-				sch.Action(s.ctx)
-			}(schedule)
-		} else {
-			reason := "trigger_time_not_reached"
-			if should && !filtersOk {
-				reason = "filters_not_passed"
-			} else if hasTriggeredThisPeriod(schedule, now) {
-				reason = "already_triggered_today"
-			}
-			triggerT := schedule.Trigger.Time()
-			s.logScheduleSkip(schedule, now, triggerT, reason)
+				if err := sch.Action(s.ctx); err != nil {
+					log.Error().Err(err).Str("event", "action_error").Str("schedule", sch.Name).Msg("action failed; will retry next cycle")
+				} else {
+					s.mu.Lock()
+					sch.LastTriggered = now
+					s.mu.Unlock()
+					s.logActionFinish(sch, start)
+				}
+			}(sch)
+			continue
 		}
+		// Derive skip reason
+		reason := "trigger_time_not_reached"
+		if hasTriggeredThisPeriod(sch, now) {
+			reason = "already_triggered_today"
+		} else if eligible[sch] { // eligible but not winner
+			reason = "superseded_by_later_schedule"
+		} else if s.shouldTrigger(sch, now) && sch.Category != "" {
+			// suppressed due to later already triggered
+			t := sch.Trigger.Time()
+			if firedT, ok := triggeredMax[sch.Category]; ok && (t.Before(firedT) || t.Equal(firedT)) {
+				reason = "earlier_than_triggered_later_schedule"
+			}
+		} else if s.shouldTrigger(sch, now) && !s.filtersPass(sch, now) {
+			reason = "filters_not_passed"
+		}
+		triggerT := sch.Trigger.Time()
+		s.logScheduleSkip(sch, now, triggerT, reason)
 	}
 }
 
@@ -238,7 +292,11 @@ func (s *Scheduler) filterPass(filter Filter, now time.Time) bool {
 // --- Logging helpers (centralized formatting) ---
 func (s *Scheduler) logScheduleAdded(schedule *DailySchedule) {
 	trigInfo := schedule.Trigger.Time().Format(time.RFC3339)
-	log.Info().Str("event", "schedule_added").Str("name", schedule.Name).Str("trigger_time", trigInfo).Int("filters", len(schedule.Filters)).Msg("schedule registered")
+	evt := log.Info().Str("event", "schedule_added").Str("name", schedule.Name).Str("trigger_time", trigInfo).Int("filters", len(schedule.Filters))
+	if schedule.Category != "" {
+		evt = evt.Str("category", schedule.Category)
+	}
+	evt.Msg("schedule registered")
 }
 
 func (s *Scheduler) logStart() {
@@ -257,11 +315,19 @@ func (s *Scheduler) logStop() {
 }
 
 func (s *Scheduler) logScheduleTrigger(schedule *DailySchedule, now time.Time) {
-	log.Info().Str("event", "schedule_trigger").Str("name", schedule.Name).Time("now", now).Msg("executing schedule action")
+	evt := log.Info().Str("event", "schedule_trigger").Str("name", schedule.Name).Time("now", now)
+	if schedule.Category != "" {
+		evt = evt.Str("category", schedule.Category)
+	}
+	evt.Msg("executing schedule action")
 }
 
 func (s *Scheduler) logScheduleSkip(schedule *DailySchedule, now, triggerT time.Time, reason string) {
-	log.Debug().Str("event", "schedule_skip").Str("name", schedule.Name).Str("reason", reason).Time("now", now).Time("trigger_time", triggerT).Time("last_triggered", schedule.LastTriggered).Msg("schedule not executed")
+	evt := log.Debug().Str("event", "schedule_skip").Str("name", schedule.Name).Str("reason", reason).Time("now", now).Time("trigger_time", triggerT).Time("last_triggered", schedule.LastTriggered)
+	if schedule.Category != "" {
+		evt = evt.Str("category", schedule.Category)
+	}
+	evt.Msg("schedule not executed")
 }
 
 func (s *Scheduler) logActionStart(schedule *DailySchedule, start time.Time) {

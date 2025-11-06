@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 
 	"github.com/mikahozz/gohome/integrations/shelly"
@@ -21,19 +22,21 @@ func main() {
 
 	scheduler := NewScheduler()
 	scheduler.AddSchedule(&DailySchedule{
-		Name: "Night lights ON",
+		Name:     "Night lights ON",
+		Category: "night_lights",
 		Trigger: Trigger{
 			Time: sun.GetSunsetToday,
 		},
-		Action: shelly.TurnOn,
+		Action: func(ctx context.Context) error { return shelly.TurnOn(ctx) },
 	})
 
 	scheduler.AddSchedule(&DailySchedule{
-		Name: "Night lights OFF",
+		Name:     "Night lights OFF",
+		Category: "night_lights",
 		Trigger: Trigger{
 			Time: sun.GetSunriseToday,
 		},
-		Action: shelly.TurnOff,
+		Action: func(ctx context.Context) error { return shelly.TurnOff(ctx) },
 	})
 	scheduler.Start()
 	defer scheduler.Stop()
