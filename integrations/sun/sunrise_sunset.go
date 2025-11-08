@@ -104,9 +104,22 @@ func getTodayTime(field string) time.Time {
 		e := errors.New("unsupported field: " + field)
 		panic(e)
 	}
-	tm, err := time.Parse("2006-01-02 3:04:05 PM", fmt.Sprintf("%s %s", s.Date, raw))
+
+	// Load location from data; fall back to Europe/Helsinki if missing or fails
+	loc, err := time.LoadLocation(s.Timezone)
+	if err != nil || loc == nil {
+		fallback, ferr := time.LoadLocation("Europe/Helsinki")
+		if ferr != nil {
+			// If even fallback fails, panic to retain previous behaviour
+			log.Error().Err(ferr).Str("timezone", s.Timezone).Msg("Failed to load timezone and fallback")
+			panic(ferr)
+		}
+		loc = fallback
+	}
+	// Parse in location so that we retain correct zone info; layout remains the same.
+	tm, err := time.ParseInLocation("2006-01-02 3:04:05 PM", fmt.Sprintf("%s %s", s.Date, raw), loc)
 	if err != nil {
-		log.Error().Err(err).Str("field", field).Msg("Error parsing sun time")
+		log.Error().Err(err).Str("field", field).Str("date", s.Date).Str("raw", raw).Msg("Error parsing sun time in location")
 		panic(err)
 	}
 	return tm

@@ -10,6 +10,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var zone, _ = time.LoadLocation("Europe/Helsinki")
+
 func main() {
 	defer func() {
 		if r := recover(); r != nil {
@@ -36,7 +38,7 @@ func main() {
 		Trigger: Trigger{
 			Time: func() time.Time {
 				now := time.Now()
-				return time.Date(now.Year(), now.Month(), now.Day(), 23, 0, 0, 0, now.Location())
+				return time.Date(now.Year(), now.Month(), now.Day(), 23, 0, 0, 0, zone)
 			},
 		},
 		Action: func(ctx context.Context) error { return shelly.TurnOff(ctx) },
@@ -48,7 +50,7 @@ func main() {
 		Trigger: Trigger{
 			Time: func() time.Time {
 				now := time.Now()
-				return time.Date(now.Year(), now.Month(), now.Day(), 6, 45, 0, 0, now.Location())
+				return time.Date(now.Year(), now.Month(), now.Day(), 6, 45, 0, 0, zone)
 			},
 		},
 		Action: func(ctx context.Context) error { return shelly.TurnOn(ctx) },

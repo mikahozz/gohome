@@ -228,12 +228,13 @@ func (s *Scheduler) evaluate(now time.Time) {
 
 // shouldTrigger checks if the trigger condition is met
 func (s *Scheduler) shouldTrigger(schedule *DailySchedule, now time.Time) bool {
+	if hasTriggeredThisPeriod(schedule, now) {
+		return false
+	}
 	t := schedule.Trigger.Time()
-	// Check if current time is at or after trigger time
-	// If hour is greater, trigger. If hour is equal, check minutes.
-	ret := !hasTriggeredThisPeriod(schedule, now) &&
-		(now.Hour() > t.Hour() || (now.Hour() == t.Hour() && now.Minute() >= t.Minute()))
-	return ret
+	// Compare absolute instants instead of naive hour/minute fields which break across timezones.
+	// Trigger when now >= t.
+	return !now.Before(t)
 }
 
 func hasTriggeredThisPeriod(schedule *DailySchedule, now time.Time) bool {

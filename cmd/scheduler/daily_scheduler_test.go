@@ -224,3 +224,43 @@ func TestEarlierScheduleDoesNotRunAfterLaterTriggered(t *testing.T) {
 	time.Sleep(50 * time.Millisecond)
 	assert.Equal(t, []string{"Early", "Late"}, executed)
 }
+
+// TestTimezoneTrigger ensures that a trigger time expressed in a non-UTC location
+// fires at the correct absolute instant even if the evaluation 'now' is in UTC.
+// Previously the scheduler only compared Hour/Minute fields, causing times whose
+// zone hour differed to never match until hours aligned incorrectly.
+func TestTimezoneTrigger(t *testing.T) {
+	// Helsinki location
+	helsinki, err := time.LoadLocation("Europe/Helsinki")
+	if err != nil {
+		t.Fatalf("failed to load location: %v", err)
+	}
+	// Sunset example: 16:08:19 local Helsinki
+	triggerInstant := time.Date(2025, 11, 8, 16, 8, 19, 0, helsinki)
+
+	// Action records execution time
+	var executedAt time.Time
+	act := func(ctx context.Context) error { executedAt = time.Now(); return nil }
+	s := NewScheduler()
+	s.AddSchedule(&DailySchedule{Name: "Sunset", Trigger: Trigger{Time: func() time.Time { return triggerInstant }}, Action: act})
+
+	// Evaluate a moment BEFORE the trigger in UTC equivalent (triggerInstant in UTC is 14:08:19)
+	beforeUTC := triggerInstant.In(time.UTC).Add(-time.Second) // 14:08:18 UTC
+	s.evaluate(beforeUTC)
+	time.Sleep(25 * time.Millisecond)
+	if !executedAt.IsZero() {
+		t.Fatalf("action executed too early at %v", executedAt)
+	}
+
+	// Evaluate exactly at the trigger absolute instant in UTC
+	atUTC := triggerInstant.In(time.UTC) // 14:08:19 UTC
+	s.evaluate(atUTC)
+	time.Sleep(25 * time.Millisecond)
+	if executedAt.IsZero() {
+		t.Fatalf("expected action to execute at trigger instant")
+	}
+	// Ensure schedule LastTriggered set
+	if s.schedules[0].LastTriggered.IsZero() {
+		t.Fatalf("expected LastTriggered to be set")
+	}
+}

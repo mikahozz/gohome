@@ -154,6 +154,19 @@ func TestGetSunriseAndSunsetToday(t *testing.T) {
 	if sunrise.Format("2006-01-02") != d.Date || sunset.Format("2006-01-02") != d.Date {
 		t.Fatalf("parsed times date mismatch. got sunrise date=%s sunset date=%s want=%s", sunrise.Format("2006-01-02"), sunset.Format("2006-01-02"), d.Date)
 	}
+
+	// Timezone assertions: ensure location is Europe/Helsinki and offset matches expected UTCOffset (minutes)
+	locRise := sunrise.Location()
+	locSet := sunset.Location()
+	if locRise.String() != d.Timezone || locSet.String() != d.Timezone {
+		t.Fatalf("unexpected location names: sunrise=%s sunset=%s expected=%s", locRise.String(), locSet.String(), d.Timezone)
+	}
+	_, riseOffset := sunrise.Zone()
+	_, setOffset := sunset.Zone()
+	expectedSeconds := d.UTCOffset * 60
+	if riseOffset != expectedSeconds || setOffset != expectedSeconds {
+		t.Fatalf("unexpected offsets: sunrise=%d sunset=%d expected=%d", riseOffset, setOffset, expectedSeconds)
+	}
 }
 
 // Helper function to get pointer to string
