@@ -183,28 +183,28 @@ func getSunData() http.HandlerFunc {
 		}
 
 		// Parse end date (optional)
-		var end *time.Time
+		var end time.Time
 		if endStr != "" {
-			parsedEnd, err := time.Parse("2006-01-02", endStr)
+			end, err = time.Parse("2006-01-02", endStr)
 			if err != nil {
 				log.Err(err).Msg("Invalid end date format")
-				http.Error(w, "Invalid end date format. Use YYYY-MM-DD (e.g., 2025-03-08).", http.StatusBadRequest)
+				http.Error(w, "Invalid end date format. Use YYYY-MM-DD (e.g., 2025-03-10).", http.StatusBadRequest)
 				return
 			}
-			end = &parsedEnd
 		}
 
-		// Load sun data - note that only month and day are considered, year is ignored
-		sunData, err := sun.LoadSunData("integrations/sun/sun_helsinki_2025.json")
+		// Load sun data
+		sunData, err := sun.NewSunData()
+
 		if err != nil {
 			log.Error().Err(err).Msg("Error loading sun data")
 			http.Error(w, "Error occurred in loading sun data", http.StatusInternalServerError)
 			return
 		}
 
-		// Get data for the date range (ignoring year)
-		filtered := sunData.GetDailyData(start, end)
-		json, err := json.Marshal(filtered)
+		// Get data for the single date (ignoring year, only returns one day)
+		dailySunData := sunData.GetSunDataForDateRange(start, end)
+		json, err := json.Marshal(dailySunData)
 		if err != nil {
 			log.Error().Err(err).Msg("Error marshalling sun data to JSON")
 			http.Error(w, "Error occurred in JSON conversion of sun data", http.StatusInternalServerError)

@@ -1,27 +1,30 @@
 package sun
 
 import (
+	_ "embed"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/rs/zerolog/log"
 )
 
-// SunData represents the overall structure of the sun data JSON
-type SunData struct {
-	Results []DailyData `json:"results"`
+type monthDay struct {
+	Month int
+	Day   int
 }
 
-// DailyData represents the sun data for a single day
-type DailyData struct {
-	Date       string `json:"date"`
+// SunData represents the overall structure of the sun data JSON
+type SunData struct {
+	byMonthDay map[monthDay]*dailySunDataRaw
+}
+
+// dailySunDataRaw represents raw sun data from JSON (internal use only)
+type dailySunDataRaw struct {
+	Month      int    `json:"month"`
+	Day        int    `json:"day"`
 	Sunrise    string `json:"sunrise"`
 	Sunset     string `json:"sunset"`
-	FirstLight string `json:"first_light"`
-	LastLight  string `json:"last_light"`
 	Dawn       string `json:"dawn"`
 	Dusk       string `json:"dusk"`
 	SolarNoon  string `json:"solar_noon"`
@@ -31,102 +34,108 @@ type DailyData struct {
 	UTCOffset  int    `json:"utc_offset"`
 }
 
-// LoadSunData loads sun data from a JSON file
-func LoadSunData(filePath string) (*SunData, error) {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		return nil, err
-	}
-
-	var sunData SunData
-	if err := json.Unmarshal(data, &sunData); err != nil {
-		return nil, err
-	}
-
-	return &sunData, nil
+// DailySunData represents the sun data for a single day
+type DailySunData struct {
+	Date       string    `json:"date"`
+	Sunrise    time.Time `json:"sunrise"`
+	Sunset     time.Time `json:"sunset"`
+	Dawn       time.Time `json:"dawn"`
+	Dusk       time.Time `json:"dusk"`
+	SolarNoon  time.Time `json:"solar_noon"`
+	GoldenHour time.Time `json:"golden_hour"`
+	DayLength  string    `json:"day_length"` // Keep as string, it's a duration like "10:23:53"
+	Timezone   string    `json:"timezone"`
+	UTCOffset  int       `json:"utc_offset"`
 }
 
-// GetDailyData returns the sun data for a specific date or date range
-// The year part of the date is ignored, only month and day are considered
-func (s *SunData) GetDailyData(startDate time.Time, endDate *time.Time) []*DailyData {
-	// Format dates as MM-DD to ignore year
-	startMonthDay := startDate.Format("01-02")
-	var results []*DailyData
+//go:embed sun_helsinki.json
+var sunDataJSON []byte
 
-	// Determine end date - either the provided end date or the start date if no end date
-	endMonthDay := startMonthDay
-	if endDate != nil {
-		endMonthDay = endDate.Format("01-02")
+// LoadSunData loads sun data from a JSON file
+func NewSunData() (*SunData, error) {
+	// Temporary struct for unmarshaling
+	var temp struct {
+		Results []dailySunDataRaw `json:"results"`
+	}
+	if err := json.Unmarshal(sunDataJSON, &temp); err != nil {
+		return nil, err
 	}
 
-	// Collect all dates in the range
-	for i, daily := range s.Results {
-		// Parse the date from the data to extract month and day
-		t, err := time.Parse("2006-01-02", daily.Date)
-		if err != nil {
-			continue // Skip invalid dates
+	// Build the map
+	sunData := &SunData{
+		byMonthDay: make(map[monthDay]*dailySunDataRaw, len(temp.Results)),
+	}
+	for i := range temp.Results {
+		key := monthDay{Month: temp.Results[i].Month, Day: temp.Results[i].Day}
+		sunData.byMonthDay[key] = &temp.Results[i]
+	}
+
+	// Validate we have all 366 days (including leap day)
+	if len(sunData.byMonthDay) != 366 {
+		return nil, fmt.Errorf("sun data incomplete: expected 366 days, got %d", len(sunData.byMonthDay))
+	}
+
+	return sunData, nil
+}
+
+// Helper to parse time string for a specific date
+func parseTimeForDate(date time.Time, timeStr string, timezone string) time.Time {
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		loc, _ = time.LoadLocation("Europe/Helsinki")
+	}
+
+	dateStr := date.Format("2006-01-02")
+	tm, err := time.ParseInLocation("2006-01-02 3:04:05 PM", fmt.Sprintf("%s %s", dateStr, timeStr), loc)
+	if err != nil {
+		log.Error().Err(err).Str("timeStr", timeStr).Msg("Error parsing sun time")
+		return time.Time{}
+	}
+	return tm
+}
+
+// GetSunDataForDateRange returns sun data for a date range in converted format.
+// If endDate is zero value or equal to startDate, returns only startDate.
+func (s *SunData) GetSunDataForDateRange(startDate time.Time, endDate time.Time) []DailySunData {
+	// If no end date or same as start, only return single day
+	if endDate.IsZero() || endDate.Equal(startDate) {
+		endDate = startDate
+	}
+
+	var results []DailySunData
+
+	// Iterate through each day in the range
+	for d := startDate; !d.After(endDate); d = d.AddDate(0, 0, 1) {
+		// Look up sun data for this month-day
+		key := monthDay{Month: int(d.Month()), Day: d.Day()}
+		dailyData := s.byMonthDay[key]
+
+		if dailyData == nil {
+			// Skip dates not in our data
+			continue
 		}
 
-		// Compare only month and day
-		dailyMonthDay := t.Format("01-02")
-
-		if dailyMonthDay >= startMonthDay && dailyMonthDay <= endMonthDay {
-			results = append(results, &s.Results[i])
+		// Convert to the format with actual date
+		converted := DailySunData{
+			Date:       d.Format("2006-01-02"),
+			Sunrise:    parseTimeForDate(d, dailyData.Sunrise, dailyData.Timezone),
+			Sunset:     parseTimeForDate(d, dailyData.Sunset, dailyData.Timezone),
+			Dawn:       parseTimeForDate(d, dailyData.Dawn, dailyData.Timezone),
+			Dusk:       parseTimeForDate(d, dailyData.Dusk, dailyData.Timezone),
+			SolarNoon:  parseTimeForDate(d, dailyData.SolarNoon, dailyData.Timezone),
+			GoldenHour: parseTimeForDate(d, dailyData.GoldenHour, dailyData.Timezone),
+			DayLength:  dailyData.DayLength,
+			Timezone:   dailyData.Timezone,
+			UTCOffset:  dailyData.UTCOffset,
 		}
+
+		results = append(results, converted)
 	}
 
 	return results
 }
 
-// getTodayTime is an internal helper to fetch and parse a specific field (sunrise/sunset)
-// for today's date from the static JSON file. It panics on error to preserve existing
-// public function behaviour.
-func getTodayTime(field string) time.Time {
-	sunData, err := LoadSunData("integrations/sun/sun_helsinki_2025.json")
-	if err != nil {
-		log.Error().Err(err).Msg("Error loading sun data")
-		panic(err)
-	}
-	sArr := sunData.GetDailyData(time.Now(), nil)
-	if len(sArr) == 0 {
-		e := errors.New("no sun data found for the date")
-		log.Error().Err(e).Msg("No sun data found for the date")
-		panic(e)
-	}
-	s := sArr[0]
-	var raw string
-	switch field {
-	case "sunrise":
-		raw = s.Sunrise
-	case "sunset":
-		raw = s.Sunset
-	default:
-		e := errors.New("unsupported field: " + field)
-		panic(e)
-	}
-
-	// Load location from data; fall back to Europe/Helsinki if missing or fails
-	loc, err := time.LoadLocation(s.Timezone)
-	if err != nil || loc == nil {
-		fallback, ferr := time.LoadLocation("Europe/Helsinki")
-		if ferr != nil {
-			// If even fallback fails, panic to retain previous behaviour
-			log.Error().Err(ferr).Str("timezone", s.Timezone).Msg("Failed to load timezone and fallback")
-			panic(ferr)
-		}
-		loc = fallback
-	}
-	// Parse in location so that we retain correct zone info; layout remains the same.
-	tm, err := time.ParseInLocation("2006-01-02 3:04:05 PM", fmt.Sprintf("%s %s", s.Date, raw), loc)
-	if err != nil {
-		log.Error().Err(err).Str("field", field).Str("date", s.Date).Str("raw", raw).Msg("Error parsing sun time in location")
-		panic(err)
-	}
-	return tm
+func (s *SunData) GetSunDataForSingleDate(date time.Time) *DailySunData {
+	sunData := s.GetSunDataForDateRange(date, time.Time{})
+	return &sunData[0]
 }
-
-// GetSunriseToday returns today's sunrise time.
-func GetSunriseToday() time.Time { return getTodayTime("sunrise") }
-
-// GetSunsetToday returns today's sunset time.
-func GetSunsetToday() time.Time { return getTodayTime("sunset") }

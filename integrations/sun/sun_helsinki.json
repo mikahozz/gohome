@@ -1,7 +1,8 @@
 {
   "results": [
     {
-      "date": "2025-01-01",
+      "month": 1,
+      "day": 1,
       "sunrise": "9:25:22 AM",
       "sunset": "3:24:31 PM",
       "first_light": "6:39:56 AM",
@@ -15,7 +16,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-02",
+      "month": 1,
+      "day": 2,
       "sunrise": "9:24:50 AM",
       "sunset": "3:25:58 PM",
       "first_light": "6:39:46 AM",
@@ -29,7 +31,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-03",
+      "month": 1,
+      "day": 3,
       "sunrise": "9:24:12 AM",
       "sunset": "3:27:30 PM",
       "first_light": "6:39:33 AM",
@@ -43,7 +46,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-04",
+      "month": 1,
+      "day": 4,
       "sunrise": "9:23:29 AM",
       "sunset": "3:29:07 PM",
       "first_light": "6:39:17 AM",
@@ -57,7 +61,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-05",
+      "month": 1,
+      "day": 5,
       "sunrise": "9:22:41 AM",
       "sunset": "3:30:48 PM",
       "first_light": "6:38:57 AM",
@@ -71,7 +76,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-06",
+      "month": 1,
+      "day": 6,
       "sunrise": "9:21:49 AM",
       "sunset": "3:32:32 PM",
       "first_light": "6:38:33 AM",
@@ -85,7 +91,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-07",
+      "month": 1,
+      "day": 7,
       "sunrise": "9:20:51 AM",
       "sunset": "3:34:21 PM",
       "first_light": "6:38:06 AM",
@@ -99,7 +106,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-08",
+      "month": 1,
+      "day": 8,
       "sunrise": "9:19:49 AM",
       "sunset": "3:36:14 PM",
       "first_light": "6:37:36 AM",
@@ -113,7 +121,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-09",
+      "month": 1,
+      "day": 9,
       "sunrise": "9:18:42 AM",
       "sunset": "3:38:11 PM",
       "first_light": "6:37:02 AM",
@@ -127,7 +136,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-10",
+      "month": 1,
+      "day": 10,
       "sunrise": "9:17:31 AM",
       "sunset": "3:40:10 PM",
       "first_light": "6:36:25 AM",
@@ -141,7 +151,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-11",
+      "month": 1,
+      "day": 11,
       "sunrise": "9:16:15 AM",
       "sunset": "3:42:14 PM",
       "first_light": "6:35:44 AM",
@@ -155,7 +166,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-12",
+      "month": 1,
+      "day": 12,
       "sunrise": "9:14:55 AM",
       "sunset": "3:44:20 PM",
       "first_light": "6:35:00 AM",
@@ -169,7 +181,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-13",
+      "month": 1,
+      "day": 13,
       "sunrise": "9:13:31 AM",
       "sunset": "3:46:29 PM",
       "first_light": "6:34:12 AM",
@@ -183,7 +196,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-14",
+      "month": 1,
+      "day": 14,
       "sunrise": "9:12:03 AM",
       "sunset": "3:48:42 PM",
       "first_light": "6:33:22 AM",
@@ -197,7 +211,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-15",
+      "month": 1,
+      "day": 15,
       "sunrise": "9:10:32 AM",
       "sunset": "3:50:56 PM",
       "first_light": "6:32:27 AM",
@@ -211,7 +226,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-16",
+      "month": 1,
+      "day": 16,
       "sunrise": "9:08:56 AM",
       "sunset": "3:53:14 PM",
       "first_light": "6:31:30 AM",
@@ -225,7 +241,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-17",
+      "month": 1,
+      "day": 17,
       "sunrise": "9:07:17 AM",
       "sunset": "3:55:34 PM",
       "first_light": "6:30:29 AM",
@@ -239,7 +256,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-18",
+      "month": 1,
+      "day": 18,
       "sunrise": "9:05:35 AM",
       "sunset": "3:57:56 PM",
       "first_light": "6:29:24 AM",
@@ -253,7 +271,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-19",
+      "month": 1,
+      "day": 19,
       "sunrise": "9:03:49 AM",
       "sunset": "4:00:20 PM",
       "first_light": "6:28:17 AM",
@@ -267,7 +286,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-20",
+      "month": 1,
+      "day": 20,
       "sunrise": "9:02:00 AM",
       "sunset": "4:02:45 PM",
       "first_light": "6:27:06 AM",
@@ -281,7 +301,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-21",
+      "month": 1,
+      "day": 21,
       "sunrise": "9:00:07 AM",
       "sunset": "4:05:13 PM",
       "first_light": "6:25:52 AM",
@@ -295,7 +316,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-22",
+      "month": 1,
+      "day": 22,
       "sunrise": "8:58:12 AM",
       "sunset": "4:07:42 PM",
       "first_light": "6:24:35 AM",
@@ -309,7 +331,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-23",
+      "month": 1,
+      "day": 23,
       "sunrise": "8:56:14 AM",
       "sunset": "4:10:13 PM",
       "first_light": "6:23:15 AM",
@@ -323,7 +346,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-24",
+      "month": 1,
+      "day": 24,
       "sunrise": "8:54:12 AM",
       "sunset": "4:12:45 PM",
       "first_light": "6:21:52 AM",
@@ -337,7 +361,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-25",
+      "month": 1,
+      "day": 25,
       "sunrise": "8:52:08 AM",
       "sunset": "4:15:19 PM",
       "first_light": "6:20:25 AM",
@@ -351,7 +376,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-26",
+      "month": 1,
+      "day": 26,
       "sunrise": "8:50:02 AM",
       "sunset": "4:17:53 PM",
       "first_light": "6:18:56 AM",
@@ -365,7 +391,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-27",
+      "month": 1,
+      "day": 27,
       "sunrise": "8:47:53 AM",
       "sunset": "4:20:29 PM",
       "first_light": "6:17:23 AM",
@@ -379,7 +406,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-28",
+      "month": 1,
+      "day": 28,
       "sunrise": "8:45:41 AM",
       "sunset": "4:23:05 PM",
       "first_light": "6:15:48 AM",
@@ -393,7 +421,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-29",
+      "month": 1,
+      "day": 29,
       "sunrise": "8:43:27 AM",
       "sunset": "4:25:42 PM",
       "first_light": "6:14:09 AM",
@@ -407,7 +436,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-30",
+      "month": 1,
+      "day": 30,
       "sunrise": "8:41:11 AM",
       "sunset": "4:28:20 PM",
       "first_light": "6:12:28 AM",
@@ -421,7 +451,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-01-31",
+      "month": 1,
+      "day": 31,
       "sunrise": "8:38:53 AM",
       "sunset": "4:30:59 PM",
       "first_light": "6:10:43 AM",
@@ -435,7 +466,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-01",
+      "month": 2,
+      "day": 1,
       "sunrise": "8:36:32 AM",
       "sunset": "4:33:38 PM",
       "first_light": "6:08:56 AM",
@@ -449,7 +481,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-02",
+      "month": 2,
+      "day": 2,
       "sunrise": "8:34:10 AM",
       "sunset": "4:36:17 PM",
       "first_light": "6:07:06 AM",
@@ -463,7 +496,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-03",
+      "month": 2,
+      "day": 3,
       "sunrise": "8:31:45 AM",
       "sunset": "4:38:57 PM",
       "first_light": "6:05:13 AM",
@@ -477,7 +511,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-04",
+      "month": 2,
+      "day": 4,
       "sunrise": "8:29:19 AM",
       "sunset": "4:41:37 PM",
       "first_light": "6:03:17 AM",
@@ -491,7 +526,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-05",
+      "month": 2,
+      "day": 5,
       "sunrise": "8:26:50 AM",
       "sunset": "4:44:18 PM",
       "first_light": "6:01:19 AM",
@@ -505,7 +541,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-06",
+      "month": 2,
+      "day": 6,
       "sunrise": "8:24:20 AM",
       "sunset": "4:46:58 PM",
       "first_light": "5:59:18 AM",
@@ -519,7 +556,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-07",
+      "month": 2,
+      "day": 7,
       "sunrise": "8:21:49 AM",
       "sunset": "4:49:38 PM",
       "first_light": "5:57:14 AM",
@@ -533,7 +571,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-08",
+      "month": 2,
+      "day": 8,
       "sunrise": "8:19:15 AM",
       "sunset": "4:52:19 PM",
       "first_light": "5:55:07 AM",
@@ -547,7 +586,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-09",
+      "month": 2,
+      "day": 9,
       "sunrise": "8:16:40 AM",
       "sunset": "4:54:59 PM",
       "first_light": "5:52:58 AM",
@@ -561,7 +601,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-10",
+      "month": 2,
+      "day": 10,
       "sunrise": "8:14:04 AM",
       "sunset": "4:57:40 PM",
       "first_light": "5:50:46 AM",
@@ -575,7 +616,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-11",
+      "month": 2,
+      "day": 11,
       "sunrise": "8:11:26 AM",
       "sunset": "5:00:20 PM",
       "first_light": "5:48:31 AM",
@@ -589,7 +631,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-12",
+      "month": 2,
+      "day": 12,
       "sunrise": "8:08:46 AM",
       "sunset": "5:03:00 PM",
       "first_light": "5:46:14 AM",
@@ -603,7 +646,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-13",
+      "month": 2,
+      "day": 13,
       "sunrise": "8:06:06 AM",
       "sunset": "5:05:40 PM",
       "first_light": "5:43:54 AM",
@@ -617,7 +661,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-14",
+      "month": 2,
+      "day": 14,
       "sunrise": "8:03:24 AM",
       "sunset": "5:08:19 PM",
       "first_light": "5:41:32 AM",
@@ -631,7 +676,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-15",
+      "month": 2,
+      "day": 15,
       "sunrise": "8:00:40 AM",
       "sunset": "5:10:58 PM",
       "first_light": "5:39:07 AM",
@@ -645,7 +691,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-16",
+      "month": 2,
+      "day": 16,
       "sunrise": "7:57:56 AM",
       "sunset": "5:13:37 PM",
       "first_light": "5:36:40 AM",
@@ -659,7 +706,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-17",
+      "month": 2,
+      "day": 17,
       "sunrise": "7:55:10 AM",
       "sunset": "5:16:16 PM",
       "first_light": "5:34:10 AM",
@@ -673,7 +721,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-18",
+      "month": 2,
+      "day": 18,
       "sunrise": "7:52:23 AM",
       "sunset": "5:18:54 PM",
       "first_light": "5:31:37 AM",
@@ -687,7 +736,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-19",
+      "month": 2,
+      "day": 19,
       "sunrise": "7:49:36 AM",
       "sunset": "5:21:31 PM",
       "first_light": "5:29:03 AM",
@@ -701,7 +751,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-20",
+      "month": 2,
+      "day": 20,
       "sunrise": "7:46:47 AM",
       "sunset": "5:24:09 PM",
       "first_light": "5:26:25 AM",
@@ -715,7 +766,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-21",
+      "month": 2,
+      "day": 21,
       "sunrise": "7:43:57 AM",
       "sunset": "5:26:46 PM",
       "first_light": "5:23:46 AM",
@@ -729,7 +781,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-22",
+      "month": 2,
+      "day": 22,
       "sunrise": "7:41:06 AM",
       "sunset": "5:29:22 PM",
       "first_light": "5:21:04 AM",
@@ -743,7 +796,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-23",
+      "month": 2,
+      "day": 23,
       "sunrise": "7:38:14 AM",
       "sunset": "5:31:58 PM",
       "first_light": "5:18:19 AM",
@@ -757,7 +811,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-24",
+      "month": 2,
+      "day": 24,
       "sunrise": "7:35:22 AM",
       "sunset": "5:34:34 PM",
       "first_light": "5:15:33 AM",
@@ -771,7 +826,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-25",
+      "month": 2,
+      "day": 25,
       "sunrise": "7:32:28 AM",
       "sunset": "5:37:09 PM",
       "first_light": "5:12:43 AM",
@@ -785,7 +841,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-26",
+      "month": 2,
+      "day": 26,
       "sunrise": "7:29:34 AM",
       "sunset": "5:39:43 PM",
       "first_light": "5:09:52 AM",
@@ -799,7 +856,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-27",
+      "month": 2,
+      "day": 27,
       "sunrise": "7:26:39 AM",
       "sunset": "5:42:18 PM",
       "first_light": "5:06:58 AM",
@@ -813,7 +871,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-02-28",
+      "month": 2,
+      "day": 28,
       "sunrise": "7:23:43 AM",
       "sunset": "5:44:51 PM",
       "first_light": "5:04:02 AM",
@@ -827,7 +886,23 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-01",
+      "month": 2,
+      "day": 29,
+      "sunrise": "7:22:15 AM",
+      "sunset": "5:46:08 PM",
+      "first_light": "5:02:33 AM",
+      "last_light": "8:05:51 PM",
+      "dawn": "6:40:03 AM",
+      "dusk": "6:28:20 PM",
+      "solar_noon": "12:34:11 PM",
+      "golden_hour": "4:47:17 PM",
+      "day_length": "10:23:53",
+      "timezone": "Europe/Helsinki",
+      "utc_offset": 120
+    },
+    {
+      "month": 3,
+      "day": 1,
       "sunrise": "7:20:46 AM",
       "sunset": "5:47:25 PM",
       "first_light": "5:01:03 AM",
@@ -841,7 +916,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-02",
+      "month": 3,
+      "day": 2,
       "sunrise": "7:17:49 AM",
       "sunset": "5:49:57 PM",
       "first_light": "4:58:02 AM",
@@ -855,7 +931,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-03",
+      "month": 3,
+      "day": 3,
       "sunrise": "7:14:51 AM",
       "sunset": "5:52:30 PM",
       "first_light": "4:54:59 AM",
@@ -869,7 +946,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-04",
+      "month": 3,
+      "day": 4,
       "sunrise": "7:11:53 AM",
       "sunset": "5:55:02 PM",
       "first_light": "4:51:53 AM",
@@ -883,7 +961,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-05",
+      "month": 3,
+      "day": 5,
       "sunrise": "7:08:54 AM",
       "sunset": "5:57:33 PM",
       "first_light": "4:48:45 AM",
@@ -897,7 +976,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-06",
+      "month": 3,
+      "day": 6,
       "sunrise": "7:05:55 AM",
       "sunset": "6:00:04 PM",
       "first_light": "4:45:34 AM",
@@ -911,7 +991,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-07",
+      "month": 3,
+      "day": 7,
       "sunrise": "7:02:55 AM",
       "sunset": "6:02:35 PM",
       "first_light": "4:42:21 AM",
@@ -925,7 +1006,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-08",
+      "month": 3,
+      "day": 8,
       "sunrise": "6:59:54 AM",
       "sunset": "6:05:05 PM",
       "first_light": "4:39:06 AM",
@@ -939,7 +1021,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-09",
+      "month": 3,
+      "day": 9,
       "sunrise": "6:56:53 AM",
       "sunset": "6:07:35 PM",
       "first_light": "4:35:48 AM",
@@ -953,7 +1036,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-10",
+      "month": 3,
+      "day": 10,
       "sunrise": "6:53:52 AM",
       "sunset": "6:10:04 PM",
       "first_light": "4:32:28 AM",
@@ -967,7 +1051,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-11",
+      "month": 3,
+      "day": 11,
       "sunrise": "6:50:50 AM",
       "sunset": "6:12:34 PM",
       "first_light": "4:29:05 AM",
@@ -981,7 +1066,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-12",
+      "month": 3,
+      "day": 12,
       "sunrise": "6:47:48 AM",
       "sunset": "6:15:02 PM",
       "first_light": "4:25:40 AM",
@@ -995,7 +1081,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-13",
+      "month": 3,
+      "day": 13,
       "sunrise": "6:44:45 AM",
       "sunset": "6:17:31 PM",
       "first_light": "4:22:12 AM",
@@ -1009,7 +1096,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-14",
+      "month": 3,
+      "day": 14,
       "sunrise": "6:41:43 AM",
       "sunset": "6:19:59 PM",
       "first_light": "4:18:42 AM",
@@ -1023,7 +1111,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-15",
+      "month": 3,
+      "day": 15,
       "sunrise": "6:38:40 AM",
       "sunset": "6:22:27 PM",
       "first_light": "4:15:09 AM",
@@ -1037,7 +1126,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-16",
+      "month": 3,
+      "day": 16,
       "sunrise": "6:35:36 AM",
       "sunset": "6:24:55 PM",
       "first_light": "4:11:33 AM",
@@ -1051,7 +1141,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-17",
+      "month": 3,
+      "day": 17,
       "sunrise": "6:32:33 AM",
       "sunset": "6:27:22 PM",
       "first_light": "4:07:55 AM",
@@ -1065,7 +1156,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-18",
+      "month": 3,
+      "day": 18,
       "sunrise": "6:29:29 AM",
       "sunset": "6:29:50 PM",
       "first_light": "4:04:13 AM",
@@ -1079,7 +1171,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-19",
+      "month": 3,
+      "day": 19,
       "sunrise": "6:26:25 AM",
       "sunset": "6:32:17 PM",
       "first_light": "4:00:29 AM",
@@ -1093,7 +1186,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-20",
+      "month": 3,
+      "day": 20,
       "sunrise": "6:23:21 AM",
       "sunset": "6:34:44 PM",
       "first_light": "3:56:42 AM",
@@ -1107,7 +1201,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-21",
+      "month": 3,
+      "day": 21,
       "sunrise": "6:20:17 AM",
       "sunset": "6:37:10 PM",
       "first_light": "3:52:52 AM",
@@ -1121,7 +1216,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-22",
+      "month": 3,
+      "day": 22,
       "sunrise": "6:17:13 AM",
       "sunset": "6:39:37 PM",
       "first_light": "3:48:59 AM",
@@ -1135,7 +1231,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-23",
+      "month": 3,
+      "day": 23,
       "sunrise": "6:14:08 AM",
       "sunset": "6:42:04 PM",
       "first_light": "3:45:02 AM",
@@ -1149,7 +1246,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-24",
+      "month": 3,
+      "day": 24,
       "sunrise": "6:11:04 AM",
       "sunset": "6:44:30 PM",
       "first_light": "3:41:02 AM",
@@ -1163,7 +1261,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-25",
+      "month": 3,
+      "day": 25,
       "sunrise": "6:08:00 AM",
       "sunset": "6:46:57 PM",
       "first_light": "3:36:59 AM",
@@ -1177,7 +1276,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-26",
+      "month": 3,
+      "day": 26,
       "sunrise": "6:04:55 AM",
       "sunset": "6:49:23 PM",
       "first_light": "3:32:52 AM",
@@ -1191,7 +1291,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-27",
+      "month": 3,
+      "day": 27,
       "sunrise": "6:01:51 AM",
       "sunset": "6:51:49 PM",
       "first_light": "3:28:41 AM",
@@ -1205,7 +1306,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-28",
+      "month": 3,
+      "day": 28,
       "sunrise": "5:58:47 AM",
       "sunset": "6:54:16 PM",
       "first_light": "3:24:26 AM",
@@ -1219,7 +1321,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-29",
+      "month": 3,
+      "day": 29,
       "sunrise": "5:55:43 AM",
       "sunset": "6:56:42 PM",
       "first_light": "3:20:06 AM",
@@ -1233,7 +1336,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-30",
+      "month": 3,
+      "day": 30,
       "sunrise": "6:52:39 AM",
       "sunset": "7:59:09 PM",
       "first_light": "4:15:42 AM",
@@ -1247,7 +1351,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-03-31",
+      "month": 3,
+      "day": 31,
       "sunrise": "6:49:35 AM",
       "sunset": "8:01:35 PM",
       "first_light": "4:11:14 AM",
@@ -1261,7 +1366,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-01",
+      "month": 4,
+      "day": 1,
       "sunrise": "6:46:32 AM",
       "sunset": "8:04:02 PM",
       "first_light": "4:06:40 AM",
@@ -1275,7 +1381,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-02",
+      "month": 4,
+      "day": 2,
       "sunrise": "6:43:28 AM",
       "sunset": "8:06:28 PM",
       "first_light": "4:02:00 AM",
@@ -1289,7 +1396,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-03",
+      "month": 4,
+      "day": 3,
       "sunrise": "6:40:25 AM",
       "sunset": "8:08:55 PM",
       "first_light": "3:57:15 AM",
@@ -1303,7 +1411,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-04",
+      "month": 4,
+      "day": 4,
       "sunrise": "6:37:22 AM",
       "sunset": "8:11:22 PM",
       "first_light": "3:52:23 AM",
@@ -1317,7 +1426,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-05",
+      "month": 4,
+      "day": 5,
       "sunrise": "6:34:19 AM",
       "sunset": "8:13:49 PM",
       "first_light": "3:47:24 AM",
@@ -1331,7 +1441,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-06",
+      "month": 4,
+      "day": 6,
       "sunrise": "6:31:17 AM",
       "sunset": "8:16:17 PM",
       "first_light": "3:42:18 AM",
@@ -1345,7 +1456,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-07",
+      "month": 4,
+      "day": 7,
       "sunrise": "6:28:15 AM",
       "sunset": "8:18:44 PM",
       "first_light": "3:37:03 AM",
@@ -1359,7 +1471,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-08",
+      "month": 4,
+      "day": 8,
       "sunrise": "6:25:13 AM",
       "sunset": "8:21:12 PM",
       "first_light": "3:31:39 AM",
@@ -1373,7 +1486,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-09",
+      "month": 4,
+      "day": 9,
       "sunrise": "6:22:12 AM",
       "sunset": "8:23:39 PM",
       "first_light": "3:26:04 AM",
@@ -1387,7 +1501,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-10",
+      "month": 4,
+      "day": 10,
       "sunrise": "6:19:11 AM",
       "sunset": "8:26:07 PM",
       "first_light": "3:20:17 AM",
@@ -1401,7 +1516,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-11",
+      "month": 4,
+      "day": 11,
       "sunrise": "6:16:11 AM",
       "sunset": "8:28:36 PM",
       "first_light": "3:14:16 AM",
@@ -1415,7 +1531,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-12",
+      "month": 4,
+      "day": 12,
       "sunrise": "6:13:11 AM",
       "sunset": "8:31:04 PM",
       "first_light": "3:08:00 AM",
@@ -1429,7 +1546,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-13",
+      "month": 4,
+      "day": 13,
       "sunrise": "6:10:12 AM",
       "sunset": "8:33:33 PM",
       "first_light": "3:01:25 AM",
@@ -1443,7 +1561,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-14",
+      "month": 4,
+      "day": 14,
       "sunrise": "6:07:13 AM",
       "sunset": "8:36:02 PM",
       "first_light": "2:54:27 AM",
@@ -1457,7 +1576,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-15",
+      "month": 4,
+      "day": 15,
       "sunrise": "6:04:14 AM",
       "sunset": "8:38:31 PM",
       "first_light": "2:47:02 AM",
@@ -1471,7 +1591,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-16",
+      "month": 4,
+      "day": 16,
       "sunrise": "6:01:17 AM",
       "sunset": "8:41:00 PM",
       "first_light": "2:39:01 AM",
@@ -1485,7 +1606,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-17",
+      "month": 4,
+      "day": 17,
       "sunrise": "5:58:20 AM",
       "sunset": "8:43:30 PM",
       "first_light": "2:30:12 AM",
@@ -1499,7 +1621,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-18",
+      "month": 4,
+      "day": 18,
       "sunrise": "5:55:23 AM",
       "sunset": "8:46:00 PM",
       "first_light": "2:20:15 AM",
@@ -1513,7 +1636,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-19",
+      "month": 4,
+      "day": 19,
       "sunrise": "5:52:28 AM",
       "sunset": "8:48:30 PM",
       "first_light": "2:08:29 AM",
@@ -1527,7 +1651,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-20",
+      "month": 4,
+      "day": 20,
       "sunrise": "5:49:33 AM",
       "sunset": "8:51:00 PM",
       "first_light": "1:53:02 AM",
@@ -1541,11 +1666,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-21",
+      "month": 4,
+      "day": 21,
       "sunrise": "5:46:38 AM",
       "sunset": "8:53:30 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:57:54 AM",
       "dusk": "9:42:15 PM",
       "solar_noon": "1:20:04 PM",
@@ -1555,11 +1681,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-22",
+      "month": 4,
+      "day": 22,
       "sunrise": "5:43:45 AM",
       "sunset": "8:56:01 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:54:35 AM",
       "dusk": "9:45:11 PM",
       "solar_noon": "1:19:53 PM",
@@ -1569,11 +1696,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-23",
+      "month": 4,
+      "day": 23,
       "sunrise": "5:40:52 AM",
       "sunset": "8:58:32 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:51:16 AM",
       "dusk": "9:48:08 PM",
       "solar_noon": "1:19:42 PM",
@@ -1583,11 +1711,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-24",
+      "month": 4,
+      "day": 24,
       "sunrise": "5:38:01 AM",
       "sunset": "9:01:02 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:47:58 AM",
       "dusk": "9:51:06 PM",
       "solar_noon": "1:19:32 PM",
@@ -1597,11 +1726,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-25",
+      "month": 4,
+      "day": 25,
       "sunrise": "5:35:10 AM",
       "sunset": "9:03:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:44:39 AM",
       "dusk": "9:54:05 PM",
       "solar_noon": "1:19:22 PM",
@@ -1611,11 +1741,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-26",
+      "month": 4,
+      "day": 26,
       "sunrise": "5:32:20 AM",
       "sunset": "9:06:05 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:41:20 AM",
       "dusk": "9:57:05 PM",
       "solar_noon": "1:19:12 PM",
@@ -1625,11 +1756,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-27",
+      "month": 4,
+      "day": 27,
       "sunrise": "5:29:31 AM",
       "sunset": "9:08:36 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:38:01 AM",
       "dusk": "10:00:06 PM",
       "solar_noon": "1:19:03 PM",
@@ -1639,11 +1771,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-28",
+      "month": 4,
+      "day": 28,
       "sunrise": "5:26:43 AM",
       "sunset": "9:11:07 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:34:41 AM",
       "dusk": "10:03:09 PM",
       "solar_noon": "1:18:55 PM",
@@ -1653,11 +1786,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-29",
+      "month": 4,
+      "day": 29,
       "sunrise": "5:23:57 AM",
       "sunset": "9:13:38 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:31:22 AM",
       "dusk": "10:06:13 PM",
       "solar_noon": "1:18:47 PM",
@@ -1667,11 +1801,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-04-30",
+      "month": 4,
+      "day": 30,
       "sunrise": "5:21:11 AM",
       "sunset": "9:16:09 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:28:03 AM",
       "dusk": "10:09:17 PM",
       "solar_noon": "1:18:40 PM",
@@ -1681,11 +1816,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-01",
+      "month": 5,
+      "day": 1,
       "sunrise": "5:18:26 AM",
       "sunset": "9:18:41 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:24:44 AM",
       "dusk": "10:12:23 PM",
       "solar_noon": "1:18:34 PM",
@@ -1695,11 +1831,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-02",
+      "month": 5,
+      "day": 2,
       "sunrise": "5:15:43 AM",
       "sunset": "9:21:12 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:21:24 AM",
       "dusk": "10:15:30 PM",
       "solar_noon": "1:18:27 PM",
@@ -1709,11 +1846,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-03",
+      "month": 5,
+      "day": 3,
       "sunrise": "5:13:01 AM",
       "sunset": "9:23:43 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:18:05 AM",
       "dusk": "10:18:39 PM",
       "solar_noon": "1:18:22 PM",
@@ -1723,11 +1861,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-04",
+      "month": 5,
+      "day": 4,
       "sunrise": "5:10:21 AM",
       "sunset": "9:26:13 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:14:46 AM",
       "dusk": "10:21:48 PM",
       "solar_noon": "1:18:17 PM",
@@ -1737,11 +1876,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-05",
+      "month": 5,
+      "day": 5,
       "sunrise": "5:07:41 AM",
       "sunset": "9:28:44 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:11:27 AM",
       "dusk": "10:24:58 PM",
       "solar_noon": "1:18:12 PM",
@@ -1751,11 +1891,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-06",
+      "month": 5,
+      "day": 6,
       "sunrise": "5:05:03 AM",
       "sunset": "9:31:14 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:08:07 AM",
       "dusk": "10:28:10 PM",
       "solar_noon": "1:18:09 PM",
@@ -1765,11 +1906,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-07",
+      "month": 5,
+      "day": 7,
       "sunrise": "5:02:27 AM",
       "sunset": "9:33:44 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:04:48 AM",
       "dusk": "10:31:22 PM",
       "solar_noon": "1:18:05 PM",
@@ -1779,11 +1921,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-08",
+      "month": 5,
+      "day": 8,
       "sunrise": "4:59:52 AM",
       "sunset": "9:36:13 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:01:29 AM",
       "dusk": "10:34:36 PM",
       "solar_noon": "1:18:03 PM",
@@ -1793,11 +1936,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-09",
+      "month": 5,
+      "day": 9,
       "sunrise": "4:57:19 AM",
       "sunset": "9:38:42 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:58:10 AM",
       "dusk": "10:37:51 PM",
       "solar_noon": "1:18:00 PM",
@@ -1807,11 +1951,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-10",
+      "month": 5,
+      "day": 10,
       "sunrise": "4:54:48 AM",
       "sunset": "9:41:10 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:54:51 AM",
       "dusk": "10:41:07 PM",
       "solar_noon": "1:17:59 PM",
@@ -1821,11 +1966,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-11",
+      "month": 5,
+      "day": 11,
       "sunrise": "4:52:18 AM",
       "sunset": "9:43:38 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:51:32 AM",
       "dusk": "10:44:23 PM",
       "solar_noon": "1:17:58 PM",
@@ -1835,11 +1981,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-12",
+      "month": 5,
+      "day": 12,
       "sunrise": "4:49:50 AM",
       "sunset": "9:46:05 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:48:14 AM",
       "dusk": "10:47:41 PM",
       "solar_noon": "1:17:57 PM",
@@ -1849,11 +1996,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-13",
+      "month": 5,
+      "day": 13,
       "sunrise": "4:47:24 AM",
       "sunset": "9:48:31 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:44:55 AM",
       "dusk": "10:50:59 PM",
       "solar_noon": "1:17:57 PM",
@@ -1863,11 +2011,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-14",
+      "month": 5,
+      "day": 14,
       "sunrise": "4:45:00 AM",
       "sunset": "9:50:56 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:41:37 AM",
       "dusk": "10:54:19 PM",
       "solar_noon": "1:17:58 PM",
@@ -1877,11 +2026,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-15",
+      "month": 5,
+      "day": 15,
       "sunrise": "4:42:38 AM",
       "sunset": "9:53:20 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:38:19 AM",
       "dusk": "10:57:39 PM",
       "solar_noon": "1:17:59 PM",
@@ -1891,11 +2041,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-16",
+      "month": 5,
+      "day": 16,
       "sunrise": "4:40:18 AM",
       "sunset": "9:55:44 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:35:01 AM",
       "dusk": "11:01:00 PM",
       "solar_noon": "1:18:01 PM",
@@ -1905,11 +2056,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-17",
+      "month": 5,
+      "day": 17,
       "sunrise": "4:38:00 AM",
       "sunset": "9:58:06 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:31:44 AM",
       "dusk": "11:04:22 PM",
       "solar_noon": "1:18:03 PM",
@@ -1919,11 +2071,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-18",
+      "month": 5,
+      "day": 18,
       "sunrise": "4:35:45 AM",
       "sunset": "10:00:26 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:28:27 AM",
       "dusk": "11:07:45 PM",
       "solar_noon": "1:18:06 PM",
@@ -1933,11 +2086,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-19",
+      "month": 5,
+      "day": 19,
       "sunrise": "4:33:32 AM",
       "sunset": "10:02:46 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:25:10 AM",
       "dusk": "11:11:08 PM",
       "solar_noon": "1:18:09 PM",
@@ -1947,11 +2101,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-20",
+      "month": 5,
+      "day": 20,
       "sunrise": "4:31:22 AM",
       "sunset": "10:05:04 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:21:53 AM",
       "dusk": "11:14:32 PM",
       "solar_noon": "1:18:13 PM",
@@ -1961,11 +2116,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-21",
+      "month": 5,
+      "day": 21,
       "sunrise": "4:29:14 AM",
       "sunset": "10:07:20 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:18:38 AM",
       "dusk": "11:17:56 PM",
       "solar_noon": "1:18:17 PM",
@@ -1975,11 +2131,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-22",
+      "month": 5,
+      "day": 22,
       "sunrise": "4:27:09 AM",
       "sunset": "10:09:34 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:15:22 AM",
       "dusk": "11:21:21 PM",
       "solar_noon": "1:18:22 PM",
@@ -1989,11 +2146,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-23",
+      "month": 5,
+      "day": 23,
       "sunrise": "4:25:07 AM",
       "sunset": "10:11:47 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:12:08 AM",
       "dusk": "11:24:46 PM",
       "solar_noon": "1:18:27 PM",
@@ -2003,11 +2161,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-24",
+      "month": 5,
+      "day": 24,
       "sunrise": "4:23:08 AM",
       "sunset": "10:13:57 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:08:54 AM",
       "dusk": "11:28:11 PM",
       "solar_noon": "1:18:32 PM",
@@ -2017,11 +2176,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-25",
+      "month": 5,
+      "day": 25,
       "sunrise": "4:21:11 AM",
       "sunset": "10:16:06 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:05:40 AM",
       "dusk": "11:31:37 PM",
       "solar_noon": "1:18:39 PM",
@@ -2031,11 +2191,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-26",
+      "month": 5,
+      "day": 26,
       "sunrise": "4:19:18 AM",
       "sunset": "10:18:12 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:02:28 AM",
       "dusk": "11:35:02 PM",
       "solar_noon": "1:18:45 PM",
@@ -2045,11 +2206,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-27",
+      "month": 5,
+      "day": 27,
       "sunrise": "4:17:29 AM",
       "sunset": "10:20:15 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:59:16 AM",
       "dusk": "11:38:27 PM",
       "solar_noon": "1:18:52 PM",
@@ -2059,11 +2221,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-28",
+      "month": 5,
+      "day": 28,
       "sunrise": "4:15:42 AM",
       "sunset": "10:22:16 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:56:06 AM",
       "dusk": "11:41:53 PM",
       "solar_noon": "1:18:59 PM",
@@ -2073,11 +2236,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-29",
+      "month": 5,
+      "day": 29,
       "sunrise": "4:13:59 AM",
       "sunset": "10:24:15 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:52:57 AM",
       "dusk": "11:45:17 PM",
       "solar_noon": "1:19:07 PM",
@@ -2087,11 +2251,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-30",
+      "month": 5,
+      "day": 30,
       "sunrise": "4:12:20 AM",
       "sunset": "10:26:10 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:49:49 AM",
       "dusk": "11:48:41 PM",
       "solar_noon": "1:19:15 PM",
@@ -2101,11 +2266,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-05-31",
+      "month": 5,
+      "day": 31,
       "sunrise": "4:10:45 AM",
       "sunset": "10:28:03 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:46:43 AM",
       "dusk": "11:52:04 PM",
       "solar_noon": "1:19:24 PM",
@@ -2115,11 +2281,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-01",
+      "month": 6,
+      "day": 1,
       "sunrise": "4:09:13 AM",
       "sunset": "10:29:52 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:43:39 AM",
       "dusk": "11:55:26 PM",
       "solar_noon": "1:19:33 PM",
@@ -2129,11 +2296,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-02",
+      "month": 6,
+      "day": 2,
       "sunrise": "4:07:46 AM",
       "sunset": "10:31:38 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:40:36 AM",
       "dusk": "11:58:47 PM",
       "solar_noon": "1:19:42 PM",
@@ -2143,11 +2311,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-03",
+      "month": 6,
+      "day": 3,
       "sunrise": "4:06:23 AM",
       "sunset": "10:33:20 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:37:36 AM",
       "dusk": "12:02:06 AM",
       "solar_noon": "1:19:51 PM",
@@ -2157,11 +2326,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-04",
+      "month": 6,
+      "day": 4,
       "sunrise": "4:05:04 AM",
       "sunset": "10:34:59 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:34:39 AM",
       "dusk": "12:05:23 AM",
       "solar_noon": "1:20:01 PM",
@@ -2171,11 +2341,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-05",
+      "month": 6,
+      "day": 5,
       "sunrise": "4:03:49 AM",
       "sunset": "10:36:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:31:44 AM",
       "dusk": "12:08:38 AM",
       "solar_noon": "1:20:11 PM",
@@ -2185,11 +2356,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-06",
+      "month": 6,
+      "day": 6,
       "sunrise": "4:02:39 AM",
       "sunset": "10:38:04 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:28:53 AM",
       "dusk": "12:11:50 AM",
       "solar_noon": "1:20:22 PM",
@@ -2199,11 +2371,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-07",
+      "month": 6,
+      "day": 7,
       "sunrise": "4:01:33 AM",
       "sunset": "10:39:31 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:26:06 AM",
       "dusk": "12:14:58 AM",
       "solar_noon": "1:20:32 PM",
@@ -2213,11 +2386,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-08",
+      "month": 6,
+      "day": 8,
       "sunrise": "4:00:33 AM",
       "sunset": "10:40:53 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:23:23 AM",
       "dusk": "12:18:03 AM",
       "solar_noon": "1:20:43 PM",
@@ -2227,11 +2401,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-09",
+      "month": 6,
+      "day": 9,
       "sunrise": "3:59:37 AM",
       "sunset": "10:42:11 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:20:46 AM",
       "dusk": "12:21:02 AM",
       "solar_noon": "1:20:54 PM",
@@ -2241,11 +2416,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-10",
+      "month": 6,
+      "day": 10,
       "sunrise": "3:58:46 AM",
       "sunset": "10:43:25 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:18:14 AM",
       "dusk": "12:23:57 AM",
       "solar_noon": "1:21:05 PM",
@@ -2255,11 +2431,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-11",
+      "month": 6,
+      "day": 11,
       "sunrise": "3:58:00 AM",
       "sunset": "10:44:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:15:49 AM",
       "dusk": "12:26:44 AM",
       "solar_noon": "1:21:17 PM",
@@ -2269,11 +2446,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-12",
+      "month": 6,
+      "day": 12,
       "sunrise": "3:57:20 AM",
       "sunset": "10:45:37 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:13:32 AM",
       "dusk": "12:29:25 AM",
       "solar_noon": "1:21:28 PM",
@@ -2283,11 +2461,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-13",
+      "month": 6,
+      "day": 13,
       "sunrise": "3:56:44 AM",
       "sunset": "10:46:36 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:11:24 AM",
       "dusk": "12:31:56 AM",
       "solar_noon": "1:21:40 PM",
@@ -2297,11 +2476,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-14",
+      "month": 6,
+      "day": 14,
       "sunrise": "3:56:14 AM",
       "sunset": "10:47:30 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:09:27 AM",
       "dusk": "12:34:17 AM",
       "solar_noon": "1:21:52 PM",
@@ -2311,11 +2491,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-15",
+      "month": 6,
+      "day": 15,
       "sunrise": "3:55:50 AM",
       "sunset": "10:48:18 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:07:42 AM",
       "dusk": "12:36:26 AM",
       "solar_noon": "1:22:04 PM",
@@ -2325,11 +2506,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-16",
+      "month": 6,
+      "day": 16,
       "sunrise": "3:55:31 AM",
       "sunset": "10:49:02 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:06:10 AM",
       "dusk": "12:38:22 AM",
       "solar_noon": "1:22:16 PM",
@@ -2339,11 +2521,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-17",
+      "month": 6,
+      "day": 17,
       "sunrise": "3:55:17 AM",
       "sunset": "10:49:40 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:04:54 AM",
       "dusk": "12:40:03 AM",
       "solar_noon": "1:22:28 PM",
@@ -2353,11 +2536,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-18",
+      "month": 6,
+      "day": 18,
       "sunrise": "3:55:09 AM",
       "sunset": "10:50:12 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:03:54 AM",
       "dusk": "12:41:27 AM",
       "solar_noon": "1:22:40 PM",
@@ -2367,11 +2551,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-19",
+      "month": 6,
+      "day": 19,
       "sunrise": "3:55:06 AM",
       "sunset": "10:50:39 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:03:13 AM",
       "dusk": "12:42:32 AM",
       "solar_noon": "1:22:53 PM",
@@ -2381,11 +2566,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-20",
+      "month": 6,
+      "day": 20,
       "sunrise": "3:55:10 AM",
       "sunset": "10:51:00 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:02:52 AM",
       "dusk": "12:43:18 AM",
       "solar_noon": "1:23:05 PM",
@@ -2395,11 +2581,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-21",
+      "month": 6,
+      "day": 21,
       "sunrise": "3:55:18 AM",
       "sunset": "10:51:16 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:02:51 AM",
       "dusk": "12:43:44 AM",
       "solar_noon": "1:23:17 PM",
@@ -2409,11 +2596,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-22",
+      "month": 6,
+      "day": 22,
       "sunrise": "3:55:32 AM",
       "sunset": "10:51:26 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:03:11 AM",
       "dusk": "12:43:48 AM",
       "solar_noon": "1:23:29 PM",
@@ -2423,11 +2611,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-23",
+      "month": 6,
+      "day": 23,
       "sunrise": "3:55:52 AM",
       "sunset": "10:51:31 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:03:51 AM",
       "dusk": "12:43:32 AM",
       "solar_noon": "1:23:41 PM",
@@ -2437,11 +2626,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-24",
+      "month": 6,
+      "day": 24,
       "sunrise": "3:56:18 AM",
       "sunset": "10:51:29 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:04:51 AM",
       "dusk": "12:42:56 AM",
       "solar_noon": "1:23:53 PM",
@@ -2451,11 +2641,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-25",
+      "month": 6,
+      "day": 25,
       "sunrise": "3:56:48 AM",
       "sunset": "10:51:23 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:06:10 AM",
       "dusk": "12:42:00 AM",
       "solar_noon": "1:24:05 PM",
@@ -2465,11 +2656,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-26",
+      "month": 6,
+      "day": 26,
       "sunrise": "3:57:24 AM",
       "sunset": "10:51:10 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:07:46 AM",
       "dusk": "12:40:48 AM",
       "solar_noon": "1:24:17 PM",
@@ -2479,11 +2671,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-27",
+      "month": 6,
+      "day": 27,
       "sunrise": "3:58:06 AM",
       "sunset": "10:50:52 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:09:38 AM",
       "dusk": "12:39:20 AM",
       "solar_noon": "1:24:29 PM",
@@ -2493,11 +2686,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-28",
+      "month": 6,
+      "day": 28,
       "sunrise": "3:58:53 AM",
       "sunset": "10:50:29 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:11:43 AM",
       "dusk": "12:37:38 AM",
       "solar_noon": "1:24:41 PM",
@@ -2507,11 +2701,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-29",
+      "month": 6,
+      "day": 29,
       "sunrise": "3:59:44 AM",
       "sunset": "10:50:00 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:14:01 AM",
       "dusk": "12:35:43 AM",
       "solar_noon": "1:24:52 PM",
@@ -2521,11 +2716,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-06-30",
+      "month": 6,
+      "day": 30,
       "sunrise": "4:00:41 AM",
       "sunset": "10:49:25 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:16:29 AM",
       "dusk": "12:33:38 AM",
       "solar_noon": "1:25:03 PM",
@@ -2535,11 +2731,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-01",
+      "month": 7,
+      "day": 1,
       "sunrise": "4:01:43 AM",
       "sunset": "10:48:46 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:19:06 AM",
       "dusk": "12:31:23 AM",
       "solar_noon": "1:25:14 PM",
@@ -2549,11 +2746,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-02",
+      "month": 7,
+      "day": 2,
       "sunrise": "4:02:49 AM",
       "sunset": "10:48:01 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:21:50 AM",
       "dusk": "12:29:00 AM",
       "solar_noon": "1:25:25 PM",
@@ -2563,11 +2761,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-03",
+      "month": 7,
+      "day": 3,
       "sunrise": "4:04:01 AM",
       "sunset": "10:47:11 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:24:41 AM",
       "dusk": "12:26:30 AM",
       "solar_noon": "1:25:36 PM",
@@ -2577,11 +2776,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-04",
+      "month": 7,
+      "day": 4,
       "sunrise": "4:05:16 AM",
       "sunset": "10:46:16 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:27:38 AM",
       "dusk": "12:23:53 AM",
       "solar_noon": "1:25:46 PM",
@@ -2591,11 +2791,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-05",
+      "month": 7,
+      "day": 5,
       "sunrise": "4:06:36 AM",
       "sunset": "10:45:16 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:30:40 AM",
       "dusk": "12:21:12 AM",
       "solar_noon": "1:25:56 PM",
@@ -2605,11 +2806,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-06",
+      "month": 7,
+      "day": 6,
       "sunrise": "4:08:01 AM",
       "sunset": "10:44:11 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:33:46 AM",
       "dusk": "12:18:25 AM",
       "solar_noon": "1:26:06 PM",
@@ -2619,11 +2821,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-07",
+      "month": 7,
+      "day": 7,
       "sunrise": "4:09:29 AM",
       "sunset": "10:43:01 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:36:55 AM",
       "dusk": "12:15:35 AM",
       "solar_noon": "1:26:15 PM",
@@ -2633,11 +2836,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-08",
+      "month": 7,
+      "day": 8,
       "sunrise": "4:11:01 AM",
       "sunset": "10:41:47 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:40:07 AM",
       "dusk": "12:12:41 AM",
       "solar_noon": "1:26:24 PM",
@@ -2647,11 +2851,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-09",
+      "month": 7,
+      "day": 9,
       "sunrise": "4:12:37 AM",
       "sunset": "10:40:29 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:43:22 AM",
       "dusk": "12:09:44 AM",
       "solar_noon": "1:26:33 PM",
@@ -2661,11 +2866,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-10",
+      "month": 7,
+      "day": 10,
       "sunrise": "4:14:17 AM",
       "sunset": "10:39:06 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:46:38 AM",
       "dusk": "12:06:44 AM",
       "solar_noon": "1:26:41 PM",
@@ -2675,11 +2881,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-11",
+      "month": 7,
+      "day": 11,
       "sunrise": "4:16:00 AM",
       "sunset": "10:37:39 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:49:56 AM",
       "dusk": "12:03:42 AM",
       "solar_noon": "1:26:49 PM",
@@ -2689,11 +2896,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-12",
+      "month": 7,
+      "day": 12,
       "sunrise": "4:17:46 AM",
       "sunset": "10:36:08 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:53:16 AM",
       "dusk": "12:00:38 AM",
       "solar_noon": "1:26:57 PM",
@@ -2703,11 +2911,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-13",
+      "month": 7,
+      "day": 13,
       "sunrise": "4:19:36 AM",
       "sunset": "10:34:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:56:36 AM",
       "dusk": "11:57:32 PM",
       "solar_noon": "1:27:04 PM",
@@ -2717,11 +2926,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-14",
+      "month": 7,
+      "day": 14,
       "sunrise": "4:21:28 AM",
       "sunset": "10:32:54 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "2:59:57 AM",
       "dusk": "11:54:25 PM",
       "solar_noon": "1:27:11 PM",
@@ -2731,11 +2941,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-15",
+      "month": 7,
+      "day": 15,
       "sunrise": "4:23:24 AM",
       "sunset": "10:31:11 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:03:19 AM",
       "dusk": "11:51:16 PM",
       "solar_noon": "1:27:17 PM",
@@ -2745,11 +2956,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-16",
+      "month": 7,
+      "day": 16,
       "sunrise": "4:25:21 AM",
       "sunset": "10:29:25 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:06:41 AM",
       "dusk": "11:48:05 PM",
       "solar_noon": "1:27:23 PM",
@@ -2759,11 +2971,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-17",
+      "month": 7,
+      "day": 17,
       "sunrise": "4:27:22 AM",
       "sunset": "10:27:36 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:10:04 AM",
       "dusk": "11:44:54 PM",
       "solar_noon": "1:27:29 PM",
@@ -2773,11 +2986,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-18",
+      "month": 7,
+      "day": 18,
       "sunrise": "4:29:25 AM",
       "sunset": "10:25:43 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:13:26 AM",
       "dusk": "11:41:41 PM",
       "solar_noon": "1:27:34 PM",
@@ -2787,11 +3001,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-19",
+      "month": 7,
+      "day": 19,
       "sunrise": "4:31:30 AM",
       "sunset": "10:23:47 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:16:49 AM",
       "dusk": "11:38:28 PM",
       "solar_noon": "1:27:38 PM",
@@ -2801,11 +3016,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-20",
+      "month": 7,
+      "day": 20,
       "sunrise": "4:33:37 AM",
       "sunset": "10:21:48 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:20:11 AM",
       "dusk": "11:35:14 PM",
       "solar_noon": "1:27:42 PM",
@@ -2815,11 +3031,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-21",
+      "month": 7,
+      "day": 21,
       "sunrise": "4:35:46 AM",
       "sunset": "10:19:46 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:23:33 AM",
       "dusk": "11:31:59 PM",
       "solar_noon": "1:27:46 PM",
@@ -2829,11 +3046,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-22",
+      "month": 7,
+      "day": 22,
       "sunrise": "4:37:57 AM",
       "sunset": "10:17:41 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:26:54 AM",
       "dusk": "11:28:44 PM",
       "solar_noon": "1:27:49 PM",
@@ -2843,11 +3061,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-23",
+      "month": 7,
+      "day": 23,
       "sunrise": "4:40:10 AM",
       "sunset": "10:15:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:30:15 AM",
       "dusk": "11:25:27 PM",
       "solar_noon": "1:27:51 PM",
@@ -2857,11 +3076,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-24",
+      "month": 7,
+      "day": 24,
       "sunrise": "4:42:24 AM",
       "sunset": "10:13:23 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:33:36 AM",
       "dusk": "11:22:11 PM",
       "solar_noon": "1:27:53 PM",
@@ -2871,11 +3091,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-25",
+      "month": 7,
+      "day": 25,
       "sunrise": "4:44:39 AM",
       "sunset": "10:11:10 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:36:56 AM",
       "dusk": "11:18:54 PM",
       "solar_noon": "1:27:55 PM",
@@ -2885,11 +3106,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-26",
+      "month": 7,
+      "day": 26,
       "sunrise": "4:46:56 AM",
       "sunset": "10:08:55 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:40:15 AM",
       "dusk": "11:15:36 PM",
       "solar_noon": "1:27:55 PM",
@@ -2899,11 +3121,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-27",
+      "month": 7,
+      "day": 27,
       "sunrise": "4:49:14 AM",
       "sunset": "10:06:37 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:43:33 AM",
       "dusk": "11:12:19 PM",
       "solar_noon": "1:27:56 PM",
@@ -2913,11 +3136,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-28",
+      "month": 7,
+      "day": 28,
       "sunrise": "4:51:34 AM",
       "sunset": "10:04:17 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:46:51 AM",
       "dusk": "11:09:00 PM",
       "solar_noon": "1:27:55 PM",
@@ -2927,11 +3151,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-29",
+      "month": 7,
+      "day": 29,
       "sunrise": "4:53:54 AM",
       "sunset": "10:01:55 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:50:07 AM",
       "dusk": "11:05:42 PM",
       "solar_noon": "1:27:55 PM",
@@ -2941,11 +3166,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-30",
+      "month": 7,
+      "day": 30,
       "sunrise": "4:56:15 AM",
       "sunset": "9:59:31 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:53:23 AM",
       "dusk": "11:02:23 PM",
       "solar_noon": "1:27:53 PM",
@@ -2955,11 +3181,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-07-31",
+      "month": 7,
+      "day": 31,
       "sunrise": "4:58:38 AM",
       "sunset": "9:57:05 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:56:38 AM",
       "dusk": "10:59:04 PM",
       "solar_noon": "1:27:51 PM",
@@ -2969,11 +3196,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-01",
+      "month": 8,
+      "day": 1,
       "sunrise": "5:01:00 AM",
       "sunset": "9:54:37 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "3:59:52 AM",
       "dusk": "10:55:45 PM",
       "solar_noon": "1:27:49 PM",
@@ -2983,11 +3211,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-02",
+      "month": 8,
+      "day": 2,
       "sunrise": "5:03:24 AM",
       "sunset": "9:52:07 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:03:05 AM",
       "dusk": "10:52:26 PM",
       "solar_noon": "1:27:45 PM",
@@ -2997,11 +3226,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-03",
+      "month": 8,
+      "day": 3,
       "sunrise": "5:05:48 AM",
       "sunset": "9:49:35 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:06:17 AM",
       "dusk": "10:49:07 PM",
       "solar_noon": "1:27:42 PM",
@@ -3011,11 +3241,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-04",
+      "month": 8,
+      "day": 4,
       "sunrise": "5:08:13 AM",
       "sunset": "9:47:02 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:09:27 AM",
       "dusk": "10:45:47 PM",
       "solar_noon": "1:27:37 PM",
@@ -3025,11 +3256,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-05",
+      "month": 8,
+      "day": 5,
       "sunrise": "5:10:38 AM",
       "sunset": "9:44:27 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:12:37 AM",
       "dusk": "10:42:28 PM",
       "solar_noon": "1:27:32 PM",
@@ -3039,11 +3271,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-06",
+      "month": 8,
+      "day": 6,
       "sunrise": "5:13:03 AM",
       "sunset": "9:41:50 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:15:46 AM",
       "dusk": "10:39:08 PM",
       "solar_noon": "1:27:27 PM",
@@ -3053,11 +3286,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-07",
+      "month": 8,
+      "day": 7,
       "sunrise": "5:15:29 AM",
       "sunset": "9:39:12 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:18:53 AM",
       "dusk": "10:35:48 PM",
       "solar_noon": "1:27:21 PM",
@@ -3067,11 +3301,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-08",
+      "month": 8,
+      "day": 8,
       "sunrise": "5:17:55 AM",
       "sunset": "9:36:33 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:21:59 AM",
       "dusk": "10:32:29 PM",
       "solar_noon": "1:27:14 PM",
@@ -3081,11 +3316,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-09",
+      "month": 8,
+      "day": 9,
       "sunrise": "5:20:21 AM",
       "sunset": "9:33:52 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:25:04 AM",
       "dusk": "10:29:09 PM",
       "solar_noon": "1:27:07 PM",
@@ -3095,11 +3331,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-10",
+      "month": 8,
+      "day": 10,
       "sunrise": "5:22:48 AM",
       "sunset": "9:31:10 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:28:08 AM",
       "dusk": "10:25:49 PM",
       "solar_noon": "1:26:59 PM",
@@ -3109,11 +3346,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-11",
+      "month": 8,
+      "day": 11,
       "sunrise": "5:25:14 AM",
       "sunset": "9:28:26 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:31:11 AM",
       "dusk": "10:22:29 PM",
       "solar_noon": "1:26:50 PM",
@@ -3123,11 +3361,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-12",
+      "month": 8,
+      "day": 12,
       "sunrise": "5:27:41 AM",
       "sunset": "9:25:42 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:34:13 AM",
       "dusk": "10:19:09 PM",
       "solar_noon": "1:26:41 PM",
@@ -3137,11 +3376,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-13",
+      "month": 8,
+      "day": 13,
       "sunrise": "5:30:07 AM",
       "sunset": "9:22:56 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:37:13 AM",
       "dusk": "10:15:50 PM",
       "solar_noon": "1:26:31 PM",
@@ -3151,11 +3391,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-14",
+      "month": 8,
+      "day": 14,
       "sunrise": "5:32:34 AM",
       "sunset": "9:20:09 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:40:13 AM",
       "dusk": "10:12:30 PM",
       "solar_noon": "1:26:21 PM",
@@ -3165,11 +3406,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-15",
+      "month": 8,
+      "day": 15,
       "sunrise": "5:35:00 AM",
       "sunset": "9:17:20 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:43:11 AM",
       "dusk": "10:09:10 PM",
       "solar_noon": "1:26:10 PM",
@@ -3179,11 +3421,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-16",
+      "month": 8,
+      "day": 16,
       "sunrise": "5:37:27 AM",
       "sunset": "9:14:31 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:46:08 AM",
       "dusk": "10:05:50 PM",
       "solar_noon": "1:25:59 PM",
@@ -3193,11 +3436,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-17",
+      "month": 8,
+      "day": 17,
       "sunrise": "5:39:53 AM",
       "sunset": "9:11:41 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:49:03 AM",
       "dusk": "10:02:31 PM",
       "solar_noon": "1:25:47 PM",
@@ -3207,11 +3451,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-18",
+      "month": 8,
+      "day": 18,
       "sunrise": "5:42:19 AM",
       "sunset": "9:08:50 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:51:58 AM",
       "dusk": "9:59:11 PM",
       "solar_noon": "1:25:35 PM",
@@ -3221,11 +3466,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-19",
+      "month": 8,
+      "day": 19,
       "sunrise": "5:44:45 AM",
       "sunset": "9:05:58 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:54:52 AM",
       "dusk": "9:55:52 PM",
       "solar_noon": "1:25:22 PM",
@@ -3235,11 +3481,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-20",
+      "month": 8,
+      "day": 20,
       "sunrise": "5:47:11 AM",
       "sunset": "9:03:05 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "4:57:44 AM",
       "dusk": "9:52:32 PM",
       "solar_noon": "1:25:08 PM",
@@ -3249,11 +3496,12 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-21",
+      "month": 8,
+      "day": 21,
       "sunrise": "5:49:37 AM",
       "sunset": "9:00:11 PM",
-      "first_light": null,
-      "last_light": null,
+      "first_light": "",
+      "last_light": "",
       "dawn": "5:00:35 AM",
       "dusk": "9:49:13 PM",
       "solar_noon": "1:24:54 PM",
@@ -3263,7 +3511,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-22",
+      "month": 8,
+      "day": 22,
       "sunrise": "5:52:02 AM",
       "sunset": "8:57:17 PM",
       "first_light": "1:39:27 AM",
@@ -3277,7 +3526,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-23",
+      "month": 8,
+      "day": 23,
       "sunrise": "5:54:28 AM",
       "sunset": "8:54:21 PM",
       "first_light": "2:02:11 AM",
@@ -3291,7 +3541,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-24",
+      "month": 8,
+      "day": 24,
       "sunrise": "5:56:53 AM",
       "sunset": "8:51:25 PM",
       "first_light": "2:15:35 AM",
@@ -3305,7 +3556,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-25",
+      "month": 8,
+      "day": 25,
       "sunrise": "5:59:17 AM",
       "sunset": "8:48:28 PM",
       "first_light": "2:26:08 AM",
@@ -3319,7 +3571,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-26",
+      "month": 8,
+      "day": 26,
       "sunrise": "6:01:42 AM",
       "sunset": "8:45:31 PM",
       "first_light": "2:35:07 AM",
@@ -3333,7 +3586,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-27",
+      "month": 8,
+      "day": 27,
       "sunrise": "6:04:06 AM",
       "sunset": "8:42:33 PM",
       "first_light": "2:43:05 AM",
@@ -3347,7 +3601,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-28",
+      "month": 8,
+      "day": 28,
       "sunrise": "6:06:30 AM",
       "sunset": "8:39:34 PM",
       "first_light": "2:50:19 AM",
@@ -3361,7 +3616,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-29",
+      "month": 8,
+      "day": 29,
       "sunrise": "6:08:54 AM",
       "sunset": "8:36:35 PM",
       "first_light": "2:57:00 AM",
@@ -3375,7 +3631,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-30",
+      "month": 8,
+      "day": 30,
       "sunrise": "6:11:17 AM",
       "sunset": "8:33:35 PM",
       "first_light": "3:03:14 AM",
@@ -3389,7 +3646,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-08-31",
+      "month": 8,
+      "day": 31,
       "sunrise": "6:13:41 AM",
       "sunset": "8:30:34 PM",
       "first_light": "3:09:06 AM",
@@ -3403,7 +3661,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-01",
+      "month": 9,
+      "day": 1,
       "sunrise": "6:16:04 AM",
       "sunset": "8:27:34 PM",
       "first_light": "3:14:40 AM",
@@ -3417,7 +3676,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-02",
+      "month": 9,
+      "day": 2,
       "sunrise": "6:18:26 AM",
       "sunset": "8:24:32 PM",
       "first_light": "3:19:58 AM",
@@ -3431,7 +3691,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-03",
+      "month": 9,
+      "day": 3,
       "sunrise": "6:20:49 AM",
       "sunset": "8:21:31 PM",
       "first_light": "3:25:02 AM",
@@ -3445,7 +3706,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-04",
+      "month": 9,
+      "day": 4,
       "sunrise": "6:23:11 AM",
       "sunset": "8:18:28 PM",
       "first_light": "3:29:55 AM",
@@ -3459,7 +3721,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-05",
+      "month": 9,
+      "day": 5,
       "sunrise": "6:25:33 AM",
       "sunset": "8:15:26 PM",
       "first_light": "3:34:36 AM",
@@ -3473,7 +3736,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-06",
+      "month": 9,
+      "day": 6,
       "sunrise": "6:27:55 AM",
       "sunset": "8:12:23 PM",
       "first_light": "3:39:08 AM",
@@ -3487,7 +3751,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-07",
+      "month": 9,
+      "day": 7,
       "sunrise": "6:30:17 AM",
       "sunset": "8:09:20 PM",
       "first_light": "3:43:32 AM",
@@ -3501,7 +3766,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-08",
+      "month": 9,
+      "day": 8,
       "sunrise": "6:32:38 AM",
       "sunset": "8:06:16 PM",
       "first_light": "3:47:47 AM",
@@ -3515,7 +3781,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-09",
+      "month": 9,
+      "day": 9,
       "sunrise": "6:35:00 AM",
       "sunset": "8:03:13 PM",
       "first_light": "3:51:55 AM",
@@ -3529,7 +3796,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-10",
+      "month": 9,
+      "day": 10,
       "sunrise": "6:37:21 AM",
       "sunset": "8:00:08 PM",
       "first_light": "3:55:57 AM",
@@ -3543,7 +3811,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-11",
+      "month": 9,
+      "day": 11,
       "sunrise": "6:39:42 AM",
       "sunset": "7:57:04 PM",
       "first_light": "3:59:52 AM",
@@ -3557,7 +3826,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-12",
+      "month": 9,
+      "day": 12,
       "sunrise": "6:42:03 AM",
       "sunset": "7:54:00 PM",
       "first_light": "4:03:42 AM",
@@ -3571,7 +3841,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-13",
+      "month": 9,
+      "day": 13,
       "sunrise": "6:44:24 AM",
       "sunset": "7:50:55 PM",
       "first_light": "4:07:27 AM",
@@ -3585,7 +3856,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-14",
+      "month": 9,
+      "day": 14,
       "sunrise": "6:46:45 AM",
       "sunset": "7:47:50 PM",
       "first_light": "4:11:06 AM",
@@ -3599,7 +3871,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-15",
+      "month": 9,
+      "day": 15,
       "sunrise": "6:49:05 AM",
       "sunset": "7:44:46 PM",
       "first_light": "4:14:41 AM",
@@ -3613,7 +3886,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-16",
+      "month": 9,
+      "day": 16,
       "sunrise": "6:51:26 AM",
       "sunset": "7:41:41 PM",
       "first_light": "4:18:12 AM",
@@ -3627,7 +3901,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-17",
+      "month": 9,
+      "day": 17,
       "sunrise": "6:53:47 AM",
       "sunset": "7:38:36 PM",
       "first_light": "4:21:39 AM",
@@ -3641,7 +3916,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-18",
+      "month": 9,
+      "day": 18,
       "sunrise": "6:56:07 AM",
       "sunset": "7:35:30 PM",
       "first_light": "4:25:02 AM",
@@ -3655,7 +3931,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-19",
+      "month": 9,
+      "day": 19,
       "sunrise": "6:58:28 AM",
       "sunset": "7:32:25 PM",
       "first_light": "4:28:21 AM",
@@ -3669,7 +3946,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-20",
+      "month": 9,
+      "day": 20,
       "sunrise": "7:00:49 AM",
       "sunset": "7:29:20 PM",
       "first_light": "4:31:37 AM",
@@ -3683,7 +3961,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-21",
+      "month": 9,
+      "day": 21,
       "sunrise": "7:03:10 AM",
       "sunset": "7:26:15 PM",
       "first_light": "4:34:50 AM",
@@ -3697,7 +3976,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-22",
+      "month": 9,
+      "day": 22,
       "sunrise": "7:05:31 AM",
       "sunset": "7:23:10 PM",
       "first_light": "4:37:59 AM",
@@ -3711,7 +3991,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-23",
+      "month": 9,
+      "day": 23,
       "sunrise": "7:07:52 AM",
       "sunset": "7:20:05 PM",
       "first_light": "4:41:06 AM",
@@ -3725,7 +4006,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-24",
+      "month": 9,
+      "day": 24,
       "sunrise": "7:10:13 AM",
       "sunset": "7:17:00 PM",
       "first_light": "4:44:10 AM",
@@ -3739,7 +4021,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-25",
+      "month": 9,
+      "day": 25,
       "sunrise": "7:12:35 AM",
       "sunset": "7:13:56 PM",
       "first_light": "4:47:12 AM",
@@ -3753,7 +4036,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-26",
+      "month": 9,
+      "day": 26,
       "sunrise": "7:14:56 AM",
       "sunset": "7:10:51 PM",
       "first_light": "4:50:11 AM",
@@ -3767,7 +4051,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-27",
+      "month": 9,
+      "day": 27,
       "sunrise": "7:17:18 AM",
       "sunset": "7:07:47 PM",
       "first_light": "4:53:08 AM",
@@ -3781,7 +4066,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-28",
+      "month": 9,
+      "day": 28,
       "sunrise": "7:19:40 AM",
       "sunset": "7:04:43 PM",
       "first_light": "4:56:02 AM",
@@ -3795,7 +4081,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-29",
+      "month": 9,
+      "day": 29,
       "sunrise": "7:22:02 AM",
       "sunset": "7:01:39 PM",
       "first_light": "4:58:55 AM",
@@ -3809,7 +4096,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-09-30",
+      "month": 9,
+      "day": 30,
       "sunrise": "7:24:25 AM",
       "sunset": "6:58:35 PM",
       "first_light": "5:01:45 AM",
@@ -3823,7 +4111,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-01",
+      "month": 10,
+      "day": 1,
       "sunrise": "7:26:48 AM",
       "sunset": "6:55:32 PM",
       "first_light": "5:04:33 AM",
@@ -3837,7 +4126,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-02",
+      "month": 10,
+      "day": 2,
       "sunrise": "7:29:11 AM",
       "sunset": "6:52:29 PM",
       "first_light": "5:07:20 AM",
@@ -3851,7 +4141,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-03",
+      "month": 10,
+      "day": 3,
       "sunrise": "7:31:34 AM",
       "sunset": "6:49:27 PM",
       "first_light": "5:10:04 AM",
@@ -3865,7 +4156,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-04",
+      "month": 10,
+      "day": 4,
       "sunrise": "7:33:58 AM",
       "sunset": "6:46:24 PM",
       "first_light": "5:12:48 AM",
@@ -3879,7 +4171,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-05",
+      "month": 10,
+      "day": 5,
       "sunrise": "7:36:22 AM",
       "sunset": "6:43:23 PM",
       "first_light": "5:15:29 AM",
@@ -3893,7 +4186,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-06",
+      "month": 10,
+      "day": 6,
       "sunrise": "7:38:47 AM",
       "sunset": "6:40:21 PM",
       "first_light": "5:18:09 AM",
@@ -3907,7 +4201,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-07",
+      "month": 10,
+      "day": 7,
       "sunrise": "7:41:12 AM",
       "sunset": "6:37:20 PM",
       "first_light": "5:20:47 AM",
@@ -3921,7 +4216,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-08",
+      "month": 10,
+      "day": 8,
       "sunrise": "7:43:37 AM",
       "sunset": "6:34:20 PM",
       "first_light": "5:23:24 AM",
@@ -3935,7 +4231,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-09",
+      "month": 10,
+      "day": 9,
       "sunrise": "7:46:03 AM",
       "sunset": "6:31:20 PM",
       "first_light": "5:26:00 AM",
@@ -3949,7 +4246,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-10",
+      "month": 10,
+      "day": 10,
       "sunrise": "7:48:30 AM",
       "sunset": "6:28:21 PM",
       "first_light": "5:28:34 AM",
@@ -3963,7 +4261,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-11",
+      "month": 10,
+      "day": 11,
       "sunrise": "7:50:56 AM",
       "sunset": "6:25:22 PM",
       "first_light": "5:31:07 AM",
@@ -3977,7 +4276,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-12",
+      "month": 10,
+      "day": 12,
       "sunrise": "7:53:24 AM",
       "sunset": "6:22:24 PM",
       "first_light": "5:33:39 AM",
@@ -3991,7 +4291,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-13",
+      "month": 10,
+      "day": 13,
       "sunrise": "7:55:51 AM",
       "sunset": "6:19:26 PM",
       "first_light": "5:36:09 AM",
@@ -4005,7 +4306,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-14",
+      "month": 10,
+      "day": 14,
       "sunrise": "7:58:20 AM",
       "sunset": "6:16:29 PM",
       "first_light": "5:38:39 AM",
@@ -4019,7 +4321,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-15",
+      "month": 10,
+      "day": 15,
       "sunrise": "8:00:48 AM",
       "sunset": "6:13:33 PM",
       "first_light": "5:41:07 AM",
@@ -4033,7 +4336,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-16",
+      "month": 10,
+      "day": 16,
       "sunrise": "8:03:17 AM",
       "sunset": "6:10:38 PM",
       "first_light": "5:43:34 AM",
@@ -4047,7 +4351,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-17",
+      "month": 10,
+      "day": 17,
       "sunrise": "8:05:47 AM",
       "sunset": "6:07:43 PM",
       "first_light": "5:46:00 AM",
@@ -4061,7 +4366,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-18",
+      "month": 10,
+      "day": 18,
       "sunrise": "8:08:17 AM",
       "sunset": "6:04:49 PM",
       "first_light": "5:48:26 AM",
@@ -4075,7 +4381,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-19",
+      "month": 10,
+      "day": 19,
       "sunrise": "8:10:48 AM",
       "sunset": "6:01:56 PM",
       "first_light": "5:50:50 AM",
@@ -4089,7 +4396,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-20",
+      "month": 10,
+      "day": 20,
       "sunrise": "8:13:19 AM",
       "sunset": "5:59:04 PM",
       "first_light": "5:53:13 AM",
@@ -4103,7 +4411,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-21",
+      "month": 10,
+      "day": 21,
       "sunrise": "8:15:51 AM",
       "sunset": "5:56:13 PM",
       "first_light": "5:55:35 AM",
@@ -4117,7 +4426,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-22",
+      "month": 10,
+      "day": 22,
       "sunrise": "8:18:23 AM",
       "sunset": "5:53:23 PM",
       "first_light": "5:57:57 AM",
@@ -4131,7 +4441,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-23",
+      "month": 10,
+      "day": 23,
       "sunrise": "8:20:55 AM",
       "sunset": "5:50:34 PM",
       "first_light": "6:00:17 AM",
@@ -4145,7 +4456,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-24",
+      "month": 10,
+      "day": 24,
       "sunrise": "8:23:28 AM",
       "sunset": "5:47:46 PM",
       "first_light": "6:02:37 AM",
@@ -4159,7 +4471,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-25",
+      "month": 10,
+      "day": 25,
       "sunrise": "8:26:02 AM",
       "sunset": "5:44:58 PM",
       "first_light": "6:04:55 AM",
@@ -4173,7 +4486,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-26",
+      "month": 10,
+      "day": 26,
       "sunrise": "7:28:36 AM",
       "sunset": "4:42:13 PM",
       "first_light": "5:07:13 AM",
@@ -4187,7 +4501,8 @@
       "utc_offset": 180
     },
     {
-      "date": "2025-10-27",
+      "month": 10,
+      "day": 27,
       "sunrise": "7:31:10 AM",
       "sunset": "4:39:28 PM",
       "first_light": "5:09:30 AM",
@@ -4201,7 +4516,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-10-28",
+      "month": 10,
+      "day": 28,
       "sunrise": "7:33:45 AM",
       "sunset": "4:36:44 PM",
       "first_light": "5:11:46 AM",
@@ -4215,7 +4531,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-10-29",
+      "month": 10,
+      "day": 29,
       "sunrise": "7:36:20 AM",
       "sunset": "4:34:02 PM",
       "first_light": "5:14:01 AM",
@@ -4229,7 +4546,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-10-30",
+      "month": 10,
+      "day": 30,
       "sunrise": "7:38:55 AM",
       "sunset": "4:31:21 PM",
       "first_light": "5:16:15 AM",
@@ -4243,7 +4561,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-10-31",
+      "month": 10,
+      "day": 31,
       "sunrise": "7:41:30 AM",
       "sunset": "4:28:41 PM",
       "first_light": "5:18:28 AM",
@@ -4257,7 +4576,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-01",
+      "month": 11,
+      "day": 1,
       "sunrise": "7:44:06 AM",
       "sunset": "4:26:03 PM",
       "first_light": "5:20:41 AM",
@@ -4271,7 +4591,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-02",
+      "month": 11,
+      "day": 2,
       "sunrise": "7:46:42 AM",
       "sunset": "4:23:26 PM",
       "first_light": "5:22:52 AM",
@@ -4285,7 +4606,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-03",
+      "month": 11,
+      "day": 3,
       "sunrise": "7:49:18 AM",
       "sunset": "4:20:51 PM",
       "first_light": "5:25:02 AM",
@@ -4299,7 +4621,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-04",
+      "month": 11,
+      "day": 4,
       "sunrise": "7:51:55 AM",
       "sunset": "4:18:17 PM",
       "first_light": "5:27:12 AM",
@@ -4313,7 +4636,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-05",
+      "month": 11,
+      "day": 5,
       "sunrise": "7:54:31 AM",
       "sunset": "4:15:45 PM",
       "first_light": "5:29:21 AM",
@@ -4327,7 +4651,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-06",
+      "month": 11,
+      "day": 6,
       "sunrise": "7:57:07 AM",
       "sunset": "4:13:15 PM",
       "first_light": "5:31:28 AM",
@@ -4341,7 +4666,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-07",
+      "month": 11,
+      "day": 7,
       "sunrise": "7:59:43 AM",
       "sunset": "4:10:46 PM",
       "first_light": "5:33:35 AM",
@@ -4355,7 +4681,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-08",
+      "month": 11,
+      "day": 8,
       "sunrise": "8:02:19 AM",
       "sunset": "4:08:19 PM",
       "first_light": "5:35:40 AM",
@@ -4369,7 +4696,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-09",
+      "month": 11,
+      "day": 9,
       "sunrise": "8:04:55 AM",
       "sunset": "4:05:54 PM",
       "first_light": "5:37:44 AM",
@@ -4383,7 +4711,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-10",
+      "month": 11,
+      "day": 10,
       "sunrise": "8:07:31 AM",
       "sunset": "4:03:32 PM",
       "first_light": "5:39:48 AM",
@@ -4397,7 +4726,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-11",
+      "month": 11,
+      "day": 11,
       "sunrise": "8:10:06 AM",
       "sunset": "4:01:11 PM",
       "first_light": "5:41:50 AM",
@@ -4411,7 +4741,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-12",
+      "month": 11,
+      "day": 12,
       "sunrise": "8:12:41 AM",
       "sunset": "3:58:52 PM",
       "first_light": "5:43:51 AM",
@@ -4425,7 +4756,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-13",
+      "month": 11,
+      "day": 13,
       "sunrise": "8:15:15 AM",
       "sunset": "3:56:35 PM",
       "first_light": "5:45:50 AM",
@@ -4439,7 +4771,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-14",
+      "month": 11,
+      "day": 14,
       "sunrise": "8:17:49 AM",
       "sunset": "3:54:21 PM",
       "first_light": "5:47:49 AM",
@@ -4453,7 +4786,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-15",
+      "month": 11,
+      "day": 15,
       "sunrise": "8:20:22 AM",
       "sunset": "3:52:09 PM",
       "first_light": "5:49:46 AM",
@@ -4467,7 +4801,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-16",
+      "month": 11,
+      "day": 16,
       "sunrise": "8:22:54 AM",
       "sunset": "3:50:00 PM",
       "first_light": "5:51:42 AM",
@@ -4481,7 +4816,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-17",
+      "month": 11,
+      "day": 17,
       "sunrise": "8:25:25 AM",
       "sunset": "3:47:53 PM",
       "first_light": "5:53:36 AM",
@@ -4495,7 +4831,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-18",
+      "month": 11,
+      "day": 18,
       "sunrise": "8:27:55 AM",
       "sunset": "3:45:48 PM",
       "first_light": "5:55:29 AM",
@@ -4509,7 +4846,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-19",
+      "month": 11,
+      "day": 19,
       "sunrise": "8:30:24 AM",
       "sunset": "3:43:47 PM",
       "first_light": "5:57:20 AM",
@@ -4523,7 +4861,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-20",
+      "month": 11,
+      "day": 20,
       "sunrise": "8:32:52 AM",
       "sunset": "3:41:48 PM",
       "first_light": "5:59:10 AM",
@@ -4537,7 +4876,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-21",
+      "month": 11,
+      "day": 21,
       "sunrise": "8:35:18 AM",
       "sunset": "3:39:52 PM",
       "first_light": "6:00:58 AM",
@@ -4551,7 +4891,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-22",
+      "month": 11,
+      "day": 22,
       "sunrise": "8:37:43 AM",
       "sunset": "3:37:59 PM",
       "first_light": "6:02:45 AM",
@@ -4565,7 +4906,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-23",
+      "month": 11,
+      "day": 23,
       "sunrise": "8:40:06 AM",
       "sunset": "3:36:10 PM",
       "first_light": "6:04:30 AM",
@@ -4579,7 +4921,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-24",
+      "month": 11,
+      "day": 24,
       "sunrise": "8:42:27 AM",
       "sunset": "3:34:23 PM",
       "first_light": "6:06:13 AM",
@@ -4593,7 +4936,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-25",
+      "month": 11,
+      "day": 25,
       "sunrise": "8:44:46 AM",
       "sunset": "3:32:40 PM",
       "first_light": "6:07:54 AM",
@@ -4607,7 +4951,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-26",
+      "month": 11,
+      "day": 26,
       "sunrise": "8:47:03 AM",
       "sunset": "3:31:01 PM",
       "first_light": "6:09:33 AM",
@@ -4621,7 +4966,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-27",
+      "month": 11,
+      "day": 27,
       "sunrise": "8:49:18 AM",
       "sunset": "3:29:25 PM",
       "first_light": "6:11:11 AM",
@@ -4635,7 +4981,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-28",
+      "month": 11,
+      "day": 28,
       "sunrise": "8:51:31 AM",
       "sunset": "3:27:53 PM",
       "first_light": "6:12:46 AM",
@@ -4649,7 +4996,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-29",
+      "month": 11,
+      "day": 29,
       "sunrise": "8:53:41 AM",
       "sunset": "3:26:24 PM",
       "first_light": "6:14:19 AM",
@@ -4663,7 +5011,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-11-30",
+      "month": 11,
+      "day": 30,
       "sunrise": "8:55:48 AM",
       "sunset": "3:25:00 PM",
       "first_light": "6:15:51 AM",
@@ -4677,7 +5026,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-01",
+      "month": 12,
+      "day": 1,
       "sunrise": "8:57:52 AM",
       "sunset": "3:23:40 PM",
       "first_light": "6:17:20 AM",
@@ -4691,7 +5041,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-02",
+      "month": 12,
+      "day": 2,
       "sunrise": "8:59:54 AM",
       "sunset": "3:22:24 PM",
       "first_light": "6:18:46 AM",
@@ -4705,7 +5056,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-03",
+      "month": 12,
+      "day": 3,
       "sunrise": "9:01:52 AM",
       "sunset": "3:21:12 PM",
       "first_light": "6:20:10 AM",
@@ -4719,7 +5071,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-04",
+      "month": 12,
+      "day": 4,
       "sunrise": "9:03:46 AM",
       "sunset": "3:20:04 PM",
       "first_light": "6:21:32 AM",
@@ -4733,7 +5086,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-05",
+      "month": 12,
+      "day": 5,
       "sunrise": "9:05:38 AM",
       "sunset": "3:19:02 PM",
       "first_light": "6:22:52 AM",
@@ -4747,7 +5101,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-06",
+      "month": 12,
+      "day": 6,
       "sunrise": "9:07:25 AM",
       "sunset": "3:18:04 PM",
       "first_light": "6:24:09 AM",
@@ -4761,7 +5116,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-07",
+      "month": 12,
+      "day": 7,
       "sunrise": "9:09:09 AM",
       "sunset": "3:17:10 PM",
       "first_light": "6:25:23 AM",
@@ -4775,7 +5131,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-08",
+      "month": 12,
+      "day": 8,
       "sunrise": "9:10:48 AM",
       "sunset": "3:16:22 PM",
       "first_light": "6:26:35 AM",
@@ -4789,7 +5146,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-09",
+      "month": 12,
+      "day": 9,
       "sunrise": "9:12:23 AM",
       "sunset": "3:15:39 PM",
       "first_light": "6:27:44 AM",
@@ -4803,7 +5161,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-10",
+      "month": 12,
+      "day": 10,
       "sunrise": "9:13:54 AM",
       "sunset": "3:15:00 PM",
       "first_light": "6:28:50 AM",
@@ -4817,7 +5176,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-11",
+      "month": 12,
+      "day": 11,
       "sunrise": "9:15:21 AM",
       "sunset": "3:14:27 PM",
       "first_light": "6:29:54 AM",
@@ -4831,7 +5191,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-12",
+      "month": 12,
+      "day": 12,
       "sunrise": "9:16:43 AM",
       "sunset": "3:14:00 PM",
       "first_light": "6:30:54 AM",
@@ -4845,7 +5206,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-13",
+      "month": 12,
+      "day": 13,
       "sunrise": "9:18:00 AM",
       "sunset": "3:13:37 PM",
       "first_light": "6:31:52 AM",
@@ -4859,7 +5221,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-14",
+      "month": 12,
+      "day": 14,
       "sunrise": "9:19:12 AM",
       "sunset": "3:13:20 PM",
       "first_light": "6:32:47 AM",
@@ -4873,7 +5236,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-15",
+      "month": 12,
+      "day": 15,
       "sunrise": "9:20:19 AM",
       "sunset": "3:13:09 PM",
       "first_light": "6:33:38 AM",
@@ -4887,7 +5251,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-16",
+      "month": 12,
+      "day": 16,
       "sunrise": "9:21:21 AM",
       "sunset": "3:13:03 PM",
       "first_light": "6:34:27 AM",
@@ -4901,7 +5266,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-17",
+      "month": 12,
+      "day": 17,
       "sunrise": "9:22:18 AM",
       "sunset": "3:13:03 PM",
       "first_light": "6:35:12 AM",
@@ -4915,7 +5281,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-18",
+      "month": 12,
+      "day": 18,
       "sunrise": "9:23:10 AM",
       "sunset": "3:13:08 PM",
       "first_light": "6:35:55 AM",
@@ -4929,7 +5296,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-19",
+      "month": 12,
+      "day": 19,
       "sunrise": "9:23:56 AM",
       "sunset": "3:13:20 PM",
       "first_light": "6:36:34 AM",
@@ -4943,7 +5311,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-20",
+      "month": 12,
+      "day": 20,
       "sunrise": "9:24:37 AM",
       "sunset": "3:13:36 PM",
       "first_light": "6:37:10 AM",
@@ -4957,7 +5326,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-21",
+      "month": 12,
+      "day": 21,
       "sunrise": "9:25:12 AM",
       "sunset": "3:13:59 PM",
       "first_light": "6:37:42 AM",
@@ -4971,7 +5341,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-22",
+      "month": 12,
+      "day": 22,
       "sunrise": "9:25:41 AM",
       "sunset": "3:14:27 PM",
       "first_light": "6:38:12 AM",
@@ -4985,7 +5356,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-23",
+      "month": 12,
+      "day": 23,
       "sunrise": "9:26:05 AM",
       "sunset": "3:15:01 PM",
       "first_light": "6:38:38 AM",
@@ -4999,7 +5371,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-24",
+      "month": 12,
+      "day": 24,
       "sunrise": "9:26:24 AM",
       "sunset": "3:15:40 PM",
       "first_light": "6:39:00 AM",
@@ -5013,7 +5386,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-25",
+      "month": 12,
+      "day": 25,
       "sunrise": "9:26:37 AM",
       "sunset": "3:16:25 PM",
       "first_light": "6:39:19 AM",
@@ -5027,7 +5401,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-26",
+      "month": 12,
+      "day": 26,
       "sunrise": "9:26:44 AM",
       "sunset": "3:17:16 PM",
       "first_light": "6:39:35 AM",
@@ -5041,7 +5416,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-27",
+      "month": 12,
+      "day": 27,
       "sunrise": "9:26:45 AM",
       "sunset": "3:18:11 PM",
       "first_light": "6:39:48 AM",
@@ -5055,7 +5431,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-28",
+      "month": 12,
+      "day": 28,
       "sunrise": "9:26:41 AM",
       "sunset": "3:19:13 PM",
       "first_light": "6:39:57 AM",
@@ -5069,7 +5446,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-29",
+      "month": 12,
+      "day": 29,
       "sunrise": "9:26:32 AM",
       "sunset": "3:20:19 PM",
       "first_light": "6:40:02 AM",
@@ -5083,7 +5461,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-30",
+      "month": 12,
+      "day": 30,
       "sunrise": "9:26:16 AM",
       "sunset": "3:21:31 PM",
       "first_light": "6:40:04 AM",
@@ -5097,7 +5476,8 @@
       "utc_offset": 120
     },
     {
-      "date": "2025-12-31",
+      "month": 12,
+      "day": 31,
       "sunrise": "9:25:56 AM",
       "sunset": "3:22:47 PM",
       "first_light": "6:40:02 AM",
@@ -5110,6 +5490,5 @@
       "timezone": "Europe/Helsinki",
       "utc_offset": 120
     }
-  ],
-  "status": "OK"
+  ]
 }

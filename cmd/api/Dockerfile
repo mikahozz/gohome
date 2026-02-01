@@ -17,8 +17,6 @@ RUN go build -o /builder/main ./cmd/api
 FROM gcr.io/distroless/static-debian11:nonroot
 WORKDIR /app
 COPY --from=base /builder/main /builder/.env ./
-# Copy the sun data file
-COPY --from=base /builder/integrations/sun/sun_helsinki_2025.json ./integrations/sun/
 
 EXPOSE 6001
 CMD ["/app/main"]

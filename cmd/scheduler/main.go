@@ -12,6 +12,26 @@ import (
 
 var zone, _ = time.LoadLocation("Europe/Helsinki")
 
+var sunDataInstance *sun.SunData
+
+func init() {
+	var err error
+	sunDataInstance, err = sun.NewSunData()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Failed to load sun data")
+	}
+}
+
+func getSunriseTimeToday() time.Time {
+	data := sunDataInstance.GetSunDataForSingleDate(time.Now())
+	return data.Sunrise
+}
+
+func getSunsetTimeToday() time.Time {
+	data := sunDataInstance.GetSunDataForSingleDate(time.Now())
+	return data.Sunset
+}
+
 func main() {
 	defer func() {
 		if r := recover(); r != nil {
@@ -28,7 +48,7 @@ func main() {
 		Name:     "Night lights ON at sunset",
 		Category: "night_lights",
 		Trigger: Trigger{
-			Time: sun.GetSunsetToday,
+			Time: getSunsetTimeToday,
 		},
 		Action: func(ctx context.Context) error { return shelly.TurnOn(ctx) },
 	})
@@ -59,7 +79,7 @@ func main() {
 		Name:     "Morning lights OFF at sunrise",
 		Category: "night_lights",
 		Trigger: Trigger{
-			Time: sun.GetSunriseToday,
+			Time: getSunriseTimeToday,
 		},
 		Action: func(ctx context.Context) error { return shelly.TurnOff(ctx) },
 	})

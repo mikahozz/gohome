@@ -1,175 +1,224 @@
 package sun
 
 import (
-	"os"
-	"path/filepath"
 	"testing"
 	"time"
 )
 
-func TestLoadSunData(t *testing.T) {
-	// Test loading the data
-	sunData, err := LoadSunData("sun_helsinki_2025.json")
+// TestNewSunData verifies that sun data loads correctly from JSON file and builds the internal index.
+// It checks that all 366 days (including leap day) are loaded and can be looked up.
+func TestNewSunData(t *testing.T) {
+
+	sunData, err := NewSunData()
 	if err != nil {
-		t.Fatalf("LoadSunData failed: %v", err)
+		t.Fatalf("NewSunData failed: %v", err)
 	}
 
-	// Verify the data was loaded correctly
-	if len(sunData.Results) != 365 {
-		t.Errorf("Expected 365 result, got %d", len(sunData.Results))
+	// Should have 366 records (365 days + leap day)
+	if len(sunData.byMonthDay) != 366 {
+		t.Errorf("Expected 366 records (including leap day), got %d", len(sunData.byMonthDay))
 	}
 
-	result := sunData.Results[0]
-	expected := DailyData{
-		Date:      "2025-01-01",
-		Sunrise:   "9:25:22 AM",
-		Timezone:  "Europe/Helsinki",
-		UTCOffset: 120,
+	// Verify Jan 1 data exists
+	jan1 := sunData.GetSunDataForSingleDate(time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC))
+	if jan1 == nil || jan1.Date != "2026-01-01" {
+		t.Errorf("Jan 1 data incorrect: %+v", jan1)
 	}
-	if result.Date != expected.Date || result.Sunrise != expected.Sunrise ||
-		result.Timezone != expected.Timezone || result.UTCOffset != expected.UTCOffset {
-		t.Errorf("First result mismatch.\nGot: %+v\nWant: %+v", result, expected)
+
+	// Verify leap day (Feb 29) exists
+	leapDay := sunData.GetSunDataForSingleDate(time.Date(2024, 2, 29, 0, 0, 0, 0, time.UTC))
+	if leapDay == nil || leapDay.Date != "2024-02-29" {
+		t.Errorf("Leap day data incorrect: %+v", leapDay)
 	}
 }
 
-func TestGetDailyData(t *testing.T) {
-	// Create test data with different years to verify year-independent behavior
-	sunData := &SunData{
-		Results: []DailyData{
-			{
-				Date:    "2025-01-01",
-				Sunrise: "9:25:22 AM",
-				Sunset:  "3:24:31 PM",
-			},
-			{
-				Date:    "2025-01-02",
-				Sunrise: "9:24:50 AM",
-				Sunset:  "3:25:58 PM",
-			},
-			{
-				Date:    "2025-01-03",
-				Sunrise: "9:24:15 AM",
-				Sunset:  "3:27:30 PM",
-			},
-		},
+// TestGetSunDataForSingleDate_YearIndependence verifies that sun data lookup works regardless of year.
+// The system matches only by month and day, so querying Feb 1 in any year returns the same sun times.
+func TestGetSunDataForSingleDate_YearIndependence(t *testing.T) {
+
+	sunData, err := NewSunData()
+	if err != nil {
+		t.Fatalf("NewSunData failed: %v", err)
 	}
 
-	// Test cases
-	testCases := []struct {
-		name           string
-		startDate      string
-		endDate        *string
-		expectedDates  []string
-		expectedLength int
-	}{
-		{
-			name:           "Single day - same year",
-			startDate:      "2025-01-01",
-			endDate:        nil,
-			expectedDates:  []string{"2025-01-01"},
-			expectedLength: 1,
-		},
-		{
-			name:           "Single day - different year",
-			startDate:      "2023-01-01", // Different year, same month/day
-			endDate:        nil,
-			expectedDates:  []string{"2025-01-01"},
-			expectedLength: 1,
-		},
-		{
-			name:           "Date range - same year",
-			startDate:      "2025-01-02",
-			endDate:        stringPtr("2025-01-03"),
-			expectedDates:  []string{"2025-01-02", "2025-01-03"},
-			expectedLength: 2,
-		},
-		{
-			name:           "Date range - different years",
-			startDate:      "2023-01-02",            // Different year, same month/day
-			endDate:        stringPtr("2024-01-03"), // Different year, same month/day
-			expectedDates:  []string{"2025-01-02", "2025-01-03"},
-			expectedLength: 2,
-		},
-		{
-			name:           "Non-existent date",
-			startDate:      "2025-01-04",
-			endDate:        nil,
-			expectedDates:  []string{},
-			expectedLength: 0,
-		},
+	// Query the same month-day (Feb 1) in different years
+	data2024 := sunData.GetSunDataForSingleDate(time.Date(2024, 2, 1, 0, 0, 0, 0, time.UTC))
+	data2025 := sunData.GetSunDataForSingleDate(time.Date(2025, 2, 1, 0, 0, 0, 0, time.UTC))
+	data2026 := sunData.GetSunDataForSingleDate(time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC))
+
+	if data2024 == nil || data2025 == nil || data2026 == nil {
+		t.Fatalf("Failed to get data for different years")
 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
-			startDate, _ := time.Parse("2006-01-02", tc.startDate)
-			var endDate *time.Time
-			if tc.endDate != nil {
-				parsed, _ := time.Parse("2006-01-02", *tc.endDate)
-				endDate = &parsed
-			}
+	// The sunrise/sunset times should have the same time-of-day, just different dates
+	if data2024.Sunrise.Hour() != data2025.Sunrise.Hour() ||
+		data2024.Sunrise.Hour() != data2026.Sunrise.Hour() {
+		t.Errorf("Sunrise hours differ across years: 2024=%d, 2025=%d, 2026=%d",
+			data2024.Sunrise.Hour(), data2025.Sunrise.Hour(), data2026.Sunrise.Hour())
+	}
 
-			result := sunData.GetDailyData(startDate, endDate)
-
-			// Check length
-			if len(result) != tc.expectedLength {
-				t.Fatalf("Expected to find %d results, got %d", tc.expectedLength, len(result))
-			}
-
-			// Check dates if we expect results
-			for i, expectedDate := range tc.expectedDates {
-				if i < len(result) && result[i].Date != expectedDate {
-					t.Errorf("Expected date %s at position %d, got %s", expectedDate, i, result[i].Date)
-				}
-			}
-		})
+	// But the dates should reflect the queried year
+	if data2024.Date != "2024-02-01" {
+		t.Errorf("Expected date 2024-02-01, got %s", data2024.Date)
+	}
+	if data2025.Date != "2025-02-01" {
+		t.Errorf("Expected date 2025-02-01, got %s", data2025.Date)
+	}
+	if data2026.Date != "2026-02-01" {
+		t.Errorf("Expected date 2026-02-01, got %s", data2026.Date)
 	}
 }
 
-func TestGetSunriseAndSunsetToday(t *testing.T) {
-	// Change working directory to repo root so relative path in GetSunrise/Set functions resolves
-	wd, _ := os.Getwd()
-	// Assume test file located at .../integrations/sun; repo root is two levels up
-	root := filepath.Clean(filepath.Join(wd, "..", ".."))
-	if err := os.Chdir(root); err != nil {
-		t.Fatalf("failed to chdir root: %v", err)
-	}
-	defer os.Chdir(wd)
+// TestGetSunDataForSingleDate_ParsedTimesHaveCorrectYear verifies that returned time.Time values
+// contain the queried date's year, not the year from the JSON file (which was 2025).
+// This was a bug where times would be in 2025 regardless of query year.
+func TestGetSunDataForSingleDate_ParsedTimesHaveCorrectYear(t *testing.T) {
 
-	sunrise := GetSunriseToday()
-	sunset := GetSunsetToday()
-	if !sunset.After(sunrise) {
-		t.Fatalf("expected sunset (%v) to be after sunrise (%v)", sunset, sunrise)
-	}
-	// Load raw data to verify the parsed times match the expected date
-	sunData, err := LoadSunData("integrations/sun/sun_helsinki_2025.json")
+	sunData, err := NewSunData()
 	if err != nil {
-		t.Fatalf("could not load sun data: %v", err)
-	}
-	todayArr := sunData.GetDailyData(time.Now(), nil)
-	if len(todayArr) == 0 {
-		t.Fatalf("no data for today in test dataset")
-	}
-	d := todayArr[0]
-	// Ensure the date portion matches
-	if sunrise.Format("2006-01-02") != d.Date || sunset.Format("2006-01-02") != d.Date {
-		t.Fatalf("parsed times date mismatch. got sunrise date=%s sunset date=%s want=%s", sunrise.Format("2006-01-02"), sunset.Format("2006-01-02"), d.Date)
+		t.Fatalf("NewSunData failed: %v", err)
 	}
 
-	// Timezone assertions: ensure location is Europe/Helsinki and offset matches expected UTCOffset (minutes)
-	locRise := sunrise.Location()
-	locSet := sunset.Location()
-	if locRise.String() != d.Timezone || locSet.String() != d.Timezone {
-		t.Fatalf("unexpected location names: sunrise=%s sunset=%s expected=%s", locRise.String(), locSet.String(), d.Timezone)
+	// Query Feb 1, 2026
+	now := time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC)
+	data := sunData.GetSunDataForSingleDate(now)
+
+	// The returned times should be in 2026, not 2025
+	if data.Sunrise.Year() != 2026 {
+		t.Errorf("Sunrise year should be 2026, got %d", data.Sunrise.Year())
 	}
-	_, riseOffset := sunrise.Zone()
-	_, setOffset := sunset.Zone()
-	expectedSeconds := d.UTCOffset * 60
+	if data.Sunset.Year() != 2026 {
+		t.Errorf("Sunset year should be 2026, got %d", data.Sunset.Year())
+	}
+
+	// Also verify that the times are reasonable (not in the past by more than a day from query date)
+	dayBefore := now.Add(-24 * time.Hour)
+	if data.Sunrise.Before(dayBefore) {
+		t.Errorf("Sunrise is more than 24 hours before query date: %v", data.Sunrise)
+	}
+	if data.Sunset.Before(dayBefore) {
+		t.Errorf("Sunset is more than 24 hours before query date: %v", data.Sunset)
+	}
+}
+
+// TestGetSunDataForSingleDate_LeapDay verifies that Feb 29 data exists and can be queried.
+func TestGetSunDataForSingleDate_LeapDay(t *testing.T) {
+
+	sunData, err := NewSunData()
+	if err != nil {
+		t.Fatalf("NewSunData failed: %v", err)
+	}
+
+	// Query Feb 29 in a leap year (2024)
+	leapDay := time.Date(2024, 2, 29, 0, 0, 0, 0, time.UTC)
+	data := sunData.GetSunDataForSingleDate(leapDay)
+
+	if data.Date != "2024-02-29" {
+		t.Errorf("Expected date 2024-02-29, got %s", data.Date)
+	}
+
+	// Verify it has reasonable data (should be between Feb 28 and Mar 1)
+	if data.Sunrise.IsZero() || data.Sunset.IsZero() {
+		t.Errorf("Leap day data missing sunrise or sunset")
+	}
+
+	// Sunrise should be before sunset
+	if !data.Sunset.After(data.Sunrise) {
+		t.Errorf("Sunset should be after sunrise for leap day")
+	}
+}
+
+// TestGetSunDataForDateRange verifies that querying a date range returns correct results.
+func TestGetSunDataForDateRange(t *testing.T) {
+
+	sunData, err := NewSunData()
+	if err != nil {
+		t.Fatalf("NewSunData failed: %v", err)
+	}
+
+	// Query a 3-day range
+	start := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
+	end := time.Date(2026, 1, 3, 0, 0, 0, 0, time.UTC)
+	results := sunData.GetSunDataForDateRange(start, end)
+
+	if len(results) != 3 {
+		t.Errorf("Expected 3 results, got %d", len(results))
+	}
+
+	// Verify dates are sequential
+	expectedDates := []string{"2026-01-01", "2026-01-02", "2026-01-03"}
+	for i, result := range results {
+		if result.Date != expectedDates[i] {
+			t.Errorf("Expected date %s at position %d, got %s", expectedDates[i], i, result.Date)
+		}
+	}
+
+	// Query single day by using zero value for end date
+	singleResult := sunData.GetSunDataForDateRange(start, time.Time{})
+	if len(singleResult) != 1 {
+		t.Errorf("Expected 1 result for single day query, got %d", len(singleResult))
+	}
+	if singleResult[0].Date != "2026-01-01" {
+		t.Errorf("Expected date 2026-01-01, got %s", singleResult[0].Date)
+	}
+}
+
+// TestGetSunDataForSingleDate_TimezoneAndOffset verifies that times are parsed with correct timezone.
+func TestGetSunDataForSingleDate_TimezoneAndOffset(t *testing.T) {
+
+	sunData, err := NewSunData()
+	if err != nil {
+		t.Fatalf("NewSunData failed: %v", err)
+	}
+
+	now := time.Now()
+	data := sunData.GetSunDataForSingleDate(now)
+
+	// Basic sanity: sunset should be after sunrise
+	if !data.Sunset.After(data.Sunrise) {
+		t.Errorf("Sunset (%v) should be after sunrise (%v)", data.Sunset, data.Sunrise)
+	}
+
+	// Timezone should be Europe/Helsinki
+	locRise := data.Sunrise.Location()
+	locSet := data.Sunset.Location()
+	if locRise.String() != data.Timezone || locSet.String() != data.Timezone {
+		t.Errorf("Unexpected location names: sunrise=%s sunset=%s expected=%s",
+			locRise.String(), locSet.String(), data.Timezone)
+	}
+
+	// Verify UTC offset matches
+	_, riseOffset := data.Sunrise.Zone()
+	_, setOffset := data.Sunset.Zone()
+	expectedSeconds := data.UTCOffset * 60
 	if riseOffset != expectedSeconds || setOffset != expectedSeconds {
-		t.Fatalf("unexpected offsets: sunrise=%d sunset=%d expected=%d", riseOffset, setOffset, expectedSeconds)
+		t.Errorf("Unexpected offsets: sunrise=%d sunset=%d expected=%d",
+			riseOffset, setOffset, expectedSeconds)
 	}
 }
 
-// Helper function to get pointer to string
-func stringPtr(s string) *string {
-	return &s
+// TestNewSunData_AllDaysPresent verifies that all 366 days of the year are present in the data.
+func TestNewSunData_AllDaysPresent(t *testing.T) {
+
+	sunData, err := NewSunData()
+	if err != nil {
+		t.Fatalf("NewSunData failed: %v", err)
+	}
+
+	// Test every single day of a leap year
+	year := 2024 // Leap year
+	for month := 1; month <= 12; month++ {
+		daysInMonth := time.Date(year, time.Month(month+1), 0, 0, 0, 0, 0, time.UTC).Day()
+		for day := 1; day <= daysInMonth; day++ {
+			date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+			data := sunData.GetSunDataForSingleDate(date) // Will panic if missing
+
+			if data == nil {
+				t.Errorf("Missing data for %s", date.Format("2006-01-02"))
+			}
+			if data.Sunrise.IsZero() {
+				t.Errorf("Missing sunrise for %s", date.Format("2006-01-02"))
+			}
+		}
+	}
 }
