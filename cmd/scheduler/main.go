@@ -23,12 +23,14 @@ func init() {
 }
 
 func getSunriseTimeToday() time.Time {
-	data := sunDataInstance.GetSunDataForSingleDate(time.Now())
+	now := time.Now().In(zone) // Get current time in Helsinki timezone
+	data := sunDataInstance.GetSunDataForSingleDate(now)
 	return data.Sunrise
 }
 
 func getSunsetTimeToday() time.Time {
-	data := sunDataInstance.GetSunDataForSingleDate(time.Now())
+	now := time.Now().In(zone) // Get current time in Helsinki timezone
+	data := sunDataInstance.GetSunDataForSingleDate(now)
 	return data.Sunset
 }
 
@@ -57,7 +59,7 @@ func main() {
 		Category: "night_lights",
 		Trigger: Trigger{
 			Time: func() time.Time {
-				now := time.Now()
+				now := time.Now().In(zone) // Get current time in Helsinki timezone
 				return time.Date(now.Year(), now.Month(), now.Day(), 23, 0, 0, 0, zone)
 			},
 		},
@@ -69,7 +71,7 @@ func main() {
 		Category: "night_lights",
 		Trigger: Trigger{
 			Time: func() time.Time {
-				now := time.Now()
+				now := time.Now().In(zone) // Get current time in Helsinki timezone
 				return time.Date(now.Year(), now.Month(), now.Day(), 6, 45, 0, 0, zone)
 			},
 		},
