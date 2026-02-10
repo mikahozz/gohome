@@ -104,21 +104,10 @@ func trimTrailingSlash(s string) string {
 	return s
 }
 
-func safeURL(raw string) string {
-	u, err := url.Parse(raw)
-	if err != nil {
-		return raw
-	}
-	u.User = nil
-	u.RawQuery = ""
-	u.Fragment = ""
-	return u.String()
-}
-
 // GetStatus retrieves the current switch status.
 func (c *ShellyClient) GetStatus(ctx context.Context) (SwitchStatus, error) {
 	endpoint := fmt.Sprintf("%s/rpc/Switch.GetStatus?id=0", c.baseURL)
-	log.Info().Str("event", "shelly_get_status").Msg("Sending query to Shelly: " + safeURL(endpoint))
+	log.Info().Str("event", "shelly_get_status").Msg("Sending query to Shelly: " + endpoint)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, endpoint, nil)
 	if err != nil {
 		return SwitchStatus{}, err
@@ -156,7 +145,7 @@ func (c *ShellyClient) Set(ctx context.Context, on bool, verify bool, timeout ti
 		q.Set("on", "false")
 	}
 	u.RawQuery = q.Encode()
-	log.Info().Str("event", "shelly_set").Msg("Sending query to Shelly: " + safeURL(u.String()))
+	log.Info().Str("event", "shelly_set").Msg("Sending query to Shelly: " + u.String())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
 	if err != nil {
 		return SwitchStatus{}, err

@@ -3,7 +3,7 @@ package fmi
 import (
 	"encoding/xml"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -39,12 +39,11 @@ func (f FMI_StationsModel) Validate() error {
 
 func (fmis *FMI_StationsModel) LoadWeatherStations() error {
 	q := fmt.Sprintf("https://opendata.fmi.fi/wfs/fin?request=getFeature&storedquery_id=fmi::ef::stations")
-	resp, err := httpClient.Get(q)
+	resp, err := http.Get(q)
 	if err != nil {
 		return errors.Wrap(err, "Error fetching stations from FMI")
 	}
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Wrapf(err, "Error reading body from FMI stations request: StatusCode: %d", resp.StatusCode)
 	}
