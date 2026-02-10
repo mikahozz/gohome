@@ -271,8 +271,12 @@ func main() {
 
 	// Start server in a goroutine
 	server := &http.Server{
-		Addr:    port,
-		Handler: loggingMiddleware(mux),
+		Addr:              port,
+		Handler:           loggingMiddleware(mux),
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       10 * time.Second,
+		WriteTimeout:      10 * time.Second,
+		IdleTimeout:       60 * time.Second,
 	}
 
 	go func() {

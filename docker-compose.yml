@@ -8,8 +8,6 @@ services:
       dockerfile: ./cmd/api/Dockerfile
     ports:
       - 6001:6001
-    networks:
-      - homeapp73-docker_default
   scheduler:
     container_name: gohome-scheduler
     image: gohome-scheduler
@@ -19,8 +17,6 @@ services:
       dockerfile: ./cmd/scheduler/Dockerfile
     ports:
       - 6002:6002
-    networks:
-      - homeapp73-docker_default
   dozzle:
     image: amir20/dozzle:v9.0
     volumes:
@@ -36,8 +32,3 @@ services:
       #
       # Uncomment to enable authentication. See https://dozzle.dev/guide/authentication
       # - DOZZLE_AUTH_PROVIDER=simple
-
-networks:
-  homeapp73-docker_default:
-    external: true
-

@@ -13,12 +13,16 @@ type HTTPClient interface {
 }
 
 type DefaultHTTPClient struct {
-	apiKey string
+	apiKey     string
+	httpClient *http.Client
 }
 
 func NewDefaultHTTPClient(apiKey string) *DefaultHTTPClient {
 	return &DefaultHTTPClient{
 		apiKey: apiKey,
+		httpClient: &http.Client{
+			Timeout: 10 * time.Second,
+		},
 	}
 }
 
@@ -37,9 +41,11 @@ func (c *DefaultHTTPClient) Get(endpoint string, periodStart, periodEnd time.Tim
 	params.Add("periodEnd", periodEnd.UTC().Format("200601021504"))
 
 	apiURL.RawQuery = params.Encode()
-	fmt.Println("Requesting url:", apiURL.String())
-
-	resp, err := http.Get(apiURL.String())
+	req, err := http.NewRequest(http.MethodGet, apiURL.String(), nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating API request: %w", err)
+	}
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error making API request: %w", err)
 	}

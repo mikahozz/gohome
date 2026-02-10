@@ -3,7 +3,7 @@ package fmi
 import (
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"math"
 	"net/http"
 	"regexp"
@@ -49,21 +49,22 @@ func (obs *FMI_ObservationsModel) LoadObservations(location StationId, requestTy
 	switch requestType {
 	case Observations:
 		obs.Observations.Resolution = Minutes
-		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::multipointcoverage&fmisid=%s",
+		q = fmt.Sprintf("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::observations::weather::multipointcoverage&fmisid=%s",
 			location)
 	case Forecast:
 		obs.Observations.Resolution = Hours
-		q = fmt.Sprintf("http://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&parameters=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,precipitation1h,Pressure,DewPoint,Visibility,TotalCloudCover,SmartSymbol&place=%s",
+		q = fmt.Sprintf("https://opendata.fmi.fi/wfs?service=WFS&version=2.0.0&request=getFeature&storedquery_id=fmi::forecast::harmonie::surface::point::multipointcoverage&parameters=Temperature,Humidity,WindSpeedMS,WindGust,WindDirection,precipitation1h,Pressure,DewPoint,Visibility,TotalCloudCover,SmartSymbol&place=%s",
 			location)
 	default:
 		return errors.Errorf("Invalid requestType: %v", requestType)
 	}
 
-	resp, err := http.Get(q)
+	resp, err := httpClient.Get(q)
 	if err != nil {
 		return errors.Wrap(err, "Error fetching data from FMI")
 	}
-	body, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Wrapf(err, "Error reading body from FMI request: StatusCode: %d", resp.StatusCode)
 	}
